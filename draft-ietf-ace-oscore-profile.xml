@@ -813,23 +813,28 @@ token.
       </t>
 
       <t>
-        The client MUST discard the current security context associated with an RS when:
+        The client MUST discard the current Security Context associated with an RS when:
 
       <list style="symbols">
         <t> the Sequence Number space ends. </t>
         <t> the access token associated with the context expires. </t>
-        <t> the client receives a number of 4.01 Unauthorized responses to OSCORE requests using the same security context. The exact number needs to be specified by the application. </t>
+        <t> the client receives a number of 4.01 Unauthorized responses to OSCORE requests using the same Security Context. The exact number needs to be specified by the application. </t>
         <t> the client receives a new nonce in the 2.01 (Created) response (see <xref target="rs-c"/>) to a POST request to the authz-info endpoint, when re-posting a (non-expired) token associated to the existing context. </t>
       </list>
       </t>
 
       <t>
-        The RS MUST discard the current security context associated with a client when:
+        The RS MUST discard the current Security Context associated with a client when:
 
       <list style="symbols">
         <t> the Sequence Number space ends. </t>
         <t> the access token associated with the context expires. </t>
+        <t> the client has successfully replaced the current security context with a newer one by posting an access token to the RS, e.g., for an update of access rights or by re-posting the same token, as specified in <xref target="c-rs">.
       </list>
+      </t>
+
+      <t>
+        Whenever one more access token is successfully posted to the RS, and a new Security Context is derived between the client and RS, messages in transit that were protected with the previous Security Context might not pass verification, as the old context is discarded. That means that messages sent shortly before the client posts one more access token to the RS might not successfully reach the destination. Analogously, implementations may want to cancel CoAP observations at the RS registered before the Security Context is replaced, or conversely they will need to implement a mechanism to ensure that those observation are to be protected with the newly derived Security Context.
       </t>
 
     </section>

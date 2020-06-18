@@ -690,7 +690,7 @@ OSCORE_Security_Context = {
         </figure>
 
         <t>
-          If the client has already posted a valid token, has already established a security association with the RS, and wants to update its access rights, the client can do so by posting the new token (retrieved from the AS and containing the update of access rights) to the /authz-info endpoint, within an OSCORE protected message, using the OSCORE Security Context established during the first exchange. In this case, only the token is sent, no nonce is sent. After proper verification (see <xref target="rs-c"/>), the RS will replace the old token with the new one, maintaining the same Security Context.
+          If the client has already posted a valid token, has already established a security association with the RS, and wants to update its access rights, the client can do so by posting the new token (retrieved from the AS and containing the update of access rights) to the /authz-info endpoint. The client MUST protect the request using the OSCORE Security Context established during the first token exchange. The client MUST only send the access token in the payload, no nonce is sent. After proper verification (see <xref target="rs-c"/>), the RS will replace the old token with the new one, maintaining the same Security Context.
         </t>
 
         <section anchor="nonce1" title="The Nonce 1 Parameter" >

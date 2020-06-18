@@ -6,7 +6,7 @@
 <!ENTITY I-D.ietf-ace-oauth-authz SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ace-oauth-authz.xml">
 <!ENTITY I-D.ietf-ace-oauth-params SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ace-oauth-params.xml">
 <!--<!ENTITY I-D.gerdes-ace-dcaf-authorize SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.gerdes-ace-dcaf-authorize.xml">-->
-<!ENTITY I-D.ietf-ace-cwt-proof-of-possession SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ace-cwt-proof-of-possession">
+<!ENTITY RFC8747 SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8747.xml">
 <!ENTITY RFC7800 SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7800.xml"> 
 <!ENTITY RFC2119 SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml">
 <!ENTITY RFC7252 SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7252.xml">
@@ -352,6 +352,7 @@ Usually it is assumed that constrained devices will be pre-configured with the n
         </t>
         <t>
           Moreover, implementers of this specification need to be aware that if other authentication mechanisms are used to set up OSCORE between the same client and RS, that do not rely on AS assigning identifiers, collisions may happen and need to be mitigated.
+          A mitigation example would be to use distinct namespaces of identifiers for different authentication mechanisms.
         </t>
         <t>
           Note that in <xref target="oscore-setup"/> C sets the Sender ID of its Security Context to the clientId value received and the Recipient ID to the serverId value, and RS does the opposite.
@@ -409,7 +410,7 @@ Usually it is assumed that constrained devices will be pre-configured with the n
 
 
         <t>
-          The same CWT token as in <xref target="ex2"/>, using the value abbreviations defined in <xref target="I-D.ietf-ace-oauth-authz"/> and <xref target="I-D.ietf-ace-cwt-proof-of-possession"/> and encoded in CBOR is shown in <xref target="ex2-cbor"/>.
+          The same CWT token as in <xref target="ex2"/>, using the value abbreviations defined in <xref target="I-D.ietf-ace-oauth-authz"/> and <xref target="RFC8747"/> and encoded in CBOR is shown in <xref target="ex2-cbor"/>.
         </t>
 
         <t>
@@ -665,7 +666,7 @@ OSCORE_Security_Context = {
         </t>
 
         <t>
-          Note that a client may be required to re-POST the access token in order to complete a request, since an RS may delete a stored access token at any time, for example due to all storage space being consumed. This situation is detected by the client when it receives an AS Request Creation Hints response.
+          Note that a client may be required to re-POST the access token in order to complete a request, since an RS may delete a stored access token (and associated Security Context) at any time, for example due to all storage space being consumed. This situation is detected by the client when it receives an AS Request Creation Hints response. Reposting the same access token will result in deriving a new OSCORE Security Context to be used with the RS, as different nonces will be used.
         </t>
 
         <t>
@@ -687,6 +688,10 @@ OSCORE_Security_Context = {
   ]]>
           </artwork>
         </figure>
+
+        <t>
+          If the client has already posted a valid token, has already established a security association with the RS, and wants to update its access rights, the client can do so by posting the new token (retrieved from the AS and containing the update of access rights) to the /authz-info endpoint. The client MUST protect the request using the OSCORE Security Context established during the first token exchange. The client MUST only send the access token in the payload, no nonce is sent. After proper verification (see <xref target="rs-c"/>), the RS will replace the old token with the new one, maintaining the same Security Context.
+        </t>
 
         <section anchor="nonce1" title="The Nonce 1 Parameter" >
           <t>
@@ -730,13 +735,17 @@ OSCORE_Security_Context = {
   ]]>
           </artwork>
         </figure>
-
-        <t>
-          As specified in section 5.8.1 of <xref target="I-D.ietf-ace-oauth-authz"/>, when receiving an updated access token with updated authorization information from the client (see <xref target="c-as"/>), it is recommended that the RS overwrites the previous token, that is only the latest authorization information in the token received by the RS is valid. This simplifies for the RS to keep track of authorization information for a given client.
-        </t>
         
         <t>
           As specified in section 5.8.3 of <xref target="I-D.ietf-ace-oauth-authz"/>, the RS must notify the client with an error response with code 4.01 (Unauthorized) for any long running request before terminating the session, when the access token expires.
+        </t>
+
+        <t>
+          If the RS receives the token in a OSCORE protected message, it means that the client is requesting an update of access rights. The RS MUST discard any nonce in the request, if any was sent. The RS MUST check that the "kid" of the "cnf" parameter of the new access token matches the OSCORE Security Context used to protect the message. If that's the case, the RS MUST discard the old token and associate the new token to the Security Context identified by "kid". The RS MUST respond with a 2.01 (Created) response protected with the same Security Context, with no payload. If any verification fails, the RS MUST respond with a 4.01 (Unauthorized) error response.
+        </t>
+
+        <t>
+          As specified in section 5.8.1 of <xref target="I-D.ietf-ace-oauth-authz"/>, when receiving an updated access token with updated authorization information from the client (see <xref target="c-as"/>), it is recommended that the RS overwrites the previous token, that is only the latest authorization information in the token received by the RS is valid. This simplifies for the RS to keep track of authorization information for a given client.
         </t>
 
         <section anchor="nonce2" title="The Nonce 2 Parameter" >
@@ -772,11 +781,6 @@ requests received that correspond to a Security Context with an expired
 token.
         </t>
 
-        <t>
-          If the exchange was an update of access rights, i.e., a new Security Context was derived from a client that already had a Security Context in place, the RS is RECOMMENDED to delete the old Security Context after OSCORE verification and verification of access rights succeed. The RS MUST delete the Security Context if it deletes the access token associated to it.
-          If the exchange was an update of access rights, i.e., a new Security Context was derived from a client that already had a Security Context in place, the RS is RECOMMENDED to delete the old Security Context after OSCORE verification succeeds. The RS MUST delete the Security Context if it deletes the access token associated to it.
-        </t>
-
       </section> <!-- ends from line 481-->
 
       <section anchor="tok-ver" title="Access rights verification">
@@ -806,30 +810,39 @@ token.
 
     </section>
 
-     <section anchor="sec-ctx-discard" title="Discarding the Security Context">
+    <section anchor="sec-ctx-discard" title="Discarding the Security Context">
 
       <t>
         There are a number of scenarios where a client or RS needs to discard the OSCORE security context, and acquire a new one.
       </t>
 
       <t>
-        The client MUST discard the current security context associated with an RS when:
-
-      <list style="symbols">
-        <t> the Sequence Number space ends. </t>
-        <t> the access token associated with the context expires. </t>
-        <t> the client receives a number of 4.01 Unauthorized responses to OSCORE requests using the same security context. The exact number needs to be specified by the application. </t>
-        <t> the client receives a new nonce in the 2.01 (Created) response (see <xref target="rs-c"/>) to a POST request to the authz-info endpoint, when re-posting a (non-expired) token associated to the existing context. </t>
-      </list>
+        The client MUST discard the current Security Context associated with an RS when:
       </t>
 
       <t>
-        The RS MUST discard the current security context associated with a client when:
+        <list style="symbols">
+          <t> the Sequence Number space ends. </t>
+          <t> the access token associated with the context expires. </t>
+          <t> the client receives a number of 4.01 Unauthorized responses to OSCORE requests using the same Security Context. The exact number needs to be specified by the application. </t>
+          <t> the client receives a new nonce in the 2.01 (Created) response (see <xref target="rs-c"/>) to a POST request to the authz-info endpoint, when re-posting a (non-expired) token associated to the existing context. </t>
+        </list>
+      </t>
 
-      <list style="symbols">
-        <t> the Sequence Number space ends. </t>
-        <t> the access token associated with the context expires. </t>
-      </list>
+      <t>
+        The RS MUST discard the current Security Context associated with a client when:
+      </t>
+
+      <t>
+        <list style="symbols">
+          <t> the Sequence Number space ends. </t>
+          <t> the access token associated with the context expires. </t>
+          <t> the client has successfully replaced the current security context with a newer one by posting an access token to the unprotected /authz-info endpoint at the RS, e.g., by re-posting the same token, as specified in <xref target="c-rs"/>.</t>
+        </list>
+      </t>
+
+      <t>
+        Whenever one more access token is successfully posted to the RS, and a new Security Context is derived between the client and RS, messages in transit that were protected with the previous Security Context might not pass verification, as the old context is discarded. That means that messages sent shortly before the client posts one more access token to the RS might not successfully reach the destination. Analogously, implementations may want to cancel CoAP observations at the RS registered before the Security Context is replaced, or conversely they will need to implement a mechanism to ensure that those observation are to be protected with the newly derived Security Context.
       </t>
 
     </section>
@@ -1040,7 +1053,7 @@ token.
 
       <section anchor="osc-cwt" title="CWT Confirmation Methods Registry">
 
-        <t>The following registration is done for the CWT Confirmation Methods Registry following the procedure specified in section 7.2.1 of <xref target="I-D.ietf-ace-cwt-proof-of-possession"/>:</t>
+        <t>The following registration is done for the CWT Confirmation Methods Registry following the procedure specified in section 7.2.1 of <xref target="RFC8747"/>:</t>
 
         <t><?rfc subcompact="yes"?><list style='symbols'>
           <t>Confirmation Method Name: "osc"</t>
@@ -1134,7 +1147,7 @@ token.
       
       <!--&I-D.gerdes-ace-dcaf-authorize;-->
       <!--&I-D.selander-ace-cose-ecdhe;-->
-      &I-D.ietf-ace-cwt-proof-of-possession;
+      &RFC8747;
       &RFC7800;
       &RFC4949;
       &RFC6749;
@@ -1443,6 +1456,7 @@ where does it say that? - ->
 
       <t>
         The authors wish to thank Jim Schaad and Marco Tiloca for the input on this memo. Special thanks to the responsible area director Benjamin Kaduk for his extensive review and contributed text.
+        Ludwig Seitz worked on this document as part of the CelticNext projects CyberWI, and CRITISEC with funding from Vinnova.
       </t>
 
     </section>

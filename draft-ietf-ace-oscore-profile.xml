@@ -807,7 +807,7 @@ token.
 
     </section>
 
-     <section anchor="sec-ctx-discard" title="Discarding the Security Context">
+    <section anchor="sec-ctx-discard" title="Discarding the Security Context">
 
       <t>
         There are a number of scenarios where a client or RS needs to discard the OSCORE security context, and acquire a new one.
@@ -815,23 +815,27 @@ token.
 
       <t>
         The client MUST discard the current Security Context associated with an RS when:
+      </t>
 
-      <list style="symbols">
-        <t> the Sequence Number space ends. </t>
-        <t> the access token associated with the context expires. </t>
-        <t> the client receives a number of 4.01 Unauthorized responses to OSCORE requests using the same Security Context. The exact number needs to be specified by the application. </t>
-        <t> the client receives a new nonce in the 2.01 (Created) response (see <xref target="rs-c"/>) to a POST request to the authz-info endpoint, when re-posting a (non-expired) token associated to the existing context. </t>
-      </list>
+      <t>
+        <list style="symbols">
+          <t> the Sequence Number space ends. </t>
+          <t> the access token associated with the context expires. </t>
+          <t> the client receives a number of 4.01 Unauthorized responses to OSCORE requests using the same Security Context. The exact number needs to be specified by the application. </t>
+          <t> the client receives a new nonce in the 2.01 (Created) response (see <xref target="rs-c"/>) to a POST request to the authz-info endpoint, when re-posting a (non-expired) token associated to the existing context. </t>
+        </list>
       </t>
 
       <t>
         The RS MUST discard the current Security Context associated with a client when:
+      </t>
 
-      <list style="symbols">
-        <t> the Sequence Number space ends. </t>
-        <t> the access token associated with the context expires. </t>
-        <t> the client has successfully replaced the current security context with a newer one by posting an access token to the RS, e.g., for an update of access rights or by re-posting the same token, as specified in <xref target="c-rs">.
-      </list>
+      <t>
+        <list style="symbols">
+          <t> the Sequence Number space ends. </t>
+          <t> the access token associated with the context expires. </t>
+          <t> the client has successfully replaced the current security context with a newer one by posting an access token to the RS, e.g., for an update of access rights or by re-posting the same token, as specified in <xref target="c-rs"/>.</t>
+        </list>
       </t>
 
       <t>

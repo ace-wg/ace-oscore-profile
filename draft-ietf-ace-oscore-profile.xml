@@ -921,24 +921,22 @@ token.
        <t>Note to RFC Editor: Please replace all occurrences of "&SELF;"
       with the RFC number of this specification and delete this paragraph.</t>
 
-      <section title="ACE OAuth Profile Registry" >
+      <section title="ACE Profile Registry" >
 
-        <t>The following registration is done for the ACE OAuth Profile
-        Registry following the procedure specified in section 8.7 of <xref
+        <t>The following registration is done for the ACE Profile
+        Registry following the procedure specified in section 8.8 of <xref
         target="I-D.ietf-ace-oauth-authz"/>:</t>
 
         <t><?rfc subcompact="yes"?><list style='symbols'>
-          <t>Profile name: coap_oscore</t>
+          <t>Name: coap_oscore</t>
 
-          <t>Profile Description: Profile for using OSCORE to secure communication
+          <t>Description: Profile for using OSCORE to secure communication
         between constrained nodes using the Authentication and Authorization
         for Constrained Environments framework.</t>
 
-          <t>Profile ID: TBD (value between 1 and 255)</t>
-        
-          <t>Change Controller: IESG</t>
+          <t>CBOR Value: TBD (value between 1 and 255)</t>
 
-          <t>Specification Document(s): &SELF;</t>
+          <t>Reference: &SELF;</t>
         </list></t>
 
       </section>

@@ -332,8 +332,15 @@ Usually it is assumed that constrained devices will be pre-configured with the n
         </t>
 
         <t>
-          The OSCORE_Security_Context is a CBOR map object, defined in <xref target="oscore-sec-ctx"/>. This object is transported in the 'cnf' parameter of the access token response as defined in Section 3.2 of <xref target="I-D.ietf-ace-oauth-params"/>, as the value of a field named 'osc', registered in <xref target="osc-cwt"/> and <xref target="osc-jwt"/>.
-          The master secret MUST be communicated as the 'ms' field in the 'osc' field in the 'cnf' parameter of the access token response as defined in Section 3.2 of <xref target="I-D.ietf-ace-oauth-params"/>.
+          This data is transported in the the OSCORE_Security_Context. The OSCORE_Security_Context is a CBOR map object, defined in <xref target="oscore-sec-ctx"/>. This object is transported in the 'cnf' parameter of the access token response as defined in Section 3.2 of <xref target="I-D.ietf-ace-oauth-params"/>, as the value of a field named 'osc', registered in <xref target="osc-cwt"/> and <xref target="osc-jwt"/>.
+        </t>
+
+        <t>
+          The AS MUST assign an identifier to the RS (server identifier), and to the client (client identifier), and MAY assign an identifier to the context (context identifier). These identifiers are then used as Sender ID, Recipient ID and ID Context in the OSCORE context as described in section 3.1 of <xref target="RFC8613"/>: specifically, the server identifier is used as Sender ID of the node acting as RS in this profile, and the client identifier is used as Sender ID of the node acting as ACE client. These parameters are sent as clientId, serverId and (when assigned) contextId in the OSCORE_Security_Context. ClientId and serverId MUST be included in the OSCORE_Security_Context, contextId MUST be included when assigned. The applications need to consider that these identifiers are sent in the clear and may reveal information about the endpoints, as mentioned in section 12.8 of <xref target="RFC8613"/>. The pair (client identifier, context identifier) MUST be unique in the set of all clients for a single RS.
+        </t>
+ 
+        <t>
+          The master secret MUST be communicated as the 'ms' field in the 'osc' field in the 'cnf' parameter of the access token response.
           The AEAD algorithm may be included as the 'alg' parameter in the OSCORE_Security_Context; the HKDF algorithm may be included
       	  as the 'hkdf' parameter of the OSCORE_Security_Context, a salt may be included as the 'salt' parameter of the
       	  OSCORE_Security_Context, and the OSCORE version number may be included as the 'version' parameter of the OSCORE_Security_Context.
@@ -342,10 +349,6 @@ Usually it is assumed that constrained devices will be pre-configured with the n
         <t>
         	The same parameters MUST be included as part of the access token. This profile RECOMMENDS the use of CBOR web token (CWT) as specified in  <xref target="RFC8392"/>. If the token is a CWT, the same OSCORE_Security_Context structure defined above MUST be placed in the 'osc' field of the 'cnf' claim of this token.  The access token MUST be encrypted, since it will be transferred from the client to the RS over an unprotected channel.
 	      </t>
-
-        <t>
-          The AS MUST also assign an identifier to the RS (serverId), and to the client (clientId), and MAY assign an identifier to the context (contextId). These identifiers are then used as Sender ID, Recipient ID and ID Context in the OSCORE context as described in section 3.1 of <xref target="RFC8613"/>.  Applications need to consider that these identifiers are sent in the clear and may reveal information about the endpoints, as mentioned in section 12.8 of <xref target="RFC8613"/>. The pair (client identifier, context identifier) MUST be unique in the set of all clients for a single RS.  Moreover, clientId, serverId and (when assigned) contextId MUST be included in the OSCORE_Security_Context, as defined in <xref target="oscore-sec-ctx"/>.
-        </t>
 
         <t>
           We assume in this document that a resource is associated to one single AS, which makes it possible for the AS to enforce uniqueness of identifiers for each client requesting a particular resource to a RS.  If this is not the case, collisions of identifiers may occur at the RS, in which case the RS needs to have a mechanism in place to disambiguate identifiers or mitigate the effect of the collisions.

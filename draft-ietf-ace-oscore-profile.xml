@@ -971,7 +971,7 @@ token.
       <section title="OAuth Parameters CBOR Mappings Registry">
 
         <t>The following registrations are done for the OAuth Parameters CBOR Mappings 
-        Registry following the procedure specified in section 8.9 of <xref
+        Registry following the procedure specified in section 8.10 of <xref
         target="I-D.ietf-ace-oauth-authz"/>:</t>
 
         <t><?rfc subcompact="yes"?><list style='symbols'>
@@ -988,7 +988,7 @@ token.
 
           <t>CBOR Key: TBD2</t>
         
-          <t>Value Type: IESG</t>
+          <t>Value Type: bstr</t>
 
           <t>Reference: &SELF;</t>
         </list></t>

@@ -527,7 +527,7 @@ A5                                      # map(5)
             <c>serverId</c>        <c>3</c>        <c>bstr</c>        <c></c>        <c>OSCORE Sender ID value of the server, OSCORE Recipient ID value of the client</c>
             <c>hkdf</c>        <c>4</c>        <c>tstr / int</c>        <c>COSE Algorithm Values (HMAC-based)</c>        <c>OSCORE HKDF value</c>
             <c>alg</c>        <c>5</c>        <c>tstr / int</c>  <c>COSE Algorithm Values (AEAD)</c>        <c>OSCORE AEAD Algorithm value</c>
-            <c>salt</c>        <c>6</c>        <c>bstr</c>        <c></c>        <c>OSCORE Master Salt value</c>
+            <c>salt</c>        <c>6</c>        <c>bstr</c>        <c></c>        <c>an input to OSCORE Master Salt value</c>
             <c>contextId</c>        <c>7</c>        <c>bstr</c>        <c></c>        <c>OSCORE ID Context value</c>
           </texttable>
 
@@ -573,7 +573,7 @@ A5                                      # map(5)
               </t>
 
               <t hangText="salt:">
-                This parameter identifies the OSCORE Master Salt value, which is a byte string. For more information about this field, see section 3.1 of <xref target="RFC8613"/>.
+                This parameter identifies an input to the OSCORE Master Salt value, which is a byte string. For more information about this field, see section 3.1 of <xref target="RFC8613"/>.
                 In JSON, the "salt" value is a Base64 encoded byte string.
                 In CBOR, the "salt" type is bstr, and has label 6.
               </t>

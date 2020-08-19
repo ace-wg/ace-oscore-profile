@@ -371,7 +371,7 @@ Usually it is assumed that constrained devices will be pre-configured with the n
     Content-Type: "application/ace+cbor"
     Payload:
     {
-      "access_token" : h'a5037674656d7053656e73 ...
+      "access_token" : h'8343a1010aa2044c53 ...
        (remainder of access token (CWT) omitted for brevity)',
       "profile" : "coap_oscore",
       "expires_in" : "3600",
@@ -389,10 +389,10 @@ Usually it is assumed that constrained devices will be pre-configured with the n
         </figure>
 
         <t>
-          <xref target="ex2"/> shows an example CWT, containing the necessary OSCORE parameters in the 'cnf' claim, in CBOR diagnostic notation without tag and value abbreviations.
+          <xref target="ex2"/> shows an example CWT Claims Set, containing the necessary OSCORE parameters in the 'cnf' claim, in CBOR diagnostic notation without tag and value abbreviations.
         </t>
 
-        <figure anchor="ex2" title="Example CWT with OSCORE parameters.">
+        <figure anchor="ex2" title="Example CWT Claims Set with OSCORE parameters.">
           <artwork><![CDATA[
   {
     "aud" : "tempSensorInLivingRoom",
@@ -413,14 +413,14 @@ Usually it is assumed that constrained devices will be pre-configured with the n
 
 
         <t>
-          The same CWT token as in <xref target="ex2"/>, using the value abbreviations defined in <xref target="I-D.ietf-ace-oauth-authz"/> and <xref target="RFC8747"/> and encoded in CBOR is shown in <xref target="ex2-cbor"/>. The bytes in hexadecimal are reported in the first column, while their corresponding CBOR meaning is reported after the '#' sign on the second column, for easiness of readability.
+          The same CWT Claims Set as in <xref target="ex2"/>, using the value abbreviations defined in <xref target="I-D.ietf-ace-oauth-authz"/> and <xref target="RFC8747"/> and encoded in CBOR is shown in <xref target="ex2-cbor"/>. The bytes in hexadecimal are reported in the first column, while their corresponding CBOR meaning is reported after the '#' sign on the second column, for easiness of readability.
         </t>
 
         <t>
           NOTE TO THE RFC EDITOR: before publishing, it should be checked (and in case fixed) that the values used below (which are not yet registered) are the final values registered in IANA.
         </t>
 
-        <figure anchor="ex2-cbor" title="Example CWT with OSCORE parameters, CBOR encoded.">
+        <figure anchor="ex2-cbor" title="Example CWT Claims Set with OSCORE parameters, CBOR encoded.">
           <artwork><![CDATA[
 A5                                      # map(5)
    03                                   # unsigned(3)
@@ -472,7 +472,7 @@ A5                                      # map(5)
     Content-Type: "application/ace+cbor"
     Payload:
     {
-      "access_token" : h'a5037674656d7053656e73 ...
+      "access_token" : h'8343a1010aa2044c53 ...
        (remainder of access token (CWT) omitted for brevity)',
       "profile" : "coap_oscore",
       "expires_in" : "3600"
@@ -482,10 +482,10 @@ A5                                      # map(5)
         </figure>
 
         <t>
-          <xref target="ex6"/> shows an example CWT, containing the necessary OSCORE parameters in the 'cnf' claim for update of access rights, in CBOR diagnostic notation without tag and value abbreviations.
+          <xref target="ex6"/> shows an example CWT Claims Set, containing the necessary OSCORE parameters in the 'cnf' claim for update of access rights, in CBOR diagnostic notation without tag and value abbreviations.
         </t>
 
-        <figure anchor="ex6" title="Example CWT with OSCORE parameters for update of access rights.">
+        <figure anchor="ex6" title="Example CWT Claims Set with OSCORE parameters for update of access rights.">
           <artwork><![CDATA[
   {
     "aud" : "tempSensorInLivingRoom",
@@ -684,7 +684,7 @@ OSCORE_Security_Context = {
       Content-Format: "application/ace+cbor"
       Payload:
         {
-          "access_token": h'a5037674656d7053656e73 ...
+          "access_token": h'8343a1010aa2044c53 ...
        (remainder of access token (CWT) omitted for brevity)',
           "nonce1": h'018a278f7faab55a'
         }

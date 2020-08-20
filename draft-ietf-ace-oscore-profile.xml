@@ -389,7 +389,7 @@ Usually it is assumed that constrained devices will be pre-configured with the n
         </figure>
 
         <t>
-          <xref target="ex2"/> shows an example CWT Claims Set, containing the necessary OSCORE parameters in the 'cnf' claim, in CBOR diagnostic notation without tag and value abbreviations.
+          <xref target="ex2"/> shows an example CWT Claims Set, including the relevant OSCORE parameters in the 'cnf' claim, in CBOR diagnostic notation without tag and value abbreviations.
         </t>
 
         <figure anchor="ex2" title="Example CWT Claims Set with OSCORE parameters.">

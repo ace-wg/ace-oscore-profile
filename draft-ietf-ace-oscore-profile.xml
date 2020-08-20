@@ -347,7 +347,7 @@ Usually it is assumed that constrained devices will be pre-configured with the n
         </t>
 	      
         <t>
-        	The same parameters MUST be included as part of the access token. This profile RECOMMENDS the use of CBOR web token (CWT) as specified in  <xref target="RFC8392"/>. If the token is a CWT, the same OSCORE_Security_Context structure defined above MUST be placed in the 'osc' field of the 'cnf' claim of this token.  The access token MUST be encrypted, since it will be transferred from the client to the RS over an unprotected channel.
+        	The same parameters MUST be included in the claims associated with the access token. This profile RECOMMENDS the use of CBOR web token (CWT) as specified in  <xref target="RFC8392"/>. If the token is a CWT, the same OSCORE_Security_Context structure defined above MUST be placed in the 'osc' field of the 'cnf' claim of this token.
 	      </t>
 
         <t>
@@ -664,11 +664,6 @@ OSCORE_Security_Context = {
         </t>
 
         <t>
-          The access token MUST be encrypted, since it is
-          transferred from the client to the RS over an unprotected channel.
-        </t>
-
-        <t>
           Note that a client may be required to re-POST the access token in order to complete a request, since an RS may delete a stored access token (and associated Security Context) at any time, for example due to all storage space being consumed. This situation is detected by the client when it receives an AS Request Creation Hints response. Reposting the same access token will result in deriving a new OSCORE Security Context to be used with the RS, as different nonces will be used.
         </t>
 
@@ -903,7 +898,7 @@ token.
       </t> 
 
       <t>
-        Although encrypted, the token is sent in the clear to the authz-info endpoint, so if a client uses the same single token from multiple locations with multiple Resource Servers, it can risk being tracked by the token's value.
+        The token is sent in the clear to the authz-info endpoint, so if a client uses the same single token from multiple locations with multiple Resource Servers, it can risk being tracked by the token's value even when the access token is encrypted.
       </t>
 
        <t>

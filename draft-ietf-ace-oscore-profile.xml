@@ -180,7 +180,7 @@
       </t>
 
       <t>
-        An overview of the profile flow for the OSCORE profile is given in <xref target="prof-overview"/>.
+        An overview of the profile flow for the OSCORE profile is given in <xref target="prof-overview"/>. The names of messages coincide with those of <xref target="I-D.ietf-ace-oauth-authz"/> when applicable.
       </t>
 
 
@@ -188,7 +188,8 @@
         <artwork><![CDATA[
    C                            RS                   AS
    | [---- Unauthorized ----->] |                     |
-   |     Resource Request       |                     |   |                            |                     |
+   |     Resource Request       |                     |   
+   |                            |                     |
    | [<---- AS Request  ------] |                     |
    |      Creation Hints        |                     |
    |                            |                     |
@@ -341,9 +342,7 @@ Usually it is assumed that constrained devices will be pre-configured with the n
  
         <t>
           The master secret MUST be communicated as the 'ms' field in the 'osc' field in the 'cnf' parameter of the access token response.
-          The AEAD algorithm may be included as the 'alg' parameter in the OSCORE_Security_Context; the HKDF algorithm may be included
-      	  as the 'hkdf' parameter of the OSCORE_Security_Context, a salt may be included as the 'salt' parameter of the
-      	  OSCORE_Security_Context, and the OSCORE version number may be included as the 'version' parameter of the OSCORE_Security_Context.
+          If included, the AEAD algorithm is sent in the 'alg' parameter in the OSCORE_Security_Context; the HKDF algorithm in the 'hkdf' parameter of the OSCORE_Security_Context; a salt in the 'salt' parameter of the OSCORE_Security_Context; and the OSCORE version in the 'version' parameter of the OSCORE_Security_Context.
         </t>
 	      
         <t>
@@ -743,7 +742,7 @@ OSCORE_Security_Context = {
         </t>
 
         <t>
-          As specified in section 5.8.1 of <xref target="I-D.ietf-ace-oauth-authz"/>, when receiving an updated access token with updated authorization information from the client (see <xref target="c-as"/>), it is recommended that the RS overwrites the previous token, that is only the latest authorization information in the token received by the RS is valid. This simplies the process needed by the RS to keep track of authorization information for a given client.
+          As specified in section 5.8.1 of <xref target="I-D.ietf-ace-oauth-authz"/>, when receiving an updated access token with updated authorization information from the client (see <xref target="c-as"/>), it is recommended that the RS overwrites the previous token, that is only the latest authorization information in the token received by the RS is valid. This simplifies the process needed by the RS to keep track of authorization information for a given client.
         </t>
 
         <section anchor="nonce2" title="The Nonce 2 Parameter" >

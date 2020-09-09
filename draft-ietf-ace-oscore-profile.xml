@@ -176,7 +176,7 @@
       </t>
 
       <t>
-        After the whole message exchange has taken place, the client can contact the AS to request an update of its access rights, sending a similar request to the token endpoint that also includes an identifier so that the AS can find the correct OSCORE security material it has previously shared with the Client. This specific identifier, which <xref target="I-D.ietf-ace-oauth-authz"/> encodes as a bstr, is formatted to include two OSCORE identifiers, namely ID context and client ID, that are necessary to determine the correct OSCORE Security Context.
+        After the whole message exchange has taken place, the client can contact the AS to request an update of its access rights, sending a similar request to the token endpoint that also includes an identifier so that the AS can find the correct OSCORE security material it has previously shared with the Client. This specific identifier, which <xref target="I-D.ietf-ace-oauth-authz"/> encodes as a bstr, is formatted to include two OSCORE identifiers, namely ID context and client ID, that are necessary to determine the correct OSCORE Input material.
       </t>
 
       <t>
@@ -333,20 +333,20 @@ Usually it is assumed that constrained devices will be pre-configured with the n
         </t>
 
         <t>
-          This data is transported in the the OSCORE_Security_Context. The OSCORE_Security_Context is a CBOR map object, defined in <xref target="oscore-sec-ctx"/>. This object is transported in the 'cnf' parameter of the access token response as defined in Section 3.2 of <xref target="I-D.ietf-ace-oauth-params"/>, as the value of a field named 'osc', registered in <xref target="osc-cwt"/> and <xref target="osc-jwt"/>.
+          This data is transported in the the OSCORE_Input_Material. The OSCORE_Input_Material is a CBOR map object, defined in <xref target="oscore-sec-ctx"/>. This object is transported in the 'cnf' parameter of the access token response as defined in Section 3.2 of <xref target="I-D.ietf-ace-oauth-params"/>, as the value of a field named 'osc', registered in <xref target="osc-cwt"/> and <xref target="osc-jwt"/>.
         </t>
 
         <t>
-          The AS MUST assign an identifier to the RS (server identifier), and to the client (client identifier), and MAY assign an identifier to the context (context identifier). These identifiers are then used as Sender ID, Recipient ID and ID Context in the OSCORE context as described in section 3.1 of <xref target="RFC8613"/>: specifically, the server identifier is used as Sender ID of the node acting as RS in this profile, and the client identifier is used as Sender ID of the node acting as ACE client. These parameters are sent as clientId, serverId and (when assigned) contextId in the OSCORE_Security_Context. ClientId and serverId MUST be included in the OSCORE_Security_Context, contextId MUST be included when assigned. The applications need to consider that these identifiers are sent in the clear and may reveal information about the endpoints, as mentioned in section 12.8 of <xref target="RFC8613"/>. The pair (client identifier, context identifier) MUST be unique in the set of all clients for a single RS.
+          The AS MUST assign an identifier to the RS (server identifier), and to the client (client identifier), and MAY assign an identifier to the context (context identifier). These identifiers are then used as Sender ID, Recipient ID and ID Context in the OSCORE context as described in section 3.1 of <xref target="RFC8613"/>: specifically, the server identifier is used as Sender ID of the node acting as RS in this profile, and the client identifier is used as Sender ID of the node acting as ACE client. These parameters are sent as clientId, serverId and (when assigned) contextId in the OSCORE_Input_Material. ClientId and serverId MUST be included in the OSCORE_Input_Material, contextId MUST be included when assigned. The applications need to consider that these identifiers are sent in the clear and may reveal information about the endpoints, as mentioned in section 12.8 of <xref target="RFC8613"/>. The pair (client identifier, context identifier) MUST be unique in the set of all clients for a single RS.
         </t>
  
         <t>
           The master secret MUST be communicated as the 'ms' field in the 'osc' field in the 'cnf' parameter of the access token response.
-          If included, the AEAD algorithm is sent in the 'alg' parameter in the OSCORE_Security_Context; the HKDF algorithm in the 'hkdf' parameter of the OSCORE_Security_Context; a salt in the 'salt' parameter of the OSCORE_Security_Context; and the OSCORE version in the 'version' parameter of the OSCORE_Security_Context.
+          If included, the AEAD algorithm is sent in the 'alg' parameter in the OSCORE_Input_Material; the HKDF algorithm in the 'hkdf' parameter of the OSCORE_Input_Material; a salt in the 'salt' parameter of the OSCORE_Input_Material; and the OSCORE version in the 'version' parameter of the OSCORE_Input_Material.
         </t>
 	      
         <t>
-        	The same parameters MUST be included in the claims associated with the access token. This profile RECOMMENDS the use of CBOR web token (CWT) as specified in  <xref target="RFC8392"/>. If the token is a CWT, the same OSCORE_Security_Context structure defined above MUST be placed in the 'osc' field of the 'cnf' claim of this token.
+        	The same parameters MUST be included in the claims associated with the access token. This profile RECOMMENDS the use of CBOR web token (CWT) as specified in  <xref target="RFC8392"/>. If the token is a CWT, the same OSCORE_Input_Material structure defined above MUST be placed in the 'osc' field of the 'cnf' claim of this token.
 	      </t>
 
         <t>
@@ -505,15 +505,15 @@ A5                                      # map(5)
         <t>
         -->
 
-        <section anchor="oscore-sec-ctx" title="OSCORE_Security_Context Object">
+        <section anchor="oscore-sec-ctx" title="The OSCORE_Input_Material">
 
           <t>
-            An OSCORE_Security_Context is an object that represents part or all of an OSCORE Security Context, i.e., the local set of information elements necessary to carry out the cryptographic operations in OSCORE (Section 3.1 of <xref target="RFC8613"/>). In particular, the OSCORE_Security_Context object is defined to be serialized and transported between nodes, as specified by this document, but can also be used by other specifications if needed. The OSCORE_Security_Context object can either be encoded as a JSON object or as a CBOR map. The set of common parameters that can appear in an OSCORE_Security_Context object can be found in the IANA "OSCORE Security Context Parameters" registry (<xref target="sec-ctx-params-reg"/>), defined for extensibility, and is specified below.
+            An OSCORE_Input_Material is an object that represents part or all of the input material to derive an OSCORE Security Context, i.e., the local set of information elements necessary to carry out the cryptographic operations in OSCORE (Section 3.1 of <xref target="RFC8613"/>). In particular, the OSCORE_Input_Material is defined to be serialized and transported between nodes, as specified by this document, but can also be used by other specifications if needed. The OSCORE_Input_Material can either be encoded as a JSON object or as a CBOR map. The set of common parameters that can appear in an OSCORE_Input_Material can be found in the IANA "OSCORE Security Context Parameters" registry (<xref target="sec-ctx-params-reg"/>), defined for extensibility, and is specified below.
             All parameters are optional.
-            <xref target="table-key-labels"/> provides a summary of the OSCORE_Security_Context parameters defined in this section.
+            <xref target="table-key-labels"/> provides a summary of the OSCORE_Input_Material parameters defined in this section.
           </t>
 
-          <texttable title="OSCORE_Security_Context Parameters" anchor="table-key-labels">
+          <texttable title="OSCORE_Input_Material Parameters" anchor="table-key-labels">
             <ttcol align='left'>name</ttcol>
             <ttcol align='left'>CBOR label</ttcol>
             <ttcol align='left' width="14em">CBOR type</ttcol>
@@ -587,10 +587,10 @@ A5                                      # map(5)
           </t>
 
           <t>
-            An example of JSON OSCORE_Security_Context is given in <xref target="JSON-osc"/>.
+            An example of JSON OSCORE_Input_Material is given in <xref target="JSON-osc"/>.
           </t>
 
-          <figure anchor="JSON-osc" title="Example JSON OSCORE_Security_Context object">
+          <figure anchor="JSON-osc" title="Example JSON OSCORE_Input_Material">
             <artwork><![CDATA[
         "osc" : {
           "alg" : "AES-CCM-16-64-128",
@@ -603,11 +603,11 @@ A5                                      # map(5)
           </figure>
 
           <t>
-            The CDDL grammar describing the CBOR OSCORE_Security_Context object is:
+            The CDDL grammar describing the CBOR OSCORE_Input_Material is:
           </t>
 
           <figure><artwork type="CDDL"><![CDATA[
-OSCORE_Security_Context = {
+OSCORE_Input_Material = {
     ? 0 => int,               ; version
     ? 1 => bstr,              ; ms
     ? 2 => bstr,              ; clientId
@@ -1053,7 +1053,7 @@ token.
         <t><?rfc subcompact="yes"?><list style='symbols'>
           <t>Confirmation Method Name: "osc"</t>
 
-          <t>Confirmation Method Description: OSCORE_Security_Context carrying the parameters for using OSCORE per-message security with implicit key confirmation</t>
+          <t>Confirmation Method Description: OSCORE_Input_Material carrying the parameters for using OSCORE per-message security with implicit key confirmation</t>
 
           <t>Confirmation Key: TBD (value between 4 and 255)</t>
 
@@ -1074,7 +1074,7 @@ token.
         <t><?rfc subcompact="yes"?><list style='symbols'>
           <t>Confirmation Method Value: "osc"</t>
 
-          <t>Confirmation Method Description: OSCORE_Security_Context carrying the parameters for using OSCORE per-message security with implicit key confirmation</t>
+          <t>Confirmation Method Description: OSCORE_Input_Material carrying the parameters for using OSCORE per-message security with implicit key confirmation</t>
         
           <t>Change Controller: IESG</t>
 

@@ -160,11 +160,11 @@
       </t>
 
       <t>
-        If the access token is valid, the RS replies to this request with a 2.01 (Created) response with Content-Format = application/ace+cbor, which contains a nonce N2 in a CBOR map. Moreover, the server concatenates the input salt, N1, and N2 to obtain the Master Salt of the OSCORE Security Context (see section 3 of <xref target="RFC8613"/>).  The RS then derives the complete Security Context associated with the received token from it plus the parameters received in the access token from the AS, following section 3.2 of <xref target="RFC8613"/>.
+        If the access token is valid, the RS replies to this request with a 2.01 (Created) response with Content-Format = application/ace+cbor, which contains a nonce N2 in a CBOR map. Moreover, the server concatenates the input salt received in the token, N1, and N2 to obtain the Master Salt of the OSCORE Security Context (see section 3 of <xref target="RFC8613"/>).  The RS then derives the complete Security Context associated with the received token from it plus the parameters received in the access token from the AS, following section 3.2 of <xref target="RFC8613"/>.
       </t>
 
       <t>
-        After receiving the nonce N2, the client concatenates the input salt, N1 and N2 to obtain the Master Salt of the OSCORE Security Context (see section 3 of <xref target="RFC8613"/>). The client then derives the complete Security Context from the nonces plus the parameters received from the AS.
+        After receiving the nonce N2, the client concatenates the input salt (received from the AS), N1 and N2 to obtain the Master Salt of the OSCORE Security Context (see section 3 of <xref target="RFC8613"/>). The client then derives the complete Security Context from the nonces plus the parameters received from the AS.
       </t>
 
       <t>

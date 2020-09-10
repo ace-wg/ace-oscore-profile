@@ -738,7 +738,7 @@ OSCORE_Input_Material = {
         </t>
 
         <t>
-          If the RS receives the token in a OSCORE protected message, it means that the client is requesting an update of access rights. The RS MUST discard any nonce in the request, if any was sent. The RS MUST check that the "kid" of the "cnf" parameter of the new access token matches the OSCORE Security Context used to protect the message. If that is the case, the RS MUST discard the old token and associate the new token to the Security Context identified by "kid". The RS MUST respond with a 2.01 (Created) response protected with the same Security Context, with no payload. If any verification fails, the RS MUST respond with a 4.01 (Unauthorized) error response.
+          If the RS receives the token in a OSCORE protected message, it means that the client is requesting an update of access rights. The RS MUST discard any nonce in the request, if any was sent. The RS MUST check that the "kid" of the "cnf" parameter of the new access token matches the OSCORE Security Context used to protect the message. If that is the case, the RS MUST discard the old token and associate the new token to the Security Context identified by the "kid" value in the "cnf" parameter. The RS MUST respond with a 2.01 (Created) response protected with the same Security Context, with no payload. If any verification fails, the RS MUST respond with a 4.01 (Unauthorized) error response.
         </t>
 
         <t>

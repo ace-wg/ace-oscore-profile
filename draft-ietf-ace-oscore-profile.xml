@@ -81,7 +81,7 @@
     <workgroup>ACE Working Group</workgroup>
     <abstract>
       <t>
-        This memo specifies a profile for the Authentication and Authorization for Constrained Environments (ACE) framework.  It utilizes Object Security for Constrained RESTful Environments (OSCORE) to provide communication security, server authentication, and proof-of-possession for a key owned by the client and bound to an OAuth 2.0 access token.
+        This memo specifies a profile for the Authentication and Authorization for Constrained Environments (ACE) framework.  It utilizes Object Security for Constrained RESTful Environments (OSCORE) to provide communication security and proof-of-possession for a key owned by the client and bound to an OAuth 2.0 access token.
       </t>
       <!-- 
         Jim: Lookup on the RFC Editor page if you need to expand OAuth
@@ -98,7 +98,7 @@
     <section anchor="introduction" title=" Introduction"> 
       
       <t>
-        This memo specifies a profile of the ACE framework <xref target="I-D.ietf-ace-oauth-authz"/>.  In this profile, a client and a resource server use the Constrained Application Protocol (CoAP) <xref target="RFC7252"/> to communicate.  The client uses an access token, bound to a key (the proof-of-possession key) to authorize its access to the resource server.  Note that this profile uses a symmetric-crypto-based scheme, where the symmetric secret is used as input material for keying material derivation.  In order to provide communication security, proof of possession, and server authentication the client and resource server use Object Security for Constrained RESTful Environments (OSCORE) <xref target="RFC8613"/>.  Note that the proof of possession is not done by a dedicated protocol element, but rather occurs implicitly, based on knowledge of the security keying material.
+        This memo specifies a profile of the ACE framework <xref target="I-D.ietf-ace-oauth-authz"/>.  In this profile, a client and a resource server use the Constrained Application Protocol (CoAP) <xref target="RFC7252"/> to communicate.  The client uses an access token, bound to a key (the proof-of-possession key) to authorize its access to the resource server.  Note that this profile uses a symmetric-crypto-based scheme, where the symmetric secret is used as input material for keying material derivation.  In order to provide communication security and proof of possession, the client and resource server use Object Security for Constrained RESTful Environments (OSCORE) <xref target="RFC8613"/>.  Note that the proof of possession is not done by a dedicated protocol element, but rather occurs implicitly, based on knowledge of the security keying material.
       </t>
 
       <t>
@@ -645,7 +645,7 @@ OSCORE_Input_Material = {
         by generating the shared OSCORE Security Context using
         the pop-key as master secret.  An attacker
         posting a valid token to the RS will not be able to generate a valid OSCORE context and
-        thus not be able to prove possession of the pop-key.
+        thus not be able to prove possession of the pop-key. Additionally, the mutual authentication is only achieved after the client has successfully verified the response from the RS.
       </t>
 
 
@@ -857,6 +857,11 @@ token.
         Furthermore the general security considerations of OSCORE <xref
         target="RFC8613"/> also apply to this specific
         use of the OSCORE protocol.
+      </t>
+
+      <t>
+        As previously stated, the proof-of-possession in this profile is performed by both parties verifying that they have established the same Security Context, which means that both the OSCORE request and OSCORE response in <xref target="c-rs"/> and <xref target="rs-c"/> pass verification.
+        RS authentication requires both that the client trusts the AS and that the OSCORE response from the RS in <xref target="rs-c"/> pass verification.
       </t>
       
       <t>
@@ -1191,7 +1196,7 @@ token.
             protect their communication: OSCORE
           </t>
           <t>
-            Specify how the client and the RS mutually authenticate: Implicitly by possession of a common OSCORE security context
+            Specify how the client and the RS mutually authenticate: Implicitly by possession of a common OSCORE security context. Note that the mutual authentication is only achieved after the client has verified the 2.01 (Created) OSCORE response.
           </t>
           <t>
             Specify the proof-of-possession protocol(s) and how to select one,

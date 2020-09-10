@@ -778,6 +778,10 @@ requests received that correspond to a Security Context with an expired
 token.
         </t>
 
+        <t>
+          Note that the ID Context can be assigned by the AS, communicated and set in both the RS and client after the exchange specified in this profile is executed. Subsequently, client and RS can update their ID Context by running a mechanism such as the one defined in Appendix B.2 of <xref target="RFC8613"/> if they support it. In that case, the ID Context in the OSCORE Security Context will not match the "contextId" parameter of the corresponding OSCORE_Input_Material. That is fine, as long as the nodes store and use the "contextId" value to identify the correct OSCORE_Input_Material at the AS.
+        </t>
+
       </section> <!-- ends from line 481-->
 
       <section anchor="tok-ver" title="Access rights verification">

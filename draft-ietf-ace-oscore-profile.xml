@@ -510,10 +510,10 @@ A5                                      # map(5)
           <t>
             An OSCORE_Input_Material is an object that represents part or all of the input material to derive an OSCORE Security Context, i.e., the local set of information elements necessary to carry out the cryptographic operations in OSCORE (Section 3.1 of <xref target="RFC8613"/>). In particular, the OSCORE_Input_Material is defined to be serialized and transported between nodes, as specified by this document, but can also be used by other specifications if needed. The OSCORE_Input_Material can either be encoded as a JSON object or as a CBOR map. The set of common parameters that can appear in an OSCORE_Input_Material can be found in the IANA "OSCORE Security Context Parameters" registry (<xref target="sec-ctx-params-reg"/>), defined for extensibility, and is specified below.
             All parameters are optional.
-            <xref target="table-key-labels"/> provides a summary of the OSCORE_Input_Material parameters defined in this section.
+            <xref target="key-labels"/> provides a summary of the OSCORE_Input_Material parameters defined in this section.
           </t>
 
-          <texttable title="OSCORE_Input_Material Parameters" anchor="table-key-labels">
+          <texttable title="OSCORE_Input_Material Parameters" anchor="key-labels">
             <ttcol align='left'>name</ttcol>
             <ttcol align='left'>CBOR label</ttcol>
             <ttcol align='left' width="14em">CBOR type</ttcol>
@@ -1049,7 +1049,7 @@ token.
         </t>
 
         <t>
-          This registry will be initially populated by the values in <xref target="table-key-labels"/>.
+          This registry will be initially populated by the values in <xref target="key-labels"/>.
           The specification column for all of these entries will be this document and <xref target="RFC8613"/>.
         </t>
 

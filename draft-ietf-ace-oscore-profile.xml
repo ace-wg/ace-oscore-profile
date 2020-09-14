@@ -791,10 +791,6 @@ token.
           requires authorization, the RS retrieves the authorization information using the access token associated to the Security Context. The RS then must verify that the authorization information covers the resource and the action requested.
         </t>
 
-        <t>
-         The response code must be 4.01 (Unauthorized) in case the client has a valid token associated with that Security Context, but the Security Context has not been used before, as the proof-of-possession in this profile is performed by both parties verifying that they have established the same Security Context.
-        </t>
-
       </section>
 
     </section>

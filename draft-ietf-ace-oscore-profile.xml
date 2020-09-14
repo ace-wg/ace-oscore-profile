@@ -350,7 +350,7 @@ Usually it is assumed that constrained devices will be pre-configured with the n
 	      </t>
 
         <t>
-          We assume in this document that a resource is associated to one single AS, which makes it possible for the AS to enforce uniqueness of identifiers for each client requesting a particular resource to a RS.  If this is not the case, collisions of identifiers may occur at the RS, in which case the RS needs to have a mechanism in place to disambiguate identifiers or mitigate the effect of the collisions.
+          We assume in this document that a RS is associated to one single AS, which makes it possible for the AS to enforce uniqueness of identifiers for each client sending requests to a RS. If this is not the case, collisions of identifiers may occur at the RS, in which case the RS needs to have a mechanism in place to disambiguate identifiers or mitigate the effect of the collisions.
         </t>
         <t>
           Moreover, implementers of this specification need to be aware that if other authentication mechanisms are used to set up OSCORE between the same client and RS, that do not rely on AS assigning identifiers, collisions may happen and need to be mitigated.

@@ -864,8 +864,8 @@ token.
       </t>
 
       <t>
-        As previously stated, the proof-of-possession in this profile is performed by both parties verifying that they have established the same Security Context, which means that both the OSCORE request and OSCORE response in <xref target="c-rs"/> and <xref target="rs-c"/> pass verification.
-        RS authentication requires both that the client trusts the AS and that the OSCORE response from the RS in <xref target="rs-c"/> pass verification.
+        As previously stated, the proof-of-possession in this profile is performed by both parties verifying that they have established the same Security Context, as specified in <xref target="oscore-setup"/>, which means that both the OSCORE request and OSCORE pass verification.
+        RS authentication requires both that the client trusts the AS and that the OSCORE response from the RS pass verification.
       </t>
       
       <t>

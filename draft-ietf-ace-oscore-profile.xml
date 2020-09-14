@@ -137,8 +137,8 @@
         </t> 
         <!-- UNDONE: changed the above to "resource" in the whole doc-->
 
-      </section> <!-- ends from line 117-->
-    </section> <!-- ends from line 106-->
+      </section>
+    </section>
 
     <section title="Protocol Overview"> 
     
@@ -152,7 +152,7 @@
       </t>
 
       <t>
-        This profile requires a client to retrieve an access token from the AS for the resource it wants to access on a RS, by sending an access token request to the token endpoint, as specified in section 5.6 of <xref target="I-D.ietf-ace-oauth-authz"/>.  To determine the AS in charge of a resource hosted at the RS, the client MAY send an initial Unauthorized Resource Request message to the RS. The RS then denies the request and sends the address of its AS back to the client as specified in section 5.1 of <xref target="I-D.ietf-ace-oauth-authz"/>. The access token request and response MUST be confidentiality-protected and ensure authenticity.  This profile RECOMMENDS the use of OSCORE between client and AS, but other protocols (such as TLS or DTLS) can be used as well.
+        This profile requires a client to retrieve an access token from the AS for the resource it wants to access on a RS, by sending an access token request to the token endpoint, as specified in section 5.6 of <xref target="I-D.ietf-ace-oauth-authz"/>. The access token request and response MUST be confidentiality-protected and ensure authenticity.  This profile RECOMMENDS the use of OSCORE between client and AS, but other protocols (such as TLS or DTLS) can be used as well.
       </t>
 
       <t>
@@ -187,11 +187,6 @@
       <figure anchor="prof-overview" title="Protocol Overview">
         <artwork><![CDATA[
    C                            RS                   AS
-   | [---- Unauthorized ----->] |                     |
-   |     Resource Request       |                     |   
-   |                            |                     |
-   | [<---- AS Request  ------] |                     |
-   |      Creation Hints        |                     |
    |                            |                     |
    | ----- POST /token  ----------------------------> |
    |                            |                     |
@@ -622,9 +617,9 @@ OSCORE_Input_Material = {
 
         </section>
 
-      </section> <!-- ends for line 266-->
+      </section>
     
-    </section> <!-- ends for line 221 -->
+    </section>
 
     <section anchor="c-rs1" title="Client-RS Communication">
 
@@ -698,7 +693,7 @@ OSCORE_Input_Material = {
           </t>
         </section>
 
-      </section> <!-- ends for line 418 -->
+      </section>
 
       <section anchor="rs-c" title="RS-to-C: 2.01 (Created)">
 
@@ -752,7 +747,7 @@ OSCORE_Input_Material = {
    JSON-based interactions. This parameter is registered in <xref target="iana-nonces" />
           </t>
         </section>
-      </section> <!-- ends for line 452-->
+      </section>
 
       <section anchor="oscore-setup" title="OSCORE Setup">
 
@@ -782,7 +777,7 @@ token.
           Note that the ID Context can be assigned by the AS, communicated and set in both the RS and client after the exchange specified in this profile is executed. Subsequently, client and RS can update their ID Context by running a mechanism such as the one defined in Appendix B.2 of <xref target="RFC8613"/> if they support it. In that case, the ID Context in the OSCORE Security Context will not match the "contextId" parameter of the corresponding OSCORE_Input_Material. That is fine, as long as the nodes store and use the "contextId" value to identify the correct OSCORE_Input_Material at the AS.
         </t>
 
-      </section> <!-- ends from line 481-->
+      </section>
 
       <section anchor="tok-ver" title="Access rights verification">
 
@@ -887,7 +882,7 @@ token.
         If a single OSCORE_Input_Material is used with multiple RSs, the RSs can impersonate C to one of the other RS, and impersonate another RS to the client. If a master secret is used with several clients, the Cs can impersonate RS to one of the other C. Similarly if symmetric keys are used to integrity protect the token between AS and RS and the token can be used with multiple RSs, the RSs can impersonate AS to one of the other RS. If the token key is used for any other communication between the RSs and AS, the RSs can impersonate each other to the AS.
       </t>
     
-    </section> <!-- ends from line 518-->
+    </section>
 
     <section title="Privacy Considerations">
       <t>
@@ -920,7 +915,7 @@ token.
       <t>
       	Note that some information might still leak after OSCORE is established, due to observable message sizes, the source, and the destination addresses.
       </t>
-    </section> <!-- ends from line 539-->
+    </section>
 
     <section title=" IANA Considerations ">
 
@@ -1127,7 +1122,7 @@ token.
           
       </section>
 
-    </section> <!-- ends from line 547-->
+    </section>
 
   </middle>
 

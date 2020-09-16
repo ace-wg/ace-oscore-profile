@@ -198,11 +198,17 @@
    | <--- 2.01 Created (N2) --- |                     |
    |                            |                     |
  /Sec Context             /Sec Context                |
-   Derivation/              Derivation/               |
+   derivation/              derivation/               |
    |                            |                     |
    | ---- OSCORE Request -----> |                     |
    |                            |                     |
+   |                    /proof-of-possession          |
+   |                    Sec Context storage/          |
+   |                            |                     |
    | <--- OSCORE Response ----- |                     |
+   |                            |                     |
+/proof-of-possession            |                     |
+Sec Context storage/            |                     |
    |                            |                     |
    | ---- OSCORE Request -----> |                     |
    |                            |                     |

@@ -357,6 +357,11 @@ Usually it is assumed that constrained devices will be pre-configured with the n
           Moreover, implementers of this specification need to be aware that if other authentication mechanisms are used to set up OSCORE between the same client and RS, that do not rely on AS assigning identifiers, collisions may happen and need to be mitigated.
           A mitigation example would be to use distinct namespaces of identifiers for different authentication mechanisms.
         </t>
+
+        <t>
+          The AS SHOULD send different OSCORE_Input_Material (and therefore different access tokens) to different authorized clients, in order for the RS to differentiate between clients. However, AS reusing the same token to several clients would be acceptable if the targeted RS only wants to know that the request is authorized and does not need info on who the client is, and if RS is constrained, as that would allow the RS to reduce storage of tokens. Implementers neeed to be aware of the reduced security properties of such a case.
+        </t>
+
         <t>
           Note that in <xref target="oscore-setup"/> C sets the Sender ID of its Security Context to the clientId value received and the Recipient ID to the serverId value, and RS does the opposite.
         </t>

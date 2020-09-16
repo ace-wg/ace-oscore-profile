@@ -755,7 +755,7 @@ OSCORE_Input_Material = {
           <t>
              This parameter MUST be sent from the RS to the Client if the ace profile used is coap_oscore.  The parameter is encoded as a byte string for
    CBOR-based interactions, and as a string (Base64 encoded binary) for
-   JSON-based interactions. This parameter is registered in <xref target="iana-nonces" />
+   JSON-based interactions. This parameter is registered in <xref target="iana-nonces" />.
           </t>
         </section>
       </section>
@@ -763,7 +763,31 @@ OSCORE_Input_Material = {
       <section anchor="oscore-setup" title="OSCORE Setup">
 
         <t>
-          Once receiving the 2.01 (Created) response from the RS, following the POST request to authz-info endpoint, the client MUST extract the bstr nonce N2 from the 'nonce2' parameter in the CBOR map in the payload of the response. Then, the client MUST set the Master Salt of the Security Context created to communicate with the RS to the concatenation of salt, N1, and N2, in this order: Master Salt = salt | N1 | N2, where | denotes byte string concatenation, where salt was received from the AS in <xref target="as-c"/>, and where N1 and N2 are the two nonces encoded as bstr (or Base64 if JSON is used). The client MUST set the Master Secret, Sender ID and Recipient ID from the parameters received from the AS in <xref target="as-c"/>. The client MUST set the AEAD Algorithm, ID Context, HKDF, and OSCORE Version from the parameters received from the AS in <xref target="as-c"/>, if present. In case these parameters are omitted, the default values are used as described in sections 3.2 and 5.4 of <xref target="RFC8613"/>. After that, the client MUST derive the complete Security Context following section 3.2.1 of <xref target="RFC8613"/>. From this point on, the client MUST use this Security Context to communicate with the RS when accessing the resources as specified by the authorization information.
+          Once receiving the 2.01 (Created) response from the RS, following the POST request to authz-info endpoint, the client MUST extract the bstr nonce N2 from the 'nonce2' parameter in the CBOR map in the payload of the response. Then, the client MUST set the Master Salt of the Security Context created to communicate with the RS to the concatenation of salt, N1, and N2, in this order: Master Salt = salt | N1 | N2, where | denotes byte string concatenation, where salt is the CBOR byte string (or Base64 if JSON is used) received from the AS in <xref target="as-c"/>, and where N1 and N2 are the two nonces encoded as CBOR byte strings (or Base64 if JSON is used). 
+        </t>
+        <t>
+          This documents does not mandate, but simply recommends the use of 64 bit random nonces. If JSON is used together with this Master Salt construction, the nonces MUST NOT be implemented as counters, to avoid two-time pad attacks on the Master Salt (see <xref target="sec-cons" />). An example of Master Salt construction using CBOR encoding is given in <xref target="ms-ex" />.
+        </t>
+
+<figure anchor="ms-ex" title="Example of Master Salt Construction">
+          <artwork><![CDATA[
+N1, N2 and input salt expressed in CBOR diagnostic notation:
+      nonce1 = h'c44b96c1d22cb96d'
+      nonce2 = h'f63dbeeb340b32c7'
+      input salt = h'e7687514468acc5d'
+
+N1, N2 and input salt as CBOR encoded byte strings:
+      nonce1 = 0x48c44b96c1d22cb96d
+      nonce2 = 0x48f63dbeeb340b32c7
+      input salt 0x48e7687514468acc5d
+
+Master Salt = 0x48e7687514468acc5d48c44b96c1d22cb96d48f63dbeeb340b32c7
+  ]]>
+          </artwork>
+        </figure>
+
+        <t>
+          The client MUST set the Master Secret, Sender ID and Recipient ID from the parameters received from the AS in <xref target="as-c"/>. The client MUST set the AEAD Algorithm, ID Context, HKDF, and OSCORE Version from the parameters received from the AS in <xref target="as-c"/>, if present. In case these parameters are omitted, the default values are used as described in sections 3.2 and 5.4 of <xref target="RFC8613"/>. After that, the client MUST derive the complete Security Context following section 3.2.1 of <xref target="RFC8613"/>. From this point on, the client MUST use this Security Context to communicate with the RS when accessing the resources as specified by the authorization information.
         </t>
 
         <t>
@@ -850,7 +874,7 @@ token.
 
     </section>
 
-    <section title="Security Considerations">
+    <section anchor="sec-cons" title="Security Considerations">
 
       <t>
         This document specifies a profile for the Authentication and
@@ -881,7 +905,7 @@ token.
       </t>
       
       <t>
-        Since the use of nonces in the exchange guarantees uniqueness of AEAD keys and nonces, it is REQUIRED that nonces are not reused with the same input keying material even in case of re-boots. This document RECOMMENDS the use of 64 bit random nonces. Considering the birthday paradox, the average collision for each nonce will happen after 2^32 messages, which is considerably more token provisionings than expected for intended applications. If applications use something else, such as a counter, they need to guarantee that reboot and loss of state on either node does not provoke re-use.
+        Since the use of nonces in the exchange guarantees uniqueness of AEAD keys and nonces, it is REQUIRED that nonces are not reused with the same input keying material even in case of re-boots. This document RECOMMENDS the use of 64 bit random nonces. Considering the birthday paradox, the average collision for each nonce will happen after 2^32 messages, which is considerably more token provisionings than expected for intended applications. If applications use something else, such as a counter, they need to guarantee that reboot and loss of state on either node does not provoke re-use. In addition to that and if the counters used as nonces are encoded in JSON, applications also need to provide a different construction for Master Salt, as an attacker can cause a two-time pad since the lengths of the input salt and nonces are not included in the construction.
         If that is not guaranteed, nodes are susceptible to re-use of AEAD (nonces, keys) pairs, especially since an on-path attacker can cause the client to use an arbitrary nonce for Security Context establishment by replaying client-to-server messages.
       </t>
 

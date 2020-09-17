@@ -359,7 +359,7 @@ Usually it is assumed that constrained devices will be pre-configured with the n
         </t>
 
         <t>
-          The AS SHOULD send different OSCORE_Input_Material (and therefore different access tokens) to different authorized clients, in order for the RS to differentiate between clients. However, AS reusing the same token to several clients would be acceptable if the targeted RS only wants to know that the request is authorized and does not need info on who the client is, and if RS is constrained, as that would allow the RS to reduce storage of tokens. Implementers neeed to be aware of the reduced security properties of such a case.
+          The AS MUST send different OSCORE_Input_Material (and therefore different access tokens) to different authorized clients, in order for the RS to differentiate between clients.
         </t>
 
         <t>

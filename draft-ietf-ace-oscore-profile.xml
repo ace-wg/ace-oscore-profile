@@ -152,7 +152,7 @@
       </t>
 
       <t>
-        This profile requires a client to retrieve an access token from the AS for the resource it wants to access on a RS, by sending an access token request to the token endpoint, as specified in section 5.6 of <xref target="I-D.ietf-ace-oauth-authz"/>. The access token request and response MUST be confidentiality-protected and ensure authenticity.  This profile RECOMMENDS the use of OSCORE between client and AS, but other protocols (such as TLS or DTLS) can be used as well.
+        This profile requires a client to retrieve an access token from the AS for the resource it wants to access on an RS, by sending an access token request to the token endpoint, as specified in section 5.6 of <xref target="I-D.ietf-ace-oauth-authz"/>. The access token request and response MUST be confidentiality-protected and ensure authenticity.  This profile RECOMMENDS the use of OSCORE between client and AS, but other protocols (such as TLS or DTLS) can be used as well.
       </t>
 
       <t>
@@ -351,7 +351,7 @@ Usually it is assumed that constrained devices will be pre-configured with the n
 	      </t>
 
         <t>
-          We assume in this document that a RS is associated to one single AS, which makes it possible for the AS to enforce uniqueness of identifiers for each client sending requests to a RS. If this is not the case, collisions of identifiers may occur at the RS, in which case the RS needs to have a mechanism in place to disambiguate identifiers or mitigate the effect of the collisions.
+          We assume in this document that an RS is associated to one single AS, which makes it possible for the AS to enforce uniqueness of identifiers for each client sending requests to an RS. If this is not the case, collisions of identifiers may occur at the RS, in which case the RS needs to have a mechanism in place to disambiguate identifiers or mitigate the effect of the collisions.
         </t>
         <t>
           Moreover, implementers of this specification need to be aware that if other authentication mechanisms are used to set up OSCORE between the same client and RS, that do not rely on AS assigning identifiers, collisions may happen and need to be mitigated.
@@ -766,7 +766,7 @@ OSCORE_Input_Material = {
           Once receiving the 2.01 (Created) response from the RS, following the POST request to authz-info endpoint, the client MUST extract the bstr nonce N2 from the 'nonce2' parameter in the CBOR map in the payload of the response. Then, the client MUST set the Master Salt of the Security Context created to communicate with the RS to the concatenation of salt, N1, and N2, in this order: Master Salt = salt | N1 | N2, where | denotes byte string concatenation, where salt is the CBOR byte string (or Base64 if JSON is used) received from the AS in <xref target="as-c"/>, and where N1 and N2 are the two nonces encoded as CBOR byte strings (or Base64 if JSON is used). 
         </t>
         <t>
-          This documents does not mandate, but simply recommends the use of 64 bit random nonces. If JSON is used together with this Master Salt construction, the nonces MUST NOT be implemented as counters, to avoid two-time pad attacks on the Master Salt (see <xref target="sec-cons" />). An example of Master Salt construction using CBOR encoding is given in <xref target="ms-ex" />.
+          This documents recommends the use of 64 bit random nonces, see <xref target="sec-cons" />. If JSON is used together with this Master Salt construction, the nonces MUST NOT be implemented as counters, to avoid two-time pad attacks on the Master Salt. An example of Master Salt construction using CBOR encoding is given in <xref target="ms-ex" />.
         </t>
 
 <figure anchor="ms-ex" title="Example of Master Salt Construction">
@@ -787,7 +787,7 @@ Master Salt = 0x48e7687514468acc5d48c44b96c1d22cb96d48f63dbeeb340b32c7
         </figure>
 
         <t>
-          The client MUST set the Master Secret, Sender ID and Recipient ID from the parameters received from the AS in <xref target="as-c"/>. The client MUST set the AEAD Algorithm, ID Context, HKDF, and OSCORE Version from the parameters received from the AS in <xref target="as-c"/>, if present. In case these parameters are omitted, the default values are used as described in sections 3.2 and 5.4 of <xref target="RFC8613"/>. After that, the client MUST derive the complete Security Context following section 3.2.1 of <xref target="RFC8613"/>. From this point on, the client MUST use this Security Context to communicate with the RS when accessing the resources as specified by the authorization information.
+          The client MUST set the Master Secret, Sender ID and Recipient ID from the parameters received from the AS in <xref target="as-c"/>. The client MUST set the AEAD Algorithm, ID Context, HKDF, and OSCORE Version from the parameters received from the AS in <xref target="as-c"/>, if present. In case an optional parameter is omitted, the default value SHALL be used as described in sections 3.2 and 5.4 of <xref target="RFC8613"/>. After that, the client MUST derive the complete Security Context following section 3.2.1 of <xref target="RFC8613"/>. From this point on, the client MUST use this Security Context to communicate with the RS when accessing the resources as specified by the authorization information.
         </t>
 
         <t>
@@ -799,7 +799,7 @@ Master Salt = 0x48e7687514468acc5d48c44b96c1d22cb96d48f63dbeeb340b32c7
         </t>
 
         <t>
-          After sending the 2.01 (Created) response, the RS MUST set the Master Salt of the Security Context created to communicate with the client to the concatenation of salt, N1, and N2, in this order: Master Salt = salt | N1 | N2, where | denotes byte string concatenation, where salt was received from the AS in <xref target="rs-c"/>, and where N1 and N2 are the two nonces encoded as bstr (or Base64 if JSON is used). The RS MUST set the Master Secret, Sender ID and Recipient ID from the parameters, received from the AS and forwarded by the client in the access token in <xref target="c-rs"/> after validation of the token as specified in <xref target="rs-c"/>. The RS MUST set the AEAD Algorithm, ID Context, HKDF, and OSCORE Version from the parameters received from the AS and forwarded by the client in the access token in <xref target="c-rs"/> after validation of the token as specified in <xref target="rs-c"/>, if present. In case these parameters are omitted, the default values are used as described in sections 3.2 and 5.4 of <xref target="RFC8613"/>. After that, the RS MUST derive the complete Security Context following section 3.2.1 of <xref target="RFC8613"/>, and MUST associate this Security Context with the authorization information from the access token.
+          After sending the 2.01 (Created) response, the RS MUST set the Master Salt of the Security Context created to communicate with the client to the concatenation of salt, N1, and N2, in this order: Master Salt = salt | N1 | N2, where | denotes byte string concatenation, where salt was received from the AS in <xref target="rs-c"/>, and where N1 and N2 are the two nonces encoded as bstr (or Base64 if JSON is used). The RS MUST set the Master Secret, Sender ID and Recipient ID from the parameters, received from the AS and forwarded by the client in the access token in <xref target="c-rs"/> after validation of the token as specified in <xref target="rs-c"/>. The RS MUST set the AEAD Algorithm, ID Context, HKDF, and OSCORE Version from the parameters received from the AS and forwarded by the client in the access token in <xref target="c-rs"/> after validation of the token as specified in <xref target="rs-c"/>, if present. In case an optional parameter is omitted, the default value SHALL be used as described in sections 3.2 and 5.4 of <xref target="RFC8613"/>. After that, the RS MUST derive the complete Security Context following section 3.2.1 of <xref target="RFC8613"/>, and MUST associate this Security Context with the authorization information from the access token.
         </t>
 
         <t>
@@ -1230,7 +1230,7 @@ token.
             protect their communication: OSCORE
           </t>
           <t>
-            Specify how the client and the RS mutually authenticate: Implicitly by possession of a common OSCORE security context. Note that the mutual authentication is only achieved after the client has verified the 2.01 (Created) OSCORE response.
+            Specify how the client and the RS mutually authenticate: Implicitly by possession of a common OSCORE security context. Note that the mutual authentication is not completed before the client has verified an OSCORE response using this security context.
           </t>
           <t>
             Specify the proof-of-possession protocol(s) and how to select one,

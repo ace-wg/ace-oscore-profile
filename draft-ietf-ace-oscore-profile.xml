@@ -763,13 +763,10 @@ OSCORE_Input_Material = {
       <section anchor="oscore-setup" title="OSCORE Setup">
 
         <t>
-          Once receiving the 2.01 (Created) response from the RS, following the POST request to authz-info endpoint, the client MUST extract the bstr nonce N2 from the 'nonce2' parameter in the CBOR map in the payload of the response. Then, the client MUST set the Master Salt of the Security Context created to communicate with the RS to the concatenation of salt, N1, and N2, in this order: Master Salt = salt | N1 | N2, where | denotes byte string concatenation, where salt is the CBOR byte string (or Base64 if JSON is used) received from the AS in <xref target="as-c"/>, and where N1 and N2 are the two nonces encoded as CBOR byte strings (or Base64 if JSON is used). 
-        </t>
-        <t>
-          This documents recommends the use of 64 bit random nonces, see <xref target="sec-cons" />. If JSON is used together with this Master Salt construction, the nonces MUST NOT be implemented as counters, to avoid two-time pad attacks on the Master Salt. An example of Master Salt construction using CBOR encoding is given in <xref target="ms-ex" />.
+          Once receiving the 2.01 (Created) response from the RS, following the POST request to authz-info endpoint, the client MUST extract the bstr nonce N2 from the 'nonce2' parameter in the CBOR map in the payload of the response. Then, the client MUST set the Master Salt of the Security Context created to communicate with the RS to the concatenation of salt, N1, and N2, in this order: Master Salt = salt | N1 | N2, where | denotes byte string concatenation, where salt is the CBOR byte string received from the AS in <xref target="as-c"/>, and where N1 and N2 are the two nonces encoded as CBOR byte strings.  An example of Master Salt construction using CBOR encoding is given in <xref target="ms-ex" />.
         </t>
 
-<figure anchor="ms-ex" title="Example of Master Salt Construction">
+        <figure anchor="ms-ex" title="Example of Master Salt construction using CBOR encoding">
           <artwork><![CDATA[
 N1, N2 and input salt expressed in CBOR diagnostic notation:
       nonce1 = h'c44b96c1d22cb96d'
@@ -779,9 +776,27 @@ N1, N2 and input salt expressed in CBOR diagnostic notation:
 N1, N2 and input salt as CBOR encoded byte strings:
       nonce1 = 0x48c44b96c1d22cb96d
       nonce2 = 0x48f63dbeeb340b32c7
-      input salt 0x48e7687514468acc5d
+      input salt = 0x48e7687514468acc5d
 
-Master Salt = 0x48e7687514468acc5d48c44b96c1d22cb96d48f63dbeeb340b32c7
+Master Salt = 0x48 e7687514468acc5d 48 c44b96c1d22cb96d 48 f63dbeeb340b32c7
+  ]]>
+          </artwork>
+        </figure>
+
+        <t>
+          If JSON is used instead of CBOR, the Master Salt of the Security Context is the Base64 encoding of the concatenation of the same parameters, each of them prefixed by their size, encoded in 1 byte. When using JSON, the nonces and input salt have a maximum size of 255 bytes. An example of Master Salt construction using Base64 encoding is given in <xref target="ms-ex-2" />.
+        </t>
+
+        <figure anchor="ms-ex-2" title="Example of Master Salt construction using Base64 encoding">
+          <artwork><![CDATA[
+N1, N2 and input salt values:
+      nonce1 = 0xc44b96c1d22cb96d (8 bytes)
+      nonce2 = 0xf63dbeeb340b32c7 (8 bytes)
+      input salt = 0xe7687514468acc5d (8 bytes)
+
+Input to Base64 encoding: 0x08 e7687514468acc5d 08 c44b96c1d22cb96d 08 f63dbeeb340b32c7
+
+Master Salt = COdodRRGisxdCMRLlsHSLLltCPY9vus0CzLH
   ]]>
           </artwork>
         </figure>
@@ -799,7 +814,7 @@ Master Salt = 0x48e7687514468acc5d48c44b96c1d22cb96d48f63dbeeb340b32c7
         </t>
 
         <t>
-          After sending the 2.01 (Created) response, the RS MUST set the Master Salt of the Security Context created to communicate with the client to the concatenation of salt, N1, and N2, in this order: Master Salt = salt | N1 | N2, where | denotes byte string concatenation, where salt was received from the AS in <xref target="rs-c"/>, and where N1 and N2 are the two nonces encoded as bstr (or Base64 if JSON is used). The RS MUST set the Master Secret, Sender ID and Recipient ID from the parameters, received from the AS and forwarded by the client in the access token in <xref target="c-rs"/> after validation of the token as specified in <xref target="rs-c"/>. The RS MUST set the AEAD Algorithm, ID Context, HKDF, and OSCORE Version from the parameters received from the AS and forwarded by the client in the access token in <xref target="c-rs"/> after validation of the token as specified in <xref target="rs-c"/>, if present. In case an optional parameter is omitted, the default value SHALL be used as described in sections 3.2 and 5.4 of <xref target="RFC8613"/>. After that, the RS MUST derive the complete Security Context following section 3.2.1 of <xref target="RFC8613"/>, and MUST associate this Security Context with the authorization information from the access token.
+          After sending the 2.01 (Created) response, the RS MUST set the Master Salt of the Security Context created to communicate with the client to the concatenation of salt, N1, and N2, in the same way described above. An example of Master Salt construction using CBOR encoding is given in <xref target="ms-ex" /> and using Base64 encoding is given in <xref target="ms-ex-2" />. The RS MUST set the Master Secret, Sender ID and Recipient ID from the parameters, received from the AS and forwarded by the client in the access token in <xref target="c-rs"/> after validation of the token as specified in <xref target="rs-c"/>. The RS MUST set the AEAD Algorithm, ID Context, HKDF, and OSCORE Version from the parameters received from the AS and forwarded by the client in the access token in <xref target="c-rs"/> after validation of the token as specified in <xref target="rs-c"/>, if present. In case an optional parameter is omitted, the default value SHALL be used as described in sections 3.2 and 5.4 of <xref target="RFC8613"/>. After that, the RS MUST derive the complete Security Context following section 3.2.1 of <xref target="RFC8613"/>, and MUST associate this Security Context with the authorization information from the access token.
         </t>
 
         <t>
@@ -905,7 +920,7 @@ token.
       </t>
       
       <t>
-        Since the use of nonces in the exchange guarantees uniqueness of AEAD keys and nonces, it is REQUIRED that nonces are not reused with the same input keying material even in case of re-boots. This document RECOMMENDS the use of 64 bit random nonces. Considering the birthday paradox, the average collision for each nonce will happen after 2^32 messages, which is considerably more token provisionings than expected for intended applications. If applications use something else, such as a counter, they need to guarantee that reboot and loss of state on either node does not provoke re-use. In addition to that and if the counters used as nonces are encoded in JSON, applications also need to provide a different construction for Master Salt, as an attacker can cause a two-time pad since the lengths of the input salt and nonces are not included in the construction.
+        Since the use of nonces in the exchange guarantees uniqueness of AEAD keys and nonces, it is REQUIRED that nonces are not reused with the same input keying material even in case of re-boots. This document RECOMMENDS the use of 64 bit random nonces. Considering the birthday paradox, the average collision for each nonce will happen after 2^32 messages, which is considerably more token provisionings than expected for intended applications. If applications use something else, such as a counter, they need to guarantee that reboot and loss of state on either node does not provoke re-use.
         If that is not guaranteed, nodes are susceptible to re-use of AEAD (nonces, keys) pairs, especially since an on-path attacker can cause the client to use an arbitrary nonce for Security Context establishment by replaying client-to-server messages.
       </t>
 

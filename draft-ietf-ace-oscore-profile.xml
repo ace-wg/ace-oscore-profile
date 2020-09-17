@@ -769,16 +769,16 @@ OSCORE_Input_Material = {
         <figure anchor="ms-ex" title="Example of Master Salt construction using CBOR encoding">
           <artwork><![CDATA[
 N1, N2 and input salt expressed in CBOR diagnostic notation:
-      nonce1 = h'c44b96c1d22cb96d'
-      nonce2 = h'f63dbeeb340b32c7'
-      input salt = h'e7687514468acc5d'
+      nonce1 = h'018a278f7faab55a'
+      nonce2 = h'25a8991cd700ac01'
+      input salt = h'f9af838368e353e78888e1426bd94e6f'
 
 N1, N2 and input salt as CBOR encoded byte strings:
-      nonce1 = 0x48c44b96c1d22cb96d
-      nonce2 = 0x48f63dbeeb340b32c7
-      input salt = 0x48e7687514468acc5d
+      nonce1 = 0x48018a278f7faab55a
+      nonce2 = 0x4825a8991cd700ac01
+      input salt = 0x50f9af838368e353e78888e1426bd94e6f
 
-Master Salt = 0x48 e7687514468acc5d 48 c44b96c1d22cb96d 48 f63dbeeb340b32c7
+Master Salt = 0x50 f9af838368e353e78888e1426bd94e6f 48 018a278f7faab55a 48 25a8991cd700ac01
   ]]>
           </artwork>
         </figure>
@@ -790,13 +790,13 @@ Master Salt = 0x48 e7687514468acc5d 48 c44b96c1d22cb96d 48 f63dbeeb340b32c7
         <figure anchor="ms-ex-2" title="Example of Master Salt construction using Base64 encoding">
           <artwork><![CDATA[
 N1, N2 and input salt values:
-      nonce1 = 0xc44b96c1d22cb96d (8 bytes)
-      nonce2 = 0xf63dbeeb340b32c7 (8 bytes)
-      input salt = 0xe7687514468acc5d (8 bytes)
+      nonce1 = 0x018a278f7faab55a (8 bytes)
+      nonce2 = 0x25a8991cd700ac01 (8 bytes)
+      input salt = 0xf9af838368e353e78888e1426bd94e6f (16 bytes)
 
-Input to Base64 encoding: 0x08 e7687514468acc5d 08 c44b96c1d22cb96d 08 f63dbeeb340b32c7
+Input to Base64 encoding: 0x10 f9af838368e353e78888e1426bd94e6f 08 018a278f7faab55a 08 25a8991cd700ac01
 
-Master Salt = COdodRRGisxdCMRLlsHSLLltCPY9vus0CzLH
+Master Salt = b64'EPmvg4No41PniIjhQmvZTm8IAYonj3+qtVoIJaiZHNcArAE='
   ]]>
           </artwork>
         </figure>

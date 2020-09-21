@@ -1024,7 +1024,7 @@ token.
           <t>Parameter name: ace_server_recipientid</t>
 
           <t>Parameter usage location: rs-client response</t>
-        
+
           <t>Change Controller: IESG</t>
 
           <t>Specification Document(s): &SELF;</t>

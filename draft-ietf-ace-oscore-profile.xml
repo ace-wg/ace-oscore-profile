@@ -1001,7 +1001,7 @@ token.
         <t><?rfc subcompact="yes"?><list style='symbols'>
           <t>Parameter name: nonce1</t>
 
-          <t>Parameter usage location: token request</t>
+          <t>Parameter usage location: client-rs request</t>
         
           <t>Change Controller: IESG</t>
 
@@ -1010,7 +1010,7 @@ token.
         <t><?rfc subcompact="yes"?><list style='symbols'>
           <t>Parameter name: nonce2</t>
 
-          <t>Parameter usage location: token response</t>
+          <t>Parameter usage location: rs-client response</t>
         
           <t>Change Controller: IESG</t>
 

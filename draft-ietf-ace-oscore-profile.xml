@@ -97,7 +97,7 @@
     <section anchor="introduction" title=" Introduction"> 
       
       <t>
-        This memo specifies a profile of the ACE framework <xref target="I-D.ietf-ace-oauth-authz"/>.  In this profile, a client and a resource server use the Constrained Application Protocol (CoAP) <xref target="RFC7252"/> to communicate.  The client uses an access token, bound to a symmetric key (the proof-of-possession key) to authorize its access to the resource server.  Note that this profile uses a symmetric-crypto-based scheme, where the symmetric secret is used as input material for keying material derivation.  In order to provide communication security and proof of possession, the client and resource server use Object Security for Constrained RESTful Environments (OSCORE) <xref target="RFC8613"/>.  Note that the proof of possession is not done by a dedicated protocol element, but rather occurs after the first OSCORE exchange.
+        This memo specifies a profile of the ACE framework <xref target="I-D.ietf-ace-oauth-authz"/>.  In this profile, a client and a resource server use the Constrained Application Protocol (CoAP) <xref target="RFC7252"/> to communicate.  The client uses an access token, bound to a symmetric key (the proof-of-possession key) to authorize its access to the resource server.  Note that this profile uses a symmetric-crypto-based scheme, where the symmetric secret is used as input material for keying material derivation.  In order to provide communication security and proof of possession, the client and resource server use Object Security for Constrained RESTful Environments (OSCORE) <xref target="RFC8613"/>.  Note that the proof of possession is not achieved through a dedicated protocol element, but rather occurs after the first message exchange using OSCORE.
       </t>
 
       <t>
@@ -168,7 +168,7 @@
       </t>
 
       <t>
-        Finally, the client sends a request protected with OSCORE to the RS. If the request verifies, the server stores the complete Security Context state that is ready for use in protecting messages, and uses it in the response, and in further communications with the client, until token expiration. This Security Context is discarded when a token (whether the same or different) is used to successfully derive a new Security Context for that client. 
+        Finally, the client sends a request protected with OSCORE to the RS. If the request is successfully verified, the server stores the complete Security Context state that is ready for use in protecting messages, and uses it in the response, and in further communications with the client, until token deletion, due to e.g. expiration. This Security Context is discarded when a token (whether the same or a different one) is used to successfully derive a new Security Context for that client. 
       </t>
 
       <t>
@@ -176,7 +176,7 @@
       </t>
 
       <t>
-        After the whole message exchange has taken place, the client can contact the AS to request an update of its access rights, sending a similar request to the token endpoint that also includes an identifier so that the AS can find the correct OSCORE security material it has previously shared with the client. This specific identifier, encoded as a byte string, is assigned by the AS to be unique in the sets of its OSCORE Security Contexts, and is not used as input material to derive the full OSCORE Security Context.
+        After the whole message exchange has taken place, the client can contact the AS to request an update of its access rights, sending a similar request to the token endpoint that also includes an identifier so that the AS can find the correct OSCORE security input material it has previously shared with the client. This specific identifier, encoded as a byte string, is assigned by the AS to be unique in the sets of its OSCORE security input materials, and is not used as input material to derive the full OSCORE Security Context.
       </t>
 
       <t>
@@ -213,7 +213,9 @@ Sec Context storage/            |                     |
    | ---- OSCORE Request -----> |                     |
    |                            |                     |
    | <--- OSCORE Response ----- |                     |
-   |           ...              |                     |
+   |                            |                     |
+/mutual        ...              |                     |
+authentication/
 ]]>
         </artwork>
       </figure>
@@ -257,7 +259,7 @@ Sec Context storage/            |                     |
         </figure>
       
         <t>
-          If the client wants to update its access rights without changing an existing OSCORE Security Context, it MUST include in its POST request to the token endpoint a req_cnf object. kid field carrying a CBOR byte string containing the OSCORE_Input_Material Identifier (assigned as discussed in <xref target="as-c"/>). This identifier, together with other information such as audience (see Section 5.6.1 of <xref target="I-D.ietf-ace-oauth-authz"/>), can be used by the AS to determine the shared secret bound to the proof-of-possession token and therefore MUST identify a symmetric key that was previously generated by the AS as a shared secret for the communication between the client and the RS. The AS MUST verify that the received value identifies a proof-of-possession key that has previously been issued to the requesting client. If that is not the case, the Client-to-AS request MUST be declined with the error code 'invalid_request' as defined in Section 5.6.3 of <xref target="I-D.ietf-ace-oauth-authz"/>.
+          If the client wants to update its access rights without changing an existing OSCORE Security Context, it MUST include in its POST request to the token endpoint a req_cnf object, with the kid field carrying a CBOR byte string containing the OSCORE_Input_Material Identifier (assigned as discussed in <xref target="as-c"/>). This identifier, together with other information such as audience (see Section 5.6.1 of <xref target="I-D.ietf-ace-oauth-authz"/>), can be used by the AS to determine the shared secret bound to the proof-of-possession token and therefore MUST identify a symmetric key that was previously generated by the AS as a shared secret for the communication between the client and the RS. The AS MUST verify that the received value identifies a proof-of-possession key that has previously been issued to the requesting client. If that is not the case, the Client-to-AS request MUST be declined with the error code 'invalid_request' as defined in Section 5.6.3 of <xref target="I-D.ietf-ace-oauth-authz"/>.
         </t>
 
         <t>
@@ -292,7 +294,7 @@ Sec Context storage/            |                     |
 
         <t>
           The AS can signal that the use of OSCORE is REQUIRED for a specific access token by including the "profile" parameter with the value "coap_oscore" in the access token response.  This means that the client MUST use OSCORE towards all resource servers for which this access token is valid, and follow <xref target="oscore-setup"/> to derive the security context to run OSCORE.
-Usually it is assumed that constrained devices will be pre-configured with the necessary profile, so that this kind of profile negotiation can be omitted.	  
+Usually it is assumed that constrained devices will be pre-configured with the necessary profile, so that this kind of profile signaling can be omitted.	  
         </t>
 
         <t>
@@ -321,7 +323,7 @@ Usually it is assumed that constrained devices will be pre-configured with the n
         </t>
 
         <t>
-          This data is transported in the the OSCORE_Input_Material. The OSCORE_Input_Material is a CBOR map object, defined in <xref target="oscore-sec-ctx"/>. This object is transported in the 'cnf' parameter of the access token response as defined in Section 3.2 of <xref target="I-D.ietf-ace-oauth-params"/>, as the value of a field named 'osc', registered in <xref target="osc-cwt"/> and <xref target="osc-jwt"/>.
+          This data is transported in the OSCORE_Input_Material. The OSCORE_Input_Material is a CBOR map object, defined in <xref target="oscore-sec-ctx"/>. This object is transported in the 'cnf' parameter of the access token response as defined in Section 3.2 of <xref target="I-D.ietf-ace-oauth-params"/>, as the value of a field named 'osc', registered in <xref target="osc-cwt"/> and <xref target="osc-jwt"/>.
         </t>
 
         <t>
@@ -329,7 +331,7 @@ Usually it is assumed that constrained devices will be pre-configured with the n
         </t>
  
         <t>
-          The master secret and the identifier of the OSCORE_Input_Material MUST be communicated as the 'ms' and 'id' field in the 'osc' field in the 'cnf' parameter of the access token response.
+          The master secret and the identifier of the OSCORE_Input_Material MUST be communicated as the 'ms' and 'id' field in the 'osc' field in the 'cnf' parameeter of the access token response.
           If included, the AEAD algorithm is sent in the 'alg' parameter in the OSCORE_Input_Material; the HKDF algorithm in the 'hkdf' parameter of the OSCORE_Input_Material; a salt in the 'salt' parameter of the OSCORE_Input_Material; and the OSCORE version in the 'version' parameter of the OSCORE_Input_Material.
         </t>
 	      
@@ -440,7 +442,7 @@ A5                                      # map(5)
 
 
         <t>
-          If the client has requested an update to its access rights using the same OSCORE Security Context, which is valid and authorized, the AS MUST omit the 'cnf' parameter in the response, and MUST carry the OSCORE Input Material identifier in the 'kid' field in the 'cnf' parameter of the token. This identifier needs to be included in the token in order for the RS to identify the correct OSCORE Input Material.
+          If the client has requested an update to its access rights using the same OSCORE Security Context, which is valid and authorized, the AS MUST omit the 'cnf' parameter in the response, and MUST carry the OSCORE Input Material identifier in the 'kid' field in the 'cnf' claim of the token. This identifier needs to be included in the token in order for the RS to identify the correct OSCORE Input Material.
         </t>
 
         <t>
@@ -502,9 +504,9 @@ A5                                      # map(5)
             <ttcol align='left'>registry</ttcol>
             <ttcol align='left'>description</ttcol>
             
-            <c>version</c>        <c>0</c>        <c>unsigned integer</c>  <c></c>        <c>OSCORE Version</c>
-            <c>ms</c>        <c>1</c>        <c>byte string</c>  <c></c>        <c>OSCORE Master Secret value</c>
-            <c>id</c>        <c>2</c>        <c>byte string</c>        <c></c>        <c>OSCORE Input Material Identifier</c>
+            <c>id</c>        <c>0</c>        <c>byte string</c>        <c></c>        <c>OSCORE Input Material Identifier</c>
+            <c>version</c>        <c>1</c>        <c>unsigned integer</c>  <c></c>        <c>OSCORE Version</c>
+            <c>ms</c>        <c>2</c>        <c>byte string</c>  <c></c>        <c>OSCORE Master Secret value</c>
             <c>hkdf</c>        <c>3</c>        <c>text string / integer</c>        <c><xref target="COSE.Algorithms"/> Values (HMAC-based)</c>        <c>OSCORE HKDF value</c>
             <c>alg</c>        <c>4</c>        <c>text string / integer</c>  <c><xref target="COSE.Algorithms"/> Values (AEAD)</c>        <c>OSCORE AEAD Algorithm value</c>
             <c>salt</c>        <c>5</c>        <c>byte string</c>        <c></c>        <c>an input to OSCORE Master Salt value</c>
@@ -514,48 +516,49 @@ A5                                      # map(5)
 
           <t>
             <list style="hanging">
-              <t hangText="version:">
-                This parameter identifies the OSCORE Version number, which is an unsigned integer. For more information about this field, see section 5.4 of <xref target="RFC8613"/>.
-                In JSON, the "version" value is an integer.
-                In CBOR, the "version" type is int, and has label 0.
-              </t>
-
-              <t hangText="ms:">
-                This parameter identifies the OSCORE Master Secret value, which is a byte string. For more information about this field, see section 3.1 of <xref target="RFC8613"/>.
-                In JSON, the "ms" value is a Base64 encoded byte string.
-                In CBOR, the "ms" type is bstr, and has label 1.
-              </t>
 
               <t hangText="id:">
                 This parameter identifies the OSCORE_Input_Material and is encoded as a byte string.
                 In JSON, the "id" value is a Base64 encoded byte string.
                 In CBOR, the "id" type is byte string, and has label 8.
               </t> 
+
+              <t hangText="version:">
+                This parameter identifies the OSCORE Version number, which is an unsigned integer. For more information about this field, see section 5.4 of <xref target="RFC8613"/>.
+                In JSON, the "version" value is an integer.
+                In CBOR, the "version" type is integer, and has label 0.
+              </t>
+
+              <t hangText="ms:">
+                This parameter identifies the OSCORE Master Secret value, which is a byte string. For more information about this field, see section 3.1 of <xref target="RFC8613"/>.
+                In JSON, the "ms" value is a Base64 encoded byte string.
+                In CBOR, the "ms" type is byte string, and has label 1.
+              </t>
               
               <t hangText="hkdf:">
                 This parameter identifies the OSCORE HKDF Algorithm. For more information about this field, see section 3.1 of <xref target="RFC8613"/>. 
                 The values used MUST be registered in the IANA "COSE Algorithms" registry (see <xref target="COSE.Algorithms"/>) and MUST be HMAC-based HKDF algorithms. The value can either be the integer or the text string value of the HMAC-based HKDF algorithm in the "COSE Algorithms" registry.
                 In JSON, the "hkdf" value is a case-sensitive ASCII string or an integer.
-                In CBOR, the "hkdf" type is tstr or int, and has label 4.
+                In CBOR, the "hkdf" type is text string or integer, and has label 4.
               </t>
 
               <t hangText="alg:">
                 This parameter identifies the OSCORE AEAD Algorithm. For more information about this field, see section 3.1 of <xref target="RFC8613"/>
                 The values used MUST be registered in the IANA "COSE Algorithms" registry (see <xref target="COSE.Algorithms"/>) and MUST be AEAD algorithms. The value can either be the integer or the text string value of the HMAC-based HKDF algorithm in the "COSE Algorithms" registry.
                 In JSON, the "alg" value is a case-sensitive ASCII string or an integer.
-                In CBOR, the "alg" type is tstr or int, and has label 5.
+                In CBOR, the "alg" type is text string or integer, and has label 5.
               </t>
 
               <t hangText="salt:">
                 This parameter identifies an input to the OSCORE Master Salt value, which is a byte string. For more information about this field, see section 3.1 of <xref target="RFC8613"/>.
                 In JSON, the "salt" value is a Base64 encoded byte string.
-                In CBOR, the "salt" type is bstr, and has label 6.
+                In CBOR, the "salt" type is byte string, and has label 6.
               </t>
 
               <t hangText="contextId:">
                 This parameter identifies the security context as a byte string. This identifier is used as OSCORE ID Context. For more information about this field, see section 3.1 of <xref target="RFC8613"/>.
                 In JSON, the "contextID" value is a Base64 encoded byte string.
-                In CBOR, the "contextID" type is bstr, and has label 7.
+                In CBOR, the "contextID" type is byte string, and has label 7.
               </t>
               
             </list>
@@ -582,9 +585,9 @@ A5                                      # map(5)
 
           <figure><artwork type="CDDL"><![CDATA[
 OSCORE_Input_Material = {
-    ? 0 => int,               ; version
-    ? 1 => bstr,              ; ms
-    ? 2 => bstr,              ; id
+    ? 0 => bstr,              ; id
+    ? 1 => int,               ; version
+    ? 2 => bstr,              ; ms
     ? 3 => tstr / int,        ; hkdf
     ? 4 => tstr / int,        ; alg
     ? 5 => bstr,              ; salt
@@ -614,11 +617,11 @@ OSCORE_Input_Material = {
       </t> -->
 
       <t>
-        Note that the RS and client authenticates themselves
+        Note that the RS and client authenticates each other
         by generating the shared OSCORE Security Context using
         the pop-key as master secret.  An attacker
-        posting a valid token to the RS will not be able to generate a valid OSCORE context and
-        thus not be able to prove possession of the pop-key. Additionally, the mutual authentication is only achieved after the client has successfully verified the response from the RS.
+        posting a valid token to the RS will not be able to generate a valid OSCORE Security Context and
+        thus not be able to prove possession of the pop-key. Additionally, the mutual authentication is only achieved after the client has successfully verified a response from the RS protectd with the generated OSCORE Security Context.
       </t>
 
 

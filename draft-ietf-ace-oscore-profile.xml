@@ -628,7 +628,7 @@ OSCORE_Input_Material = {
       <section anchor="c-rs" title="C-to-RS: POST to authz-info endpoint">
 
         <t>
-          The client MUST generate a nonce value very unlikely to have been previously used with the same input keying material. This profile RECOMMENDS to use a 64-bit long random number as nonce's value. The client MUST store the nonce N1 as long as the response from the RS is not received and the access token related to it is still valid.
+          The client MUST generate a nonce value very unlikely to have been previously used with the same input keying material. This profile RECOMMENDS to use a 64-bit long random number as nonce's value. The client MUST store the nonce N1 as long as the response from the RS is not received and the access token related to it is still valid (to the best of the client's knowledge).
         </t>
 
         <t>
@@ -677,7 +677,7 @@ OSCORE_Input_Material = {
         </figure>
 
         <t>
-          If the client has already posted a valid token, has already established a security association with the RS, and wants to update its access rights, the client can do so by posting the new token (retrieved from the AS and containing the update of access rights) to the /authz-info endpoint. The client MUST protect the request using the OSCORE Security Context established during the first token exchange. The client MUST only send the access token in the payload, no nonce or identifier are sent. After proper verification (see <xref target="rs-c"/>), the RS will replace the old token with the new one, maintaining the same Security Context.
+          If the client has already posted a valid token, has already established a security association with the RS, and wants to update its access rights, the client can do so by posting the new token (retrieved from the AS and containing the update of access rights) to the /authz-info endpoint. The client MUST protect the request using the OSCORE Security Context established during the first token exchange. The client MUST only send the 'access_token' field in the CBOR map in the payload, no nonce or identifier are sent. After proper verification (see <xref target="rs-c"/>), the RS will replace the old token with the new one, maintaining the same Security Context.
         </t>
 
         <section anchor="nonce1" title="The Nonce 1 Parameter" >
@@ -737,7 +737,7 @@ OSCORE_Input_Material = {
         </t>
 
         <t>
-          If the RS receives the token in a OSCORE protected message, it means that the client is requesting an update of access rights. The RS MUST ignore any nonce and identifiers in the request, if any was sent. The RS MUST check that the "kid" of the 'cnf' claim of the new access token matches the identifier of the OSCORE Input Material of the context used to protect the message. If that is the case, the RS MUST discard the old token and associate the new token to the Security Context identified by the "kid" value in the 'cnf' claim. The RS MUST respond with a 2.01 (Created) response protected with the same Security Context, with no payload. If any verification fails, the RS MUST respond with a 4.01 (Unauthorized) error response.
+          If the RS receives the token in a OSCORE protected message, it means that the client is requesting an update of access rights. The RS MUST ignore any nonce and identifiers in the request, if any was sent. The RS MUST check that the "kid" of the 'cnf' claim of the new access token matches the identifier of the OSCORE Input Material of the context used to protect the message. If that is the case, the RS MUST overwrite the old token and associate the new token to the Security Context identified by the "kid" value in the 'cnf' claim. The RS MUST respond with a 2.01 (Created) response protected with the same Security Context, with no payload. If any verification fails, the RS MUST respond with a 4.01 (Unauthorized) error response.
         </t>
 
         <t>
@@ -867,7 +867,7 @@ token.
       <t>
         <list style="symbols">
           <t> the Sequence Number space ends. </t>
-          <t> the access token associated with the context expires. </t>
+          <t> the access token associated with the context becomes invalid, due to e.g. expiration. </t>
           <t> the client receives a number of 4.01 Unauthorized responses to OSCORE requests using the same Security Context. The exact number needs to be specified by the application. </t>
           <t> the client receives a new nonce in the 2.01 (Created) response (see <xref target="rs-c"/>) to a POST request to the authz-info endpoint, when re-posting a (non-expired) token associated to the existing context. </t>
         </list>

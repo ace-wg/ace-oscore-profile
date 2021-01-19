@@ -125,6 +125,7 @@
 
         <t>
           Readers are expected to be familiar with the terms and concepts defined in OSCORE <xref target="RFC8613"/>, such as "Security Context" and "Recipient ID".
+        </t>
 
         <t>
           Terminology for entities in the architecture is defined in OAuth 2.0 <xref target="RFC6749"/>, such as client (C), resource server (RS), and authorization server (AS). It is assumed in this document that a given resource on a specific RS is associated to a unique AS.
@@ -158,7 +159,7 @@
       </t>
 
       <t>
-        Once the client has retrieved the access token, it generates a nonce N1. The client also generates its own OSCORE Recipient ID ID1 (see Section 3.1 of <xref target="RFC8613"/>), for use with the keying material associated to the RS. The client posts the token, N1 and its Recipient ID to the RS using the authz-info endpoint and mechanisms specified in section 5.8 of <xref target="I-D.ietf-ace-oauth-authz"/> and Content-Format = application/ace+cbor. When using this profile, the communication with the authz-info endpoint is not protected, except for update of access rights.
+        Once the client has retrieved the access token, it generates a nonce N1, defined in this specification (see <xref target="nonce1"/>). The client also generates its own OSCORE Recipient ID ID1 (see Section 3.1 of <xref target="RFC8613"/>), for use with the keying material associated to the RS. The client posts the token, N1 and its Recipient ID to the RS using the authz-info endpoint and mechanisms specified in section 5.8 of <xref target="I-D.ietf-ace-oauth-authz"/> and Content-Format = application/ace+cbor. When using this profile, the communication with the authz-info endpoint is not protected, except for update of access rights.
       </t>
 
       <t>

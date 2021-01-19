@@ -172,7 +172,7 @@
       </t>
 
       <t>
-        Finally, the client sends a request protected with OSCORE to the RS. If the request is successfully verified, the server stores the complete Security Context state that is ready for use in protecting messages, and uses it in the response, and in further communications with the client, until token deletion, due to e.g. expiration. This Security Context is discarded when a token (whether the same or a different one) is used to successfully derive a new Security Context for that client. 
+        Finally, the client starts the communication with the RS by sending a request protected with OSCORE to the RS. If the request is successfully verified, the server stores the complete Security Context state that is ready for use in protecting messages, and uses it in the response, and in further communications with the client, until token deletion, due to e.g. expiration. This Security Context is discarded when a token (whether the same or a different one) is used to successfully derive a new Security Context for that client. 
       </t>
 
       <t>

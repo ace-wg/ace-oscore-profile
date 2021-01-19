@@ -151,7 +151,7 @@
       </t>
 
       <t>
-        This profile requires a client to retrieve an access token from the AS for the resource it wants to access on an RS, by sending an access token request to the token endpoint, as specified in section 5.6 of <xref target="I-D.ietf-ace-oauth-authz"/>. The access token request and response MUST be confidentiality-protected and ensure authenticity.  This profile RECOMMENDS the use of OSCORE between client and AS, but other protocols (such as TLS or DTLS) can be used as well.
+        This profile requires a client to retrieve an access token from the AS for the resource it wants to access on an RS, by sending an access token request to the token endpoint, as specified in section 5.6 of <xref target="I-D.ietf-ace-oauth-authz"/>. The access token request and response MUST be confidentiality-protected and ensure authenticity.  This profile RECOMMENDS the use of OSCORE between client and AS, to reduce the number of libraries the client has to support, but other protocols (such as TLS or DTLS) can be used as well.
       </t>
 
       <t>

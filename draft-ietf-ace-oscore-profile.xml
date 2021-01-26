@@ -2,7 +2,6 @@
 
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
 <!ENTITY SELF "[[this specification]]">
-<!ENTITY I-D.selander-ace-cose-ecdhe SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.selander-ace-cose-ecdhe.xml">
 <!ENTITY I-D.ietf-ace-oauth-authz SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ace-oauth-authz.xml">
 <!ENTITY I-D.ietf-ace-oauth-params SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ace-oauth-params.xml">
 <!ENTITY I-D.ietf-cbor-7049bis SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-cbor-7049bis.xml">

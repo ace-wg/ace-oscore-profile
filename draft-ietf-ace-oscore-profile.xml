@@ -625,7 +625,7 @@ OSCORE_Input_Material = {
         by generating the shared OSCORE Security Context using
         the pop-key as master secret.  An attacker
         posting a valid token to the RS will not be able to generate a valid OSCORE Security Context and
-        thus not be able to prove possession of the pop-key. Additionally, the mutual authentication is only achieved after the client has successfully verified a response from the RS protectd with the generated OSCORE Security Context.
+        thus not be able to prove possession of the pop-key. Additionally, the mutual authentication is only achieved after the client has successfully verified a response from the RS protected with the generated OSCORE Security Context.
       </t>
 
 

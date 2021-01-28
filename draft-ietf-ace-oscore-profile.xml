@@ -154,7 +154,7 @@
       </t>
 
       <t>
-        This profile requires a client to retrieve an access token from the AS for the resource it wants to access on an RS, by sending an access token request to the token endpoint, as specified in section 5.8 of <xref target="I-D.ietf-ace-oauth-authz"/>. The access token request and response MUST be confidentiality-protected and ensure authenticity.  This profile RECOMMENDS the use of OSCORE between client and AS, to reduce the number of libraries the client has to support, but other protocols (such as TLS or DTLS) can be used as well.
+        This profile requires a client to retrieve an access token from the AS for the resource it wants to access on an RS, by sending an access token request to the token endpoint, as specified in section 5.8 of <xref target="I-D.ietf-ace-oauth-authz"/>. The access token request and response MUST be confidentiality-protected and ensure authenticity.  This profile RECOMMENDS the use of OSCORE between client and AS, to reduce the number of libraries the client has to support, but other protocols fulfilling the security requirements defined in section 5 of <xref target="I-D.ietf-ace-oauth-authz"/> (such as TLS or DTLS) MAY be used as well.
       </t>
 
       <t>
@@ -853,7 +853,7 @@ token.
     <section anchor="introsp" title="Secure Communication with AS">
 
       <t>
-        As specified in the ACE framework (section 5.9 of <xref target="I-D.ietf-ace-oauth-authz"/>), the requesting entity (RS and/or client) and the AS communicates via the introspection or token endpoint. The use of CoAP and OSCORE (<xref target="RFC8613"/>) for this communication is RECOMMENDED in this profile; other protocols (such as HTTP and DTLS or TLS) MAY be used instead.
+        As specified in the ACE framework (section 5.9 of <xref target="I-D.ietf-ace-oauth-authz"/>), the requesting entity (RS and/or client) and the AS communicates via the introspection or token endpoint. The use of CoAP and OSCORE (<xref target="RFC8613"/>) for this communication is RECOMMENDED in this profile; other protocols fulfilling the security requirements defined in section 5 of <xref target="I-D.ietf-ace-oauth-authz"/> (such as HTTP and DTLS or TLS) MAY be used instead.
       </t>
 
       <t>

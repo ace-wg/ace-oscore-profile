@@ -786,7 +786,8 @@ N1, N2 and input salt as CBOR encoded byte strings:
       nonce2 = 0x4825a8991cd700ac01
       input salt = 0x50f9af838368e353e78888e1426bd94e6f
 
-Master Salt = 0x50 f9af838368e353e78888e1426bd94e6f 48 018a278f7faab55a 48 25a8991cd700ac01
+Master Salt = 0x50 f9af838368e353e78888e1426bd94e6f
+                48 018a278f7faab55a 48 25a8991cd700ac01
   ]]>
           </artwork>
         </figure>
@@ -802,7 +803,8 @@ N1, N2 and input salt values:
       nonce2 = 0x25a8991cd700ac01 (8 bytes)
       input salt = 0xf9af838368e353e78888e1426bd94e6f (16 bytes)
 
-Input to Base64 encoding: 0x10 f9af838368e353e78888e1426bd94e6f 08 018a278f7faab55a 08 25a8991cd700ac01
+Input to Base64 encoding: 0x10 f9af838368e353e78888e1426bd94e6f
+                            08 018a278f7faab55a 08 25a8991cd700ac01
 
 Master Salt = b64'EPmvg4No41PniIjhQmvZTm8IAYonj3+qtVoIJaiZHNcArAE='
   ]]>

@@ -222,8 +222,8 @@ Sec Context storage/            |                     |
    |                            |                     |
    | <--- OSCORE Response ----- |                     |
    |                            |                     |
-/mutual        ...              |                     |
-authentication/
+   |           ...              |                     |
+
 ]]>
         </artwork>
       </figure>

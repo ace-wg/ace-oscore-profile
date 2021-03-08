@@ -223,7 +223,6 @@ Sec Context storage/            |                     |
    | <--- OSCORE Response ----- |                     |
    |                            |                     |
    |           ...              |                     |
-
 ]]>
         </artwork>
       </figure>

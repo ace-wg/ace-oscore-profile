@@ -175,8 +175,8 @@
       </t>
 
       <t>
-        The use of nonces during the exchange prevents the reuse of an
-        Authenticated Encryption with Associated Data (AEAD) nonces/key pair
+        The use of nonces N1 and N2 during the exchange prevents the reuse of an
+        Authenticated Encryption with Associated Data (AEAD) nonce/key pair
         for two different messages. Reuse might otherwise occur when
         client and RS derive a new Security Context from an existing (non-
         expired) access token, as might occur when either party has just rebooted, and might lead to loss of both confidentiality and integrity.
@@ -612,7 +612,7 @@ OSCORE_Input_Material = {
     <section anchor="c-rs1" title="Client-RS Communication">
 
       <t>
-        The following subsections describe the details of the POST request and response to the authz-info endpoint between client and RS. The client generates a nonce N1 and an identifier ID1 unique in the sets of its own Recipient IDs, and posts them together with the token that includes the materials (e.g., OSCORE parameters) received from the AS to the RS. The RS then generates a nonce N2 and an identifier ID2 unique in the sets of its own Recipient IDs, and uses Section 3.2 of <xref target="RFC8613"/> to derive a security context based on a shared master secret, the two nonces and the two identifiers, established between client and server. The nonces and identifiers are encoded as CBOR byte string if CBOR is used, and as Base64 string if JSON is used. This security context is used to protect all future communication between client and RS using OSCORE, as long as the access token is valid.
+        The following subsections describe the details of the POST request and response to the authz-info endpoint between client and RS. The client generates a nonce N1 and an identifier ID1 unique in the sets of its own Recipient IDs, and posts them together with the token that includes the materials (e.g., OSCORE parameters) received from the AS to the RS. The RS then generates a nonce N2 and an identifier ID2 unique in the sets of its own Recipient IDs, and uses Section 3.2 of <xref target="RFC8613"/> to derive a security context based on a shared master secret, the two exchanged nonces and the two identifiers, established between client and server. The exchanged nonces and identifiers are encoded as CBOR byte string if CBOR is used, and as Base64 string if JSON is used. This security context is used to protect all future communication between client and RS using OSCORE, as long as the access token is valid.
       </t>
 
 <!--      <t>
@@ -635,7 +635,7 @@ OSCORE_Input_Material = {
       <section anchor="c-rs" title="C-to-RS: POST to authz-info endpoint">
 
         <t>
-          The client MUST generate a nonce value very unlikely to have been previously used with the same input keying material. This profile RECOMMENDS to use a 64-bit long random number as nonce's value. The client MUST store the nonce N1 as long as the response from the RS is not received and the access token related to it is still valid (to the best of the client's knowledge).
+          The client MUST generate a nonce value N1 very unlikely to have been previously used with the same input keying material. This profile RECOMMENDS to use a 64-bit long random number as nonce's value. The client MUST store the nonce N1 as long as the response from the RS is not received and the access token related to it is still valid (to the best of the client's knowledge).
         </t>
 
         <t>
@@ -655,7 +655,7 @@ OSCORE_Input_Material = {
         </t>
 
         <t>
-          Note that a client may be required to re-POST the access token in order to complete a request, since an RS may delete a stored access token (and associated Security Context) at any time, for example due to all storage space being consumed. This situation is detected by the client when it receives an AS Request Creation Hints response. Reposting the same access token will result in deriving a new OSCORE Security Context to be used with the RS, as different nonces will be used.
+          Note that a client may be required to re-POST the access token in order to complete a request, since an RS may delete a stored access token (and associated Security Context) at any time, for example due to all storage space being consumed. This situation is detected by the client when it receives an AS Request Creation Hints response. Reposting the same access token will result in deriving a new OSCORE Security Context to be used with the RS, as different exchanged nonces will be used.
         </t>
 
         <t>
@@ -931,8 +931,8 @@ token.
       </t>
       
       <t>
-        Since the use of nonces N1 and N2 during the exchange guarantees uniqueness of AEAD keys and nonces, it is REQUIRED that nonces are not reused with the same input keying material even in case of re-boots. This document RECOMMENDS the use of 64 bit random nonces. Considering the birthday paradox, the average collision for each nonce will happen after 2^32 messages, which is considerably more token provisionings than expected for intended applications. If applications use something else, such as a counter, they need to guarantee that reboot and loss of state on either node does not provoke reuse.
-        If that is not guaranteed, nodes are susceptible to reuse of AEAD (nonces, keys) pairs, especially since an on-path attacker can cause the client to use an arbitrary nonce for Security Context establishment by replaying client-to-server messages.
+        Since the use of nonces N1 and N2 during the exchange guarantees uniqueness of AEAD keys and nonces, it is REQUIRED that the exchanged nonces are not reused with the same input keying material even in case of re-boots. This document RECOMMENDS the exchange of 64 bit random nonces. Considering the birthday paradox, the average collision for each nonce will happen after 2^32 messages, which is considerably more token provisionings than expected for intended applications. If applications use something else, such as a counter, they need to guarantee that reboot and loss of state on either node does not provoke reuse.
+        If that is not guaranteed, nodes are susceptible to reuse of AEAD (nonce, key) pairs, especially since an on-path attacker can cause the client to use an arbitrary nonce for Security Context establishment by replaying client-to-server messages.
       </t>
 
       <t>

@@ -872,7 +872,7 @@ token.
       </t>
 
       <t>
-        The client MUST discard the current Security Context associated with an RS when:
+        The client MUST discard the current Security Context associated with an RS when any of the following occurs:
       </t>
 
       <t>
@@ -885,7 +885,7 @@ token.
       </t>
 
       <t>
-        The RS MUST discard the current Security Context associated with a client when:
+        The RS MUST discard the current Security Context associated with a client when any of the following occurs:
       </t>
 
       <t>

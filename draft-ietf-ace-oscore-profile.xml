@@ -345,7 +345,8 @@ Usually it is assumed that constrained devices will be pre-configured with the n
         </t>
 	      
         <t>
-        	The same parameters MUST be included in the claims associated with the access token. This profile RECOMMENDS the use of CBOR web token (CWT) as specified in  <xref target="RFC8392"/>. If the token is a CWT, the same OSCORE_Input_Material structure defined above MUST be placed in the 'osc' field of the 'cnf' claim of this token.
+        	The same parameters MUST be included in the claims associated with the access token.
+          The OSCORE master secret MUST be encrypted by the authorization server so that only the resource server can decrypt it (see Section 6.1. of <xref target="I-D.ietf-ace-oauth-authz"/>). This profile RECOMMENDS the use of CBOR web token (CWT) protected with COSE_Encrypt/COSE_Encrypt0 as specified in  <xref target="RFC8392"/>. If the token is a CWT, the same OSCORE_Input_Material structure defined above MUST be placed in the 'osc' field of the 'cnf' claim of this token.
 	      </t>
 
         <t>

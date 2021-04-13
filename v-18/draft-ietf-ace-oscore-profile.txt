@@ -19,7 +19,7 @@ Expires: 15 October 2021                                       Combitech
 
 Abstract
 
-   This memo specifies a profile for the Authentication and
+   This document specifies a profile for the Authentication and
    Authorization for Constrained Environments (ACE) framework.  It
    utilizes Object Security for Constrained RESTful Environments
    (OSCORE) to provide communication security and proof-of-possession
@@ -95,7 +95,7 @@ Table of Contents
 
 1.  Introduction
 
-   This memo specifies a profile of the ACE framework
+   This document specifies a profile of the ACE framework
    [I-D.ietf-ace-oauth-authz].  In this profile, a client and a resource
    server use the Constrained Application Protocol (CoAP) [RFC7252] to
    communicate.  The client uses an access token, bound to a symmetric
@@ -140,16 +140,15 @@ Table of Contents
    given resource on a specific RS is associated to a unique AS.
 
    Concise Binary Object Representation (CBOR) [RFC8949] and Concise
-   Data Definition Language (CDDL) [RFC8610] are used in this
-   specification.  CDDL predefined type names, especially bstr for CBOR
-   byte strings and tstr for CBOR text strings, are used extensively in
-   the document.
+   Data Definition Language (CDDL) [RFC8610] are used in this document.
+   CDDL predefined type names, especially bstr for CBOR byte strings and
+   tstr for CBOR text strings, are used extensively in this document.
 
    Note that the term "endpoint" is used here, as in
    [I-D.ietf-ace-oauth-authz], following its OAuth definition, which is
    to denote resources such as token and introspect at the AS and authz-
    info at the RS.  The CoAP [RFC7252] definition, which is "An entity
-   participating in the CoAP protocol" is not used in this memo.
+   participating in the CoAP protocol" is not used in this document.
 
 2.  Protocol Overview
 
@@ -178,8 +177,8 @@ Table of Contents
    [I-D.ietf-tls-dtls13]) MAY be used as well.
 
    Once the client has retrieved the access token, it generates a nonce
-   N1, defined in this specification (see Section 4.1.1).  The client
-   also generates its own OSCORE Recipient ID ID1 (see Section 3.1 of
+   N1, defined in this document (see Section 4.1.1).  The client also
+   generates its own OSCORE Recipient ID ID1 (see Section 3.1 of
    [RFC8613]), for use with the keying material associated to the RS.
    The client posts the token, N1 and its Recipient ID to the RS using
    the authz-info endpoint and mechanisms specified in section 5.8 of
@@ -1049,7 +1048,7 @@ Table of Contents
    the OSCORE security context, and acquire a new one.
 
    The client MUST discard the current Security Context associated with
-   an RS when:
+   an RS when any of the following occurs:
 
    *  the Sequence Number space ends.
 
@@ -1066,7 +1065,7 @@ Table of Contents
       context.
 
    The RS MUST discard the current Security Context associated with a
-   client when:
+   client when any of the following occurs:
 
    *  the Sequence Number space ends.
 
@@ -1189,8 +1188,8 @@ Table of Contents
 9.  IANA Considerations
 
    Note to RFC Editor: Please replace all occurrences of "[[this
-   specification]]" with the RFC number of this specification and delete
-   this paragraph.
+   document]]" with the RFC number of this document and delete this
+   paragraph.
 
 9.1.  ACE Profile Registry
 
@@ -1203,7 +1202,7 @@ Table of Contents
       between constrained nodes using the Authentication and
       Authorization for Constrained Environments framework.
    *  CBOR Value: TBD (value between 1 and 255)
-   *  Reference: [[this specification]]
+   *  Reference: [[this document]]
 
 9.2.  OAuth Parameters Registry
 
@@ -1214,22 +1213,22 @@ Table of Contents
    *  Parameter name: nonce1
    *  Parameter usage location: client-rs request
    *  Change Controller: IESG
-   *  Specification Document(s): [[this specification]]
+   *  Specification Document(s): [[this document]]
 
    *  Parameter name: nonce2
    *  Parameter usage location: rs-client response
    *  Change Controller: IESG
-   *  Specification Document(s): [[this specification]]
+   *  Specification Document(s): [[this document]]
 
    *  Parameter name: ace_client_recipientid
    *  Parameter usage location: client-rs request
    *  Change Controller: IESG
-   *  Specification Document(s): [[this specification]]
+   *  Specification Document(s): [[this document]]
 
    *  Parameter name: ace_server_recipientid
    *  Parameter usage location: rs-client response
    *  Change Controller: IESG
-   *  Specification Document(s): [[this specification]]
+   *  Specification Document(s): [[this document]]
 
 9.3.  OAuth Parameters CBOR Mappings Registry
 
@@ -1240,22 +1239,22 @@ Table of Contents
    *  Name: nonce1
    *  CBOR Key: TBD1
    *  Value Type: bstr
-   *  Reference: [[this specification]]
+   *  Reference: [[this document]]
 
    *  Name: nonce2
    *  CBOR Key: TBD2
    *  Value Type: bstr
-   *  Reference: [[this specification]]
+   *  Reference: [[this document]]
 
    *  Name: ace_client_recipientid
    *  CBOR Key: TBD3
    *  Value Type: bstr
-   *  Reference: [[this specification]]
+   *  Reference: [[this document]]
 
    *  Name: ace_server_recipientid
    *  CBOR Key: TBD4
    *  Value Type: bstr
-   *  Reference: [[this specification]]
+   *  Reference: [[this document]]
 
 9.4.  OSCORE Security Context Parameters Registry
 
@@ -1269,12 +1268,12 @@ Table of Contents
    The columns of the registry are:
 
    name  The JSON name requested (e.g., "ms").  Because a core goal of
-      this specification is for the resulting representations to be
-      compact, it is RECOMMENDED that the name be short.  This name is
-      case sensitive.  Names may not match other registered names in a
-      case-insensitive manner unless the Designated Experts determine
-      that there is a compelling reason to allow an exception.  The name
-      is not used in the CBOR encoding.
+      this document is for the resulting representations to be compact,
+      it is RECOMMENDED that the name be short.  This name is case
+      sensitive.  Names may not match other registered names in a case-
+      insensitive manner unless the Designated Experts determine that
+      there is a compelling reason to allow an exception.  The name is
+      not used in the CBOR encoding.
    CBOR label  The value to be used to identify this algorithm.  Map key
       labels MUST be unique.  The label can be a positive integer, a
       negative integer or a string.  Integer values between -256 and 255
@@ -1308,7 +1307,7 @@ Table of Contents
    *  Confirmation Key: TBD (value between 4 and 255)
    *  Confirmation Value Type(s): map
    *  Change Controller: IESG
-   *  Specification Document(s): Section 3.2.1 of [[this specification]]
+   *  Specification Document(s): Section 3.2.1 of [[this document]]
 
 9.6.  JWT Confirmation Methods Registry
 
@@ -1321,7 +1320,7 @@ Table of Contents
       the parameters for using OSCORE per-message security with implicit
       key confirmation
    *  Change Controller: IESG
-   *  Specification Document(s): Section 3.2.1 of [[this specification]]
+   *  Specification Document(s): Section 3.2.1 of [[this document]]
 
 9.7.  Expert Review Instructions
 
@@ -1496,7 +1495,7 @@ Appendix A.  Profile Requirements
 Acknowledgments
 
    The authors wish to thank Jim Schaad and Marco Tiloca for the input
-   on this memo.  Special thanks to the responsible area director
+   on this document.  Special thanks to the responsible area director
    Benjamin Kaduk for his extensive review and contributed text.  Ludwig
    Seitz worked on this document as part of the CelticNext projects
    CyberWI, and CRITISEC with funding from Vinnova.  The work on this

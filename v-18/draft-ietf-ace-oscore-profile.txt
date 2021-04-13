@@ -95,25 +95,26 @@ Table of Contents
 
 1.  Introduction
 
-   This document specifies a profile of the ACE framework
-   [I-D.ietf-ace-oauth-authz].  In this profile, a client and a resource
-   server use the Constrained Application Protocol (CoAP) [RFC7252] to
-   communicate.  The client uses an access token, bound to a symmetric
-   key (the proof-of-possession key) to authorize its access to the
-   resource server.  Note that this profile uses a symmetric-crypto-
-   based scheme, where the symmetric secret is used as input material
-   for keying material derivation.  In order to provide communication
-   security and proof of possession, the client and resource server use
-   Object Security for Constrained RESTful Environments (OSCORE)
-   [RFC8613].  Note that the proof of possession is not achieved through
-   a dedicated protocol element, but rather occurs after the first
-   message exchange using OSCORE.
+   This document specifies the "coap_oscore" profile of the ACE
+   framework [I-D.ietf-ace-oauth-authz].  In this profile, a client and
+   a resource server use the Constrained Application Protocol (CoAP)
+   [RFC7252] to communicate.  The client uses an access token, bound to
+   a symmetric key (the proof-of-possession key) to authorize its access
+   to the resource server.  Note that this profile uses a symmetric-
+   crypto-based scheme, where the symmetric secret is used as input
+   material for keying material derivation.  In order to provide
+   communication security and proof of possession, the client and
+   resource server use Object Security for Constrained RESTful
+   Environments (OSCORE) [RFC8613].  Note that the proof of possession
+   is not achieved through a dedicated protocol element, but rather
+   occurs after the first message exchange using OSCORE.
 
    OSCORE specifies how to use CBOR Object Signing and Encryption (COSE)
-   [RFC8152] to secure CoAP messages.  Note that OSCORE can be used to
-   secure CoAP messages, as well as HTTP and combinations of HTTP and
-   CoAP; a profile of ACE similar to the one described in this document,
-   with the difference of using HTTP instead of CoAP as communication
+   [I-D.ietf-cose-rfc8152bis-struct][I-D.ietf-cose-rfc8152bis-algs] to
+   secure CoAP messages.  Note that OSCORE can be used to secure CoAP
+   messages, as well as HTTP and combinations of HTTP and CoAP; a
+   profile of ACE similar to the one described in this document, with
+   the difference of using HTTP instead of CoAP as communication
    protocol, could be specified analogously to this one.
 
 1.1.  Terminology
@@ -125,8 +126,9 @@ Table of Contents
    capitals, as shown here.
 
    Certain security-related terms such as "authentication",
-   "authorization", "confidentiality", "(data) integrity", "message
-   authentication code", and "verify" are taken from [RFC4949].
+   "authorization", "confidentiality", "(data) integrity", "Message
+   Authentication Code (MAC)", "Hash-based Message Authentication Code
+   (HMAC)", and "verify" are taken from [RFC4949].
 
    RESTful terminology follows HTTP [RFC7231].
 
@@ -149,6 +151,9 @@ Table of Contents
    to denote resources such as token and introspect at the AS and authz-
    info at the RS.  The CoAP [RFC7252] definition, which is "An entity
    participating in the CoAP protocol" is not used in this document.
+
+   Examples throughout this document are expressed in CBOR diagnostic
+   notation without the tag and value abbreviations.
 
 2.  Protocol Overview
 
@@ -173,8 +178,8 @@ Table of Contents
    profile RECOMMENDS the use of OSCORE between client and AS, to reduce
    the number of libraries the client has to support, but other
    protocols fulfilling the security requirements defined in section 5
-   of [I-D.ietf-ace-oauth-authz] (such as TLS [RFC8446] or DTLS
-   [I-D.ietf-tls-dtls13]) MAY be used as well.
+   of [I-D.ietf-ace-oauth-authz] MAY alternatively be used, such as TLS
+   [RFC8446] or DTLS [I-D.ietf-tls-dtls13].
 
    Once the client has retrieved the access token, it generates a nonce
    N1, defined in this document (see Section 4.1.1).  The client also
@@ -211,9 +216,10 @@ Table of Contents
    successfully verified, the server stores the complete Security
    Context state that is ready for use in protecting messages, and uses
    it in the response, and in further communications with the client,
-   until token deletion, due to e.g. expiration.  This Security Context
-   is discarded when a token (whether the same or a different one) is
-   used to successfully derive a new Security Context for that client.
+   until token deletion due to, for example, expiration.  This Security
+   Context is discarded when a token (whether the same or a different
+   one) is used to successfully derive a new Security Context for that
+   client.
 
    The use of nonces N1 and N2 during the exchange prevents the reuse of
    an Authenticated Encryption with Associated Data (AEAD) nonce/key
@@ -297,9 +303,7 @@ Table of Contents
    secure channel that guarantees authentication, message integrity and
    confidentiality (see Section 5).
 
-   An example of such a request, with payload in CBOR diagnostic
-   notation without the tag and value abbreviations is reported in
-   Figure 2
+   An example of such a request is shown in Figure 2
 
        Header: POST (Code=0.02)
        Uri-Host: "as.example.com"
@@ -307,7 +311,7 @@ Table of Contents
        Content-Format: "application/ace+cbor"
        Payload:
        {
-         "req_aud" : "tempSensor4711",
+         "audience" : "tempSensor4711",
          "scope" : "read"
         }
 
@@ -328,12 +332,10 @@ Table of Contents
    RS.  The AS MUST verify that the received value identifies a proof-
    of-possession key that has previously been issued to the requesting
    client.  If that is not the case, the Client-to-AS request MUST be
-   declined with the error code 'invalid_request' as defined in
+   declined with the error code "invalid_request" as defined in
    Section 5.8.3 of [I-D.ietf-ace-oauth-authz].
 
-   An example of such a request, with payload in CBOR diagnostic
-   notation without the tag and value abbreviations is reported in
-   Figure 3
+   An example of such a request is shown in Figure 3
 
        Header: POST (Code=0.02)
        Uri-Host: "as.example.com"
@@ -341,7 +343,7 @@ Table of Contents
        Content-Format: "application/ace+cbor"
        Payload:
        {
-         "req_aud" : "tempSensor4711",
+         "audience" : "tempSensor4711",
          "scope" : "write",
          "req_cnf" : {
            "kid" : h'01'
@@ -382,7 +384,8 @@ Table of Contents
 
    *  an AEAD algorithm
 
-   *  an HMAC-based key derivation function (HKDF) algorithm
+   *  an HMAC-based key derivation function (HKDF, [RFC5869]) algorithm,
+      see section 3.1 of [I-D.ietf-cose-rfc8152bis-algs]
 
    *  a salt
 
@@ -390,41 +393,43 @@ Table of Contents
 
    This data is transported in the OSCORE_Input_Material.  The
    OSCORE_Input_Material is a CBOR map object, defined in Section 3.2.1.
-   This object is transported in the 'cnf' parameter of the access token
+   This object is transported in the "cnf" parameter of the access token
    response as defined in Section 3.2 of [I-D.ietf-ace-oauth-params], as
-   the value of a field named 'osc', registered in Section 9.5 and
+   the value of a field named "osc", registered in Section 9.5 and
    Section 9.6.
 
    The AS MAY assign an identifier to the context (context identifier).
    This identifier is used as ID Context in the OSCORE context as
    described in section 3.1 of [RFC8613].  If assigned, this parameters
-   MUST be communicated as the 'contextId' field in the
+   MUST be communicated as the "contextId" field in the
    OSCORE_Input_Material.  The application needs to consider that this
    identifier is sent in the clear and may reveal information about the
    endpoints, as mentioned in section 12.8 of [RFC8613].
 
    The master secret and the identifier of the OSCORE_Input_Material
-   MUST be communicated as the 'ms' and 'id' field in the 'osc' field in
-   the 'cnf' parameter of the access token response.  If included, the
-   AEAD algorithm is sent in the 'alg' parameter in the
-   OSCORE_Input_Material; the HKDF algorithm in the 'hkdf' parameter of
-   the OSCORE_Input_Material; a salt in the 'salt' parameter of the
-   OSCORE_Input_Material; and the OSCORE version in the 'version'
+   MUST be communicated as the "ms" and "id" field in the "osc" field in
+   the "cnf" parameter of the access token response.  If included, the
+   AEAD algorithm is sent in the "alg" parameter in the
+   OSCORE_Input_Material; the HKDF algorithm in the "hkdf" parameter of
+   the OSCORE_Input_Material; a salt in the "salt" parameter of the
+   OSCORE_Input_Material; and the OSCORE version in the "version"
    parameter of the OSCORE_Input_Material.
 
    The same parameters MUST be included in the claims associated with
-   the access token.  This profile RECOMMENDS the use of CBOR web token
-   (CWT) as specified in [RFC8392].  If the token is a CWT, the same
-   OSCORE_Input_Material structure defined above MUST be placed in the
-   'osc' field of the 'cnf' claim of this token.
+   the access token.  The OSCORE master secret MUST be encrypted by the
+   authorization server so that only the resource server can decrypt it
+   (see Section 6.1. of [I-D.ietf-ace-oauth-authz]).  This profile
+   RECOMMENDS the use of a CBOR web token (CWT) protected with
+   COSE_Encrypt/COSE_Encrypt0 as specified in [RFC8392].  If the token
+   is a CWT, the same OSCORE_Input_Material structure defined above MUST
+   be placed in the "osc" field of the "cnf" claim of this token.
 
    The AS MUST send different OSCORE_Input_Material (and therefore
    different access tokens) to different authorized clients, in order
    for the RS to differentiate between clients.
 
-   Figure 4 shows an example of an AS response, with payload in CBOR
-   diagnostic notation without the tag and value abbreviations.  The
-   access token has been truncated for readability.
+   Figure 4 shows an example of an AS response.  The access token has
+   been truncated for readability.
 
        Header: Created (Code=2.01)
        Content-Type: "application/ace+cbor"
@@ -446,8 +451,7 @@ Table of Contents
     Figure 4: Example AS-to-C Access Token response with OSCORE profile.
 
    Figure 5 shows an example CWT Claims Set, including the relevant
-   OSCORE parameters in the 'cnf' claim, in CBOR diagnostic notation
-   without tag and value abbreviations.
+   OSCORE parameters in the "cnf" claim.
 
    {
      "aud" : "tempSensorInLivingRoom",
@@ -469,7 +473,7 @@ Table of Contents
    defined in [I-D.ietf-ace-oauth-authz] and [RFC8747] and encoded in
    CBOR is shown in Figure 6.  The bytes in hexadecimal are reported in
    the first column, while their corresponding CBOR meaning is reported
-   after the '#' sign on the second column, for easiness of readability.
+   after the "#" sign on the second column, for easiness of readability.
 
    NOTE TO THE RFC EDITOR: before publishing, it should be checked (and
    in case fixed) that the values used below (which are not yet
@@ -517,15 +521,14 @@ Table of Contents
 
    If the client has requested an update to its access rights using the
    same OSCORE Security Context, which is valid and authorized, the AS
-   MUST omit the 'cnf' parameter in the response, and MUST carry the
-   OSCORE Input Material identifier in the 'kid' field in the 'cnf'
+   MUST omit the "cnf" parameter in the response, and MUST carry the
+   OSCORE Input Material identifier in the "kid" field in the "cnf"
    claim of the token.  This identifier needs to be included in the
    token in order for the RS to identify the correct OSCORE Input
    Material.
 
-   Figure 7 shows an example of such an AS response, with payload in
-   CBOR diagnostic notation without the tag and value abbreviations.
-   The access token has been truncated for readability.
+   Figure 7 shows an example of such an AS response The access token has
+   been truncated for readability.
 
        Header: Created (Code=2.01)
        Content-Type: "application/ace+cbor"
@@ -542,8 +545,7 @@ Table of Contents
                    profile, for update of access rights.
 
    Figure 8 shows an example CWT Claims Set, containing the necessary
-   OSCORE parameters in the 'cnf' claim for update of access rights, in
-   CBOR diagnostic notation without tag and value abbreviations.
+   OSCORE parameters in the "cnf" claim for update of access rights.
 
      {
        "aud" : "tempSensorInLivingRoom",
@@ -571,8 +573,9 @@ Table of Contents
    be encoded as a JSON object or as a CBOR map.  The set of common
    parameters that can appear in an OSCORE_Input_Material can be found
    in the IANA "OSCORE Security Context Parameters" registry
-   (Section 9.4), defined for extensibility, and is specified below.
-   All parameters are optional.  Table 1 provides a summary of the
+   (Section 9.4), defined for extensibility, and the initial set of
+   parameters defined in this document is specified below.  All
+   parameters are optional.  Table 1 provides a summary of the
    OSCORE_Input_Material parameters defined in this section.
 
    +===========+=======+==========+===================+===============+
@@ -627,11 +630,12 @@ Table of Contents
       information about this field, see section 3.1 of [RFC8613].  The
       values used MUST be registered in the IANA "COSE Algorithms"
       registry (see [COSE.Algorithms]) and MUST be HMAC-based HKDF
-      algorithms.  The value can either be the integer or the text
-      string value of the HMAC-based HKDF algorithm in the "COSE
-      Algorithms" registry.  In JSON, the "hkdf" value is a case-
-      sensitive ASCII string or an integer.  In CBOR, the "hkdf" type is
-      text string or integer, and has label 3.
+      algorithms (see section 3.1 of [I-D.ietf-cose-rfc8152bis-algs]).
+      The value can either be the integer or the text string value of
+      the HMAC-based HKDF algorithm in the "COSE Algorithms" registry.
+      In JSON, the "hkdf" value is a case-sensitive ASCII string or an
+      integer.  In CBOR, the "hkdf" type is text string or integer, and
+      has label 3.
 
    alg:  This parameter identifies the OSCORE AEAD Algorithm.  For more
       information about this field, see section 3.1 of [RFC8613] The
@@ -709,10 +713,10 @@ Table of Contents
 
    The client MUST generate a nonce value N1 very unlikely to have been
    previously used with the same input keying material.  This profile
-   RECOMMENDS to use a 64-bit long random number as nonce's value.  The
-   client MUST store the nonce N1 as long as the response from the RS is
-   not received and the access token related to it is still valid (to
-   the best of the client's knowledge).
+   RECOMMENDS using a 64-bit long random number as the nonce's value.
+   The client MUST store the nonce N1 as long as the response from the
+   RS is not received and the access token related to it is still valid
+   (to the best of the client's knowledge).
 
    The client generates its own Recipient ID, ID1, for the OSCORE
    Security Context that it is establishing with the RS.  By generating
@@ -732,8 +736,8 @@ Table of Contents
    N1 and ID1 in a CBOR map.  The client MUST use the Content-Format
    "application/ace+cbor" defined in section 8.14 of
    [I-D.ietf-ace-oauth-authz].  The client MUST include the access token
-   using the 'access_token' parameter, N1 using the 'nonce1' parameter
-   defined in Section 4.1.1, and ID1 using the 'ace_client_recipientid'
+   using the "access_token" parameter, N1 using the "nonce1" parameter
+   defined in Section 4.1.1, and ID1 using the "ace_client_recipientid"
    parameter defined in Section 4.1.2.
 
    The communication with the authz-info endpoint does not have to be
@@ -750,15 +754,13 @@ Table of Contents
    nonces will be used.
 
    The client may also choose to re-POST the access token in order to
-   renew its OSCORE Security Context.  In that case, the client and the
+   update its OSCORE Security Context.  In that case, the client and the
    RS will exchange newly generated nonces, re-negotiate identifiers,
    and derive new keying material.  The client and RS might decide to
    keep the same identifiers or renew them during the re-negotiation.
 
    Figure 10 shows an example of the request sent from the client to the
-   RS, with payload in CBOR diagnostic notation without the tag and
-   value abbreviations.  The access token has been truncated for
-   readability.
+   RS.  The access token has been truncated for readability.
 
          Header: POST (Code=0.02)
          Uri-Host: "rs.example.com"
@@ -781,7 +783,7 @@ Table of Contents
    (retrieved from the AS and containing the update of access rights) to
    the /authz-info endpoint.  The client MUST protect the request using
    the OSCORE Security Context established during the first token
-   exchange.  The client MUST only send the 'access_token' field in the
+   exchange.  The client MUST only send the "access_token" field in the
    CBOR map in the payload, no nonce or identifier are sent.  After
    proper verification (see Section 4.2), the RS will replace the old
    token with the new one, maintaining the same Security Context.
@@ -814,8 +816,8 @@ Table of Contents
    request with 2.01 (Created).  If the token is valid but is associated
    to claims that the RS cannot process (e.g., an unknown scope), or if
    any of the expected parameters is missing (e.g., any of the mandatory
-   parameters from the AS or the identifier 'id1'), or if any parameters
-   received in the 'osc' field is unrecognized, the RS must respond with
+   parameters from the AS or the identifier "id1"), or if any parameters
+   received in the "osc" field is unrecognized, the RS must respond with
    an error response code equivalent to the CoAP code 4.00 (Bad
    Request).  In the latter two cases, the RS may provide additional
    information in the error response, in order to clarify what went
@@ -830,15 +832,14 @@ Table of Contents
    from the value received in the ace_client_recipientid parameter.  The
    RS sends N2 and ID2 within the 2.01 (Created) response.  The payload
    of the 2.01 (Created) response MUST be a CBOR map containing the
-   'nonce2' parameter defined in Section 4.2.1, set to N2, and the
-   'ace_server_recipientid' parameter defined in Section 4.2.2, set to
-   ID2.  This profile RECOMMENDS to use a 64-bit long random number as
-   nonce's value.  The RS MUST use the Content-Format "application/
+   "nonce2" parameter defined in Section 4.2.1, set to N2, and the
+   "ace_server_recipientid" parameter defined in Section 4.2.2, set to
+   ID2.  This profile RECOMMENDS using a 64-bit long random number as
+   the nonce's value.  The RS MUST use the Content-Format "application/
    ace+cbor" defined in section 8.14 of [I-D.ietf-ace-oauth-authz].
 
    Figure 11 shows an example of the response sent from the RS to the
-   client, with payload in CBOR diagnostic notation without the tag and
-   value abbreviations.
+   client.
 
          Header: Created (Code=2.01)
          Content-Format: "application/ace+cbor"
@@ -859,11 +860,11 @@ Table of Contents
    If the RS receives the token in a OSCORE protected message, it means
    that the client is requesting an update of access rights.  The RS
    MUST ignore any nonce and identifiers in the request, if any was
-   sent.  The RS MUST check that the "kid" of the 'cnf' claim of the new
+   sent.  The RS MUST check that the "kid" of the "cnf" claim of the new
    access token matches the identifier of the OSCORE Input Material of
    the context used to protect the message.  If that is the case, the RS
    MUST overwrite the old token and associate the new token to the
-   Security Context identified by the "kid" value in the 'cnf' claim.
+   Security Context identified by the "kid" value in the "cnf" claim.
    The RS MUST respond with a 2.01 (Created) response protected with the
    same Security Context, with no payload.  If any verification fails,
    the RS MUST respond with a 4.01 (Unauthorized) error response.
@@ -896,11 +897,11 @@ Table of Contents
 
 4.3.  OSCORE Setup
 
-   Once receiving the 2.01 (Created) response from the RS, following the
-   POST request to authz-info endpoint, the client MUST extract the bstr
-   nonce N2 from the 'nonce2' parameter in the CBOR map in the payload
-   of the response.  Then, the client MUST set the Master Salt of the
-   Security Context created to communicate with the RS to the
+   Once the 2.01 (Created) response is received from the RS, following
+   the POST request to authz-info endpoint, the client MUST extract the
+   bstr nonce N2 from the "nonce2" parameter in the CBOR map in the
+   payload of the response.  Then, the client MUST set the Master Salt
+   of the Security Context created to communicate with the RS to the
    concatenation of salt, N1, and N2, in this order: Master Salt =
    salt | N1 | N2, where | denotes byte string concatenation, where salt
    is the CBOR byte string received from the AS in Section 3.2, and
@@ -1052,8 +1053,8 @@ Table of Contents
 
    *  the Sequence Number space ends.
 
-   *  the access token associated with the context becomes invalid, due
-      to e.g. expiration.
+   *  the access token associated with the context becomes invalid due
+      to, for example, expiration.
 
    *  the client receives a number of 4.01 Unauthorized responses to
       OSCORE requests using the same Security Context.  The exact number
@@ -1085,8 +1086,8 @@ Table of Contents
    Analogously, implementations may want to cancel CoAP observations at
    the RS registered before the Security Context is replaced, or
    conversely they will need to implement a mechanism to ensure that
-   those observation are to be protected with the newly derived Security
-   Context.
+   those observations are to be protected with the newly derived
+   Security Context.
 
 7.  Security Considerations
 
@@ -1101,9 +1102,9 @@ Table of Contents
    As previously stated, the proof-of-possession in this profile is
    performed by both parties verifying that they have established the
    same Security Context, as specified in Section 4.3, which means that
-   both the OSCORE request and OSCORE response pass verification.  RS
-   authentication requires both that the client trusts the AS and that
-   the OSCORE response from the RS pass verification.
+   both the OSCORE request and the OSCORE response passes verification.
+   RS authentication requires both that the client trusts the AS and
+   that the OSCORE response from the RS passes verification.
 
    OSCORE is designed to secure point-to-point communication, providing
    a secure binding between the request and the response(s).  Thus the
@@ -1119,13 +1120,13 @@ Table of Contents
    case of re-boots.  This document RECOMMENDS the exchange of 64 bit
    random nonces.  Considering the birthday paradox, the average
    collision for each nonce will happen after 2^32 messages, which is
-   considerably more token provisionings than expected for intended
-   applications.  If applications use something else, such as a counter,
-   they need to guarantee that reboot and loss of state on either node
-   does not provoke reuse.  If that is not guaranteed, nodes are
-   susceptible to reuse of AEAD (nonce, key) pairs, especially since an
-   on-path attacker can cause the use of a previously exchanged client
-   nonce N1 for Security Context establishment by replaying the
+   considerably more token provisioned than would be expected for
+   intended applications.  If applications use something else, such as a
+   counter, they need to guarantee that reboot and loss of state on
+   either node does not provoke reuse.  If that is not guaranteed, nodes
+   are susceptible to reuse of AEAD (nonce, key) pairs, especially since
+   an on-path attacker can cause the use of a previously exchanged
+   client nonce N1 for Security Context establishment by replaying the
    corresponding client-to-server message.
 
    This profile RECOMMENDS that the RS maintains a single access token
@@ -1188,8 +1189,9 @@ Table of Contents
 9.  IANA Considerations
 
    Note to RFC Editor: Please replace all occurrences of "[[this
-   document]]" with the RFC number of this document and delete this
-   paragraph.
+   document]]" with the RFC number of this document.  Please add a
+   reference to the IANA ACE Profile registry in the nextt subsection
+   once it has been created by IANA, and then delete this paragraph.
 
 9.1.  ACE Profile Registry
 
@@ -1207,8 +1209,8 @@ Table of Contents
 9.2.  OAuth Parameters Registry
 
    The following registrations are done for the OAuth Parameters
-   Registry following the procedure specified in section 11.2 of
-   [RFC6749]:
+   Registry [IANA.OAuthParameters] following the procedure specified in
+   section 11.2 of [RFC6749]:
 
    *  Parameter name: nonce1
    *  Parameter usage location: client-rs request
@@ -1297,8 +1299,8 @@ Table of Contents
 9.5.  CWT Confirmation Methods Registry
 
    The following registration is done for the CWT Confirmation Methods
-   Registry following the procedure specified in section 7.2.1 of
-   [RFC8747]:
+   Registry [IANA.CWTConfirmationMethods] following the procedure
+   specified in section 7.2.1 of [RFC8747]:
 
    *  Confirmation Method Name: "osc"
    *  Confirmation Method Description: OSCORE_Input_Material carrying
@@ -1312,8 +1314,8 @@ Table of Contents
 9.6.  JWT Confirmation Methods Registry
 
    The following registration is done for the JWT Confirmation Methods
-   Registry following the procedure specified in section 6.2.1 of
-   [RFC7800]:
+   Registry [IANA.JWTConfirmationMethods] following the procedure
+   specified in section 6.2.1 of [RFC7800]:
 
    *  Confirmation Method Value: "osc"
    *  Confirmation Method Description: OSCORE_Input_Material carrying
@@ -1382,19 +1384,49 @@ Table of Contents
               2020, <http://www.ietf.org/internet-drafts/draft-ietf-ace-
               oauth-params-13.txt>.
 
+   [I-D.ietf-cose-rfc8152bis-algs]
+              Schaad, J., "CBOR Object Signing and Encryption (COSE):
+              Initial Algorithms", Work in Progress, Internet-Draft,
+              draft-ietf-cose-rfc8152bis-algs-12, 24 September 2020,
+              <http://www.ietf.org/internet-drafts/draft-ietf-cose-
+              rfc8152bis-algs-12.txt>.
+
+   [I-D.ietf-cose-rfc8152bis-struct]
+              Schaad, J., "CBOR Object Signing and Encryption (COSE):
+              Structures and Process", Work in Progress, Internet-Draft,
+              draft-ietf-cose-rfc8152bis-struct-14, 24 September 2020,
+              <http://www.ietf.org/internet-drafts/draft-ietf-cose-
+              rfc8152bis-struct-14.txt>.
+
+   [IANA.CWTConfirmationMethods]
+              IANA, "CWT Confirmation Methods",
+              <https://www.iana.org/assignments/cwt/
+              cwt.xhtml#confirmation-methods>.
+
+   [IANA.JWTConfirmationMethods]
+              IANA, "JWT Confirmation Methods",
+              <https://www.iana.org/assignments/jwt/
+              jwt.xhtml#confirmation-methods>.
+
+   [IANA.OAuthParameters]
+              IANA, "OAuth Parameters",
+              <https://www.iana.org/assignments/oauth-parameters/oauth-
+              parameters.xhtml#parameters>.
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
+   [RFC5869]  Krawczyk, H. and P. Eronen, "HMAC-based Extract-and-Expand
+              Key Derivation Function (HKDF)", RFC 5869,
+              DOI 10.17487/RFC5869, May 2010,
+              <https://www.rfc-editor.org/info/rfc5869>.
+
    [RFC7252]  Shelby, Z., Hartke, K., and C. Bormann, "The Constrained
               Application Protocol (CoAP)", RFC 7252,
               DOI 10.17487/RFC7252, June 2014,
               <https://www.rfc-editor.org/info/rfc7252>.
-
-   [RFC8152]  Schaad, J., "CBOR Object Signing and Encryption (COSE)",
-              RFC 8152, DOI 10.17487/RFC8152, July 2017,
-              <https://www.rfc-editor.org/info/rfc8152>.
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
@@ -1494,13 +1526,16 @@ Appendix A.  Profile Requirements
 
 Acknowledgments
 
-   The authors wish to thank Jim Schaad and Marco Tiloca for the input
-   on this document.  Special thanks to the responsible area director
-   Benjamin Kaduk for his extensive review and contributed text.  Ludwig
-   Seitz worked on this document as part of the CelticNext projects
-   CyberWI, and CRITISEC with funding from Vinnova.  The work on this
-   document has been partly supported also by the H2020 project SIFIS-
-   Home (Grant agreement 952652).
+   The authors wish to thank Jim Schaad and Marco Tiloca for the
+   substantial input to this document, as well as Elwyn Davies, Linda
+   Dunbar, Roman Danyliw, Martin Duke, Lars Eggert, Murray Kucherawy,
+   and Zaheduzzaman Sarker for their reviews and feedback.  Special
+   thanks to the responsible area director Benjamin Kaduk for his
+   extensive review and contributed text.  Ludwig Seitz worked on this
+   document as part of the CelticNext projects CyberWI, and CRITISEC
+   with funding from Vinnova.  The work on this document has been partly
+   supported also by the H2020 project SIFIS-Home (Grant agreement
+   952652).
 
 Authors' Addresses
 

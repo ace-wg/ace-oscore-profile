@@ -4,6 +4,8 @@
 <!ENTITY SELF "[[this specification]]">
 <!ENTITY I-D.ietf-ace-oauth-authz SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ace-oauth-authz.xml">
 <!ENTITY I-D.ietf-ace-oauth-params SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ace-oauth-params.xml">
+<!ENTITY I-D.ietf-tls-dtls13 SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-tls-dtls13.xml">
+<!ENTITY RFC8446 SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8446.xml">
 <!ENTITY RFC8949 SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8949.xml">
 <!ENTITY RFC8747 SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8747.xml">
 <!ENTITY RFC7800 SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7800.xml"> 
@@ -154,7 +156,7 @@
       </t>
 
       <t>
-        This profile requires a client to retrieve an access token from the AS for the resource it wants to access on an RS, by sending an access token request to the token endpoint, as specified in section 5.8 of <xref target="I-D.ietf-ace-oauth-authz"/>. The access token request and response MUST be confidentiality-protected and ensure authenticity.  This profile RECOMMENDS the use of OSCORE between client and AS, to reduce the number of libraries the client has to support, but other protocols fulfilling the security requirements defined in section 5 of <xref target="I-D.ietf-ace-oauth-authz"/> (such as TLS or DTLS) MAY be used as well.
+        This profile requires a client to retrieve an access token from the AS for the resource it wants to access on an RS, by sending an access token request to the token endpoint, as specified in section 5.8 of <xref target="I-D.ietf-ace-oauth-authz"/>. The access token request and response MUST be confidentiality-protected and ensure authenticity.  This profile RECOMMENDS the use of OSCORE between client and AS, to reduce the number of libraries the client has to support, but other protocols fulfilling the security requirements defined in section 5 of <xref target="I-D.ietf-ace-oauth-authz"/> (such as TLS <xref target="RFC8446"/> or DTLS <xref target="I-D.ietf-tls-dtls13"/>) MAY be used as well.
       </t>
 
       <t>
@@ -1259,6 +1261,8 @@ token.
       &RFC4949;
       &RFC6749;
       &RFC7231;
+      &I-D.ietf-tls-dtls13;
+      &RFC8446;
 
     </references>
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
-<!ENTITY SELF "[[this specification]]">
+<!ENTITY SELF "[[this document]]">
 <!ENTITY I-D.ietf-ace-oauth-authz SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ace-oauth-authz.xml">
 <!ENTITY I-D.ietf-ace-oauth-params SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ace-oauth-params.xml">
 <!ENTITY I-D.ietf-tls-dtls13 SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-tls-dtls13.xml">
@@ -81,7 +81,7 @@
     <workgroup>ACE Working Group</workgroup>
     <abstract>
       <t>
-        This memo specifies a profile for the Authentication and Authorization for Constrained Environments (ACE) framework.  It utilizes Object Security for Constrained RESTful Environments (OSCORE) to provide communication security and proof-of-possession for a key owned by the client and bound to an OAuth 2.0 access token.
+        This document specifies a profile for the Authentication and Authorization for Constrained Environments (ACE) framework.  It utilizes Object Security for Constrained RESTful Environments (OSCORE) to provide communication security and proof-of-possession for a key owned by the client and bound to an OAuth 2.0 access token.
       </t>
       <!-- 
         Jim: Lookup on the RFC Editor page if you need to expand OAuth
@@ -98,7 +98,7 @@
     <section anchor="introduction" title=" Introduction"> 
       
       <t>
-        This memo specifies a profile of the ACE framework <xref target="I-D.ietf-ace-oauth-authz"/>.  In this profile, a client and a resource server use the Constrained Application Protocol (CoAP) <xref target="RFC7252"/> to communicate.  The client uses an access token, bound to a symmetric key (the proof-of-possession key) to authorize its access to the resource server.  Note that this profile uses a symmetric-crypto-based scheme, where the symmetric secret is used as input material for keying material derivation.  In order to provide communication security and proof of possession, the client and resource server use Object Security for Constrained RESTful Environments (OSCORE) <xref target="RFC8613"/>.  Note that the proof of possession is not achieved through a dedicated protocol element, but rather occurs after the first message exchange using OSCORE.
+        This document specifies a profile of the ACE framework <xref target="I-D.ietf-ace-oauth-authz"/>.  In this profile, a client and a resource server use the Constrained Application Protocol (CoAP) <xref target="RFC7252"/> to communicate.  The client uses an access token, bound to a symmetric key (the proof-of-possession key) to authorize its access to the resource server.  Note that this profile uses a symmetric-crypto-based scheme, where the symmetric secret is used as input material for keying material derivation.  In order to provide communication security and proof of possession, the client and resource server use Object Security for Constrained RESTful Environments (OSCORE) <xref target="RFC8613"/>.  Note that the proof of possession is not achieved through a dedicated protocol element, but rather occurs after the first message exchange using OSCORE.
       </t>
 
       <t>
@@ -133,11 +133,11 @@
         </t>
 
         <t>
-          Concise Binary Object Representation (CBOR) <xref target="RFC8949"/> and Concise Data Definition Language (CDDL) <xref target="RFC8610"/> are used in this specification. CDDL predefined type names, especially bstr for CBOR byte strings and tstr for CBOR text strings, are used extensively in the document.
+          Concise Binary Object Representation (CBOR) <xref target="RFC8949"/> and Concise Data Definition Language (CDDL) <xref target="RFC8610"/> are used in this document. CDDL predefined type names, especially bstr for CBOR byte strings and tstr for CBOR text strings, are used extensively in this document.
         </t>
 
         <t>
-          Note that the term "endpoint" is used here, as in <xref target="I-D.ietf-ace-oauth-authz"/>, following its OAuth definition, which is to denote resources such as token and introspect at the AS and authz-info at the RS.  The CoAP <xref target="RFC7252"/> definition, which is "An entity participating in the CoAP protocol" is not used in this memo.
+          Note that the term "endpoint" is used here, as in <xref target="I-D.ietf-ace-oauth-authz"/>, following its OAuth definition, which is to denote resources such as token and introspect at the AS and authz-info at the RS.  The CoAP <xref target="RFC7252"/> definition, which is "An entity participating in the CoAP protocol" is not used in this document.
         </t> 
         <!-- UNDONE: changed the above to "resource" in the whole doc-->
 
@@ -160,7 +160,7 @@
       </t>
 
       <t>
-        Once the client has retrieved the access token, it generates a nonce N1, defined in this specification (see <xref target="nonce1"/>). The client also generates its own OSCORE Recipient ID ID1 (see Section 3.1 of <xref target="RFC8613"/>), for use with the keying material associated to the RS. The client posts the token, N1 and its Recipient ID to the RS using the authz-info endpoint and mechanisms specified in section 5.8 of <xref target="I-D.ietf-ace-oauth-authz"/> and Content-Format = application/ace+cbor. When using this profile, the communication with the authz-info endpoint is not protected, except for update of access rights.
+        Once the client has retrieved the access token, it generates a nonce N1, defined in this document (see <xref target="nonce1"/>). The client also generates its own OSCORE Recipient ID ID1 (see Section 3.1 of <xref target="RFC8613"/>), for use with the keying material associated to the RS. The client posts the token, N1 and its Recipient ID to the RS using the authz-info endpoint and mechanisms specified in section 5.8 of <xref target="I-D.ietf-ace-oauth-authz"/> and Content-Format = application/ace+cbor. When using this profile, the communication with the authz-info endpoint is not protected, except for update of access rights.
       </t>
 
       <t>
@@ -984,7 +984,7 @@ token.
     <section title=" IANA Considerations ">
 
        <t>Note to RFC Editor: Please replace all occurrences of "&SELF;"
-      with the RFC number of this specification and delete this paragraph.</t>
+      with the RFC number of this document and delete this paragraph.</t>
 
       <section title="ACE Profile Registry" >
 
@@ -1114,7 +1114,7 @@ token.
           <list style="hanging">
             <t hangText='name'>
               The JSON name requested (e.g., "ms").
-              Because a core goal of this specification is for the resulting representations to be compact, it is RECOMMENDED that the name be short.
+              Because a core goal of this document is for the resulting representations to be compact, it is RECOMMENDED that the name be short.
               This name is case sensitive.
               Names may not match other registered names in a case-insensitive manner unless the Designated Experts determine that there is a compelling reason to allow an exception.
               The name is not used in the CBOR encoding.
@@ -1329,7 +1329,7 @@ token.
     <section title="Acknowledgments" numbered='no'> 
 
       <t>
-        The authors wish to thank Jim Schaad and Marco Tiloca for the input on this memo. Special thanks to the responsible area director Benjamin Kaduk for his extensive review and contributed text.
+        The authors wish to thank Jim Schaad and Marco Tiloca for the input on this document. Special thanks to the responsible area director Benjamin Kaduk for his extensive review and contributed text.
         Ludwig Seitz worked on this document as part of the CelticNext projects CyberWI, and CRITISEC with funding from Vinnova.
         The work on this document has been partly supported also by the H2020 project SIFIS-Home (Grant agreement 952652).
       </t>

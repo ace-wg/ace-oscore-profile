@@ -300,7 +300,7 @@ Sec Context storage/            |                     |
         </t>
 
         <t>
-          The AS can signal that the use of OSCORE is REQUIRED for a specific access token by including the "profile" parameter with the value "coap_oscore" in the access token response.  This means that the client MUST use OSCORE towards all resource servers for which this access token is valid, and follow <xref target="oscore-setup"/> to derive the security context to run OSCORE.
+          The AS can signal that the use of OSCORE is REQUIRED for a specific access token by including the "ace_profile" parameter with the value "coap_oscore" in the access token response.  This means that the client MUST use OSCORE towards all resource servers for which this access token is valid, and follow <xref target="oscore-setup"/> to derive the security context to run OSCORE.
 Usually it is assumed that constrained devices will be pre-configured with the necessary profile, so that this kind of profile signaling can be omitted.	  
         </t>
 
@@ -362,7 +362,7 @@ Usually it is assumed that constrained devices will be pre-configured with the n
     {
       "access_token" : h'8343a1010aa2044c53 ...
        (remainder of access token (CWT) omitted for brevity)',
-      "profile" : "coap_oscore",
+      "ace_profile" : "coap_oscore",
       "expires_in" : "3600",
       "cnf" : {
         "osc" : {
@@ -464,7 +464,7 @@ A5                                      # map(5)
     {
       "access_token" : h'8343a1010aa2044c53 ...
        (remainder of access token (CWT) omitted for brevity)',
-      "profile" : "coap_oscore",
+      "ace_profile" : "coap_oscore",
       "expires_in" : "3600"
     }
 ]]>

@@ -334,11 +334,11 @@ Usually it is assumed that constrained devices will be pre-configured with the n
         </t>
 
         <t>
-          The AS MAY assign an identifier to the context (context identifier). This identifier is used as ID Context in the OSCORE context as described in section 3.1 of <xref target="RFC8613"/>. If assigned, this parameters MUST be communicated as the 'contextId' field in the OSCORE_Input_Material. The applications needs to consider that this identifier is sent in the clear and may reveal information about the endpoints, as mentioned in section 12.8 of <xref target="RFC8613"/>.
+          The AS MAY assign an identifier to the context (context identifier). This identifier is used as ID Context in the OSCORE context as described in section 3.1 of <xref target="RFC8613"/>. If assigned, this parameters MUST be communicated as the 'contextId' field in the OSCORE_Input_Material. The application needs to consider that this identifier is sent in the clear and may reveal information about the endpoints, as mentioned in section 12.8 of <xref target="RFC8613"/>.
         </t>
  
         <t>
-          The master secret and the identifier of the OSCORE_Input_Material MUST be communicated as the 'ms' and 'id' field in the 'osc' field in the 'cnf' parameeter of the access token response.
+          The master secret and the identifier of the OSCORE_Input_Material MUST be communicated as the 'ms' and 'id' field in the 'osc' field in the 'cnf' parameter of the access token response.
           If included, the AEAD algorithm is sent in the 'alg' parameter in the OSCORE_Input_Material; the HKDF algorithm in the 'hkdf' parameter of the OSCORE_Input_Material; a salt in the 'salt' parameter of the OSCORE_Input_Material; and the OSCORE version in the 'version' parameter of the OSCORE_Input_Material.
         </t>
 	      
@@ -624,7 +624,7 @@ OSCORE_Input_Material = {
       </t> -->
 
       <t>
-        Note that the RS and client authenticates each other
+        Note that the RS and client authenticate each other
         by generating the shared OSCORE Security Context using
         the pop-key as master secret.  An attacker
         posting a valid token to the RS will not be able to generate a valid OSCORE Security Context and
@@ -659,7 +659,7 @@ OSCORE_Input_Material = {
         </t>
 
         <t>
-          The client may also chose to re-POST the access token in order to renew its OSCORE Security Context. In that case, the client and the RS will exchange newly generated nonces, re-negotiate identifiers, and derive new keying material. The client and RS might decide to keep the same identifiers or renew them during the re-negotiation.
+          The client may also choose to re-POST the access token in order to renew its OSCORE Security Context. In that case, the client and the RS will exchange newly generated nonces, re-negotiate identifiers, and derive new keying material. The client and RS might decide to keep the same identifiers or renew them during the re-negotiation.
         </t>
 
         <t>

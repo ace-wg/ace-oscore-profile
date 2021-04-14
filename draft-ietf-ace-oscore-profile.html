@@ -11,25 +11,25 @@
 <meta content="Martin Gunnarsson" name="author">
 <meta content="
        
-        This memo specifies a profile for the Authentication and Authorization for Constrained Environments (ACE) framework.  It utilizes Object Security for Constrained RESTful Environments (OSCORE) to provide communication security and proof-of-possession for a key owned by the client and bound to an OAuth 2.0 access token.
+        This document specifies a profile for the Authentication and Authorization for Constrained Environments (ACE) framework.  It utilizes Object Security for Constrained RESTful Environments (OSCORE) to provide communication security and proof-of-possession for a key owned by the client and bound to an OAuth 2.0 access token.
        
        
     " name="description">
-<meta content="xml2rfc 3.5.0" name="generator">
+<meta content="xml2rfc 3.7.0" name="generator">
 <meta content="draft-ietf-ace-oscore-profile-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.5.0
+  xml2rfc 3.7.0
     Python 3.6.3
     appdirs 1.4.4
-    ConfigArgParse 1.3
+    ConfigArgParse 1.4
     google-i18n-address 2.4.0
     html5lib 1.1
     intervaltree 3.1.0
     Jinja2 2.11.3
     kitchen 1.2.6
-    lxml 4.6.2
+    lxml 4.6.3
     pycountry 20.7.3
-    pyflakes 2.2.0
+    pyflakes 2.3.1
     PyYAML 5.4.1
     requests 2.25.1
     setuptools 38.2.4
@@ -842,11 +842,11 @@ address div.right {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">OSCORE Profile of ACE</td>
-<td class="right">March 2021</td>
+<td class="right">April 2021</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Palombini, et al.</td>
-<td class="center">Expires 9 September 2021</td>
+<td class="center">Expires 16 October 2021</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -859,12 +859,12 @@ address div.right {
 <dd class="internet-draft">draft-ietf-ace-oscore-profile-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2021-03-08" class="published">8 March 2021</time>
+<time datetime="2021-04-14" class="published">14 April 2021</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2021-09-09">9 September 2021</time></dd>
+<dd class="expires"><time datetime="2021-10-16">16 October 2021</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -890,7 +890,7 @@ address div.right {
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">
-        This memo specifies a profile for the Authentication and Authorization for Constrained Environments (ACE) framework.  It utilizes Object Security for Constrained RESTful Environments (OSCORE) to provide communication security and proof-of-possession for a key owned by the client and bound to an OAuth 2.0 access token.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+        This document specifies a profile for the Authentication and Authorization for Constrained Environments (ACE) framework.  It utilizes Object Security for Constrained RESTful Environments (OSCORE) to provide communication security and proof-of-possession for a key owned by the client and bound to an OAuth 2.0 access token.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -911,7 +911,7 @@ address div.right {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 9 September 2021.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 16 October 2021.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -939,124 +939,124 @@ address div.right {
         <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
 <a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
         </h2>
-<nav class="toc"><ul class="ulEmpty compact toc">
-<li class="ulEmpty compact toc" id="section-toc.1-1.1">
-            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="xref">1</a>.  <a href="#name-introduction" class="xref">Introduction</a><a href="#section-toc.1-1.1.1" class="pilcrow">¶</a></p>
-<ul class="ulEmpty compact toc">
-<li class="ulEmpty compact toc" id="section-toc.1-1.1.2.1">
-                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="xref">1.1</a>.  <a href="#name-terminology" class="xref">Terminology</a><a href="#section-toc.1-1.1.2.1.1" class="pilcrow">¶</a></p>
+<nav class="toc"><ul class="ulEmpty toc compact">
+<li class="ulEmpty toc compact" id="section-toc.1-1.1">
+            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="xref">1</a>.  <a href="#name-introduction" class="xref">Introduction</a></p>
+<ul class="ulEmpty toc compact">
+<li class="ulEmpty toc compact" id="section-toc.1-1.1.2.1">
+                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="xref">1.1</a>.  <a href="#name-terminology" class="xref">Terminology</a></p>
 </li>
             </ul>
 </li>
-          <li class="ulEmpty compact toc" id="section-toc.1-1.2">
-            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="xref">2</a>.  <a href="#name-protocol-overview" class="xref">Protocol Overview</a><a href="#section-toc.1-1.2.1" class="pilcrow">¶</a></p>
+          <li class="ulEmpty toc compact" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="xref">2</a>.  <a href="#name-protocol-overview" class="xref">Protocol Overview</a></p>
 </li>
-          <li class="ulEmpty compact toc" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-client-as-communication" class="xref">Client-AS Communication</a><a href="#section-toc.1-1.3.1" class="pilcrow">¶</a></p>
-<ul class="ulEmpty compact toc">
-<li class="ulEmpty compact toc" id="section-toc.1-1.3.2.1">
-                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="xref">3.1</a>.  <a href="#name-c-to-as-post-to-token-endpo" class="xref">C-to-AS: POST to token endpoint</a><a href="#section-toc.1-1.3.2.1.1" class="pilcrow">¶</a></p>
+          <li class="ulEmpty toc compact" id="section-toc.1-1.3">
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-client-as-communication" class="xref">Client-AS Communication</a></p>
+<ul class="ulEmpty toc compact">
+<li class="ulEmpty toc compact" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="xref">3.1</a>.  <a href="#name-c-to-as-post-to-token-endpo" class="xref">C-to-AS: POST to token endpoint</a></p>
 </li>
-              <li class="ulEmpty compact toc" id="section-toc.1-1.3.2.2">
-                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="xref">3.2</a>.  <a href="#name-as-to-c-access-token" class="xref">AS-to-C: Access Token</a><a href="#section-toc.1-1.3.2.2.1" class="pilcrow">¶</a></p>
-<ul class="ulEmpty compact toc">
-<li class="ulEmpty compact toc" id="section-toc.1-1.3.2.2.2.1">
-                    <p id="section-toc.1-1.3.2.2.2.1.1"><a href="#section-3.2.1" class="xref">3.2.1</a>.  <a href="#name-the-oscore_input_material" class="xref">The OSCORE_Input_Material</a><a href="#section-toc.1-1.3.2.2.2.1.1" class="pilcrow">¶</a></p>
+              <li class="ulEmpty toc compact" id="section-toc.1-1.3.2.2">
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="xref">3.2</a>.  <a href="#name-as-to-c-access-token" class="xref">AS-to-C: Access Token</a></p>
+<ul class="ulEmpty toc compact">
+<li class="ulEmpty toc compact" id="section-toc.1-1.3.2.2.2.1">
+                    <p id="section-toc.1-1.3.2.2.2.1.1"><a href="#section-3.2.1" class="xref">3.2.1</a>.  <a href="#name-the-oscore_input_material" class="xref">The OSCORE_Input_Material</a></p>
 </li>
                 </ul>
 </li>
             </ul>
 </li>
-          <li class="ulEmpty compact toc" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="xref">4</a>.  <a href="#name-client-rs-communication" class="xref">Client-RS Communication</a><a href="#section-toc.1-1.4.1" class="pilcrow">¶</a></p>
-<ul class="ulEmpty compact toc">
-<li class="ulEmpty compact toc" id="section-toc.1-1.4.2.1">
-                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="xref">4.1</a>.  <a href="#name-c-to-rs-post-to-authz-info-" class="xref">C-to-RS: POST to authz-info endpoint</a><a href="#section-toc.1-1.4.2.1.1" class="pilcrow">¶</a></p>
-<ul class="ulEmpty compact toc">
-<li class="ulEmpty compact toc" id="section-toc.1-1.4.2.1.2.1">
-                    <p id="section-toc.1-1.4.2.1.2.1.1"><a href="#section-4.1.1" class="xref">4.1.1</a>.  <a href="#name-the-nonce-1-parameter" class="xref">The Nonce 1 Parameter</a><a href="#section-toc.1-1.4.2.1.2.1.1" class="pilcrow">¶</a></p>
+          <li class="ulEmpty toc compact" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="xref">4</a>.  <a href="#name-client-rs-communication" class="xref">Client-RS Communication</a></p>
+<ul class="ulEmpty toc compact">
+<li class="ulEmpty toc compact" id="section-toc.1-1.4.2.1">
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="xref">4.1</a>.  <a href="#name-c-to-rs-post-to-authz-info-" class="xref">C-to-RS: POST to authz-info endpoint</a></p>
+<ul class="ulEmpty toc compact">
+<li class="ulEmpty toc compact" id="section-toc.1-1.4.2.1.2.1">
+                    <p id="section-toc.1-1.4.2.1.2.1.1"><a href="#section-4.1.1" class="xref">4.1.1</a>.  <a href="#name-the-nonce-1-parameter" class="xref">The Nonce 1 Parameter</a></p>
 </li>
-                  <li class="ulEmpty compact toc" id="section-toc.1-1.4.2.1.2.2">
-                    <p id="section-toc.1-1.4.2.1.2.2.1"><a href="#section-4.1.2" class="xref">4.1.2</a>.  <a href="#name-the-ace_client_recipientid-" class="xref">The ace_client_recipientid Parameter</a><a href="#section-toc.1-1.4.2.1.2.2.1" class="pilcrow">¶</a></p>
-</li>
-                </ul>
-</li>
-              <li class="ulEmpty compact toc" id="section-toc.1-1.4.2.2">
-                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="xref">4.2</a>.  <a href="#name-rs-to-c-201-created" class="xref">RS-to-C: 2.01 (Created)</a><a href="#section-toc.1-1.4.2.2.1" class="pilcrow">¶</a></p>
-<ul class="ulEmpty compact toc">
-<li class="ulEmpty compact toc" id="section-toc.1-1.4.2.2.2.1">
-                    <p id="section-toc.1-1.4.2.2.2.1.1"><a href="#section-4.2.1" class="xref">4.2.1</a>.  <a href="#name-the-nonce-2-parameter" class="xref">The Nonce 2 Parameter</a><a href="#section-toc.1-1.4.2.2.2.1.1" class="pilcrow">¶</a></p>
-</li>
-                  <li class="ulEmpty compact toc" id="section-toc.1-1.4.2.2.2.2">
-                    <p id="section-toc.1-1.4.2.2.2.2.1"><a href="#section-4.2.2" class="xref">4.2.2</a>.  <a href="#name-the-ace_server_recipientid-" class="xref">The ace_server_recipientid Parameter</a><a href="#section-toc.1-1.4.2.2.2.2.1" class="pilcrow">¶</a></p>
+                  <li class="ulEmpty toc compact" id="section-toc.1-1.4.2.1.2.2">
+                    <p id="section-toc.1-1.4.2.1.2.2.1"><a href="#section-4.1.2" class="xref">4.1.2</a>.  <a href="#name-the-ace_client_recipientid-" class="xref">The ace_client_recipientid Parameter</a></p>
 </li>
                 </ul>
 </li>
-              <li class="ulEmpty compact toc" id="section-toc.1-1.4.2.3">
-                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="xref">4.3</a>.  <a href="#name-oscore-setup" class="xref">OSCORE Setup</a><a href="#section-toc.1-1.4.2.3.1" class="pilcrow">¶</a></p>
+              <li class="ulEmpty toc compact" id="section-toc.1-1.4.2.2">
+                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="xref">4.2</a>.  <a href="#name-rs-to-c-201-created" class="xref">RS-to-C: 2.01 (Created)</a></p>
+<ul class="ulEmpty toc compact">
+<li class="ulEmpty toc compact" id="section-toc.1-1.4.2.2.2.1">
+                    <p id="section-toc.1-1.4.2.2.2.1.1"><a href="#section-4.2.1" class="xref">4.2.1</a>.  <a href="#name-the-nonce-2-parameter" class="xref">The Nonce 2 Parameter</a></p>
 </li>
-              <li class="ulEmpty compact toc" id="section-toc.1-1.4.2.4">
-                <p id="section-toc.1-1.4.2.4.1"><a href="#section-4.4" class="xref">4.4</a>.  <a href="#name-access-rights-verification" class="xref">Access rights verification</a><a href="#section-toc.1-1.4.2.4.1" class="pilcrow">¶</a></p>
+                  <li class="ulEmpty toc compact" id="section-toc.1-1.4.2.2.2.2">
+                    <p id="section-toc.1-1.4.2.2.2.2.1"><a href="#section-4.2.2" class="xref">4.2.2</a>.  <a href="#name-the-ace_server_recipientid-" class="xref">The ace_server_recipientid Parameter</a></p>
 </li>
-            </ul>
+                </ul>
 </li>
-          <li class="ulEmpty compact toc" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="xref">5</a>.  <a href="#name-secure-communication-with-a" class="xref">Secure Communication with AS</a><a href="#section-toc.1-1.5.1" class="pilcrow">¶</a></p>
+              <li class="ulEmpty toc compact" id="section-toc.1-1.4.2.3">
+                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="xref">4.3</a>.  <a href="#name-oscore-setup" class="xref">OSCORE Setup</a></p>
 </li>
-          <li class="ulEmpty compact toc" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#section-6" class="xref">6</a>.  <a href="#name-discarding-the-security-con" class="xref">Discarding the Security Context</a><a href="#section-toc.1-1.6.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="ulEmpty compact toc" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#section-7" class="xref">7</a>.  <a href="#name-security-considerations" class="xref">Security Considerations</a><a href="#section-toc.1-1.7.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="ulEmpty compact toc" id="section-toc.1-1.8">
-            <p id="section-toc.1-1.8.1"><a href="#section-8" class="xref">8</a>.  <a href="#name-privacy-considerations" class="xref">Privacy Considerations</a><a href="#section-toc.1-1.8.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="ulEmpty compact toc" id="section-toc.1-1.9">
-            <p id="section-toc.1-1.9.1"><a href="#section-9" class="xref">9</a>.  <a href="#name-iana-considerations" class="xref">IANA Considerations</a><a href="#section-toc.1-1.9.1" class="pilcrow">¶</a></p>
-<ul class="ulEmpty compact toc">
-<li class="ulEmpty compact toc" id="section-toc.1-1.9.2.1">
-                <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="xref">9.1</a>.  <a href="#name-ace-profile-registry" class="xref">ACE Profile Registry</a><a href="#section-toc.1-1.9.2.1.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="ulEmpty compact toc" id="section-toc.1-1.9.2.2">
-                <p id="section-toc.1-1.9.2.2.1"><a href="#section-9.2" class="xref">9.2</a>.  <a href="#name-oauth-parameters-registry" class="xref">OAuth Parameters Registry</a><a href="#section-toc.1-1.9.2.2.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="ulEmpty compact toc" id="section-toc.1-1.9.2.3">
-                <p id="section-toc.1-1.9.2.3.1"><a href="#section-9.3" class="xref">9.3</a>.  <a href="#name-oauth-parameters-cbor-mappi" class="xref">OAuth Parameters CBOR Mappings Registry</a><a href="#section-toc.1-1.9.2.3.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="ulEmpty compact toc" id="section-toc.1-1.9.2.4">
-                <p id="section-toc.1-1.9.2.4.1"><a href="#section-9.4" class="xref">9.4</a>.  <a href="#name-oscore-security-context-par" class="xref">OSCORE Security Context Parameters Registry</a><a href="#section-toc.1-1.9.2.4.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="ulEmpty compact toc" id="section-toc.1-1.9.2.5">
-                <p id="section-toc.1-1.9.2.5.1"><a href="#section-9.5" class="xref">9.5</a>.  <a href="#name-cwt-confirmation-methods-re" class="xref">CWT Confirmation Methods Registry</a><a href="#section-toc.1-1.9.2.5.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="ulEmpty compact toc" id="section-toc.1-1.9.2.6">
-                <p id="section-toc.1-1.9.2.6.1"><a href="#section-9.6" class="xref">9.6</a>.  <a href="#name-jwt-confirmation-methods-re" class="xref">JWT Confirmation Methods Registry</a><a href="#section-toc.1-1.9.2.6.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="ulEmpty compact toc" id="section-toc.1-1.9.2.7">
-                <p id="section-toc.1-1.9.2.7.1"><a href="#section-9.7" class="xref">9.7</a>.  <a href="#name-expert-review-instructions" class="xref">Expert Review Instructions</a><a href="#section-toc.1-1.9.2.7.1" class="pilcrow">¶</a></p>
+              <li class="ulEmpty toc compact" id="section-toc.1-1.4.2.4">
+                <p id="section-toc.1-1.4.2.4.1"><a href="#section-4.4" class="xref">4.4</a>.  <a href="#name-access-rights-verification" class="xref">Access rights verification</a></p>
 </li>
             </ul>
 </li>
-          <li class="ulEmpty compact toc" id="section-toc.1-1.10">
-            <p id="section-toc.1-1.10.1"><a href="#section-10" class="xref">10</a>. <a href="#name-references" class="xref">References</a><a href="#section-toc.1-1.10.1" class="pilcrow">¶</a></p>
-<ul class="ulEmpty compact toc">
-<li class="ulEmpty compact toc" id="section-toc.1-1.10.2.1">
-                <p id="section-toc.1-1.10.2.1.1"><a href="#section-10.1" class="xref">10.1</a>.  <a href="#name-normative-references" class="xref">Normative References</a><a href="#section-toc.1-1.10.2.1.1" class="pilcrow">¶</a></p>
+          <li class="ulEmpty toc compact" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="xref">5</a>.  <a href="#name-secure-communication-with-a" class="xref">Secure Communication with AS</a></p>
 </li>
-              <li class="ulEmpty compact toc" id="section-toc.1-1.10.2.2">
-                <p id="section-toc.1-1.10.2.2.1"><a href="#section-10.2" class="xref">10.2</a>.  <a href="#name-informative-references" class="xref">Informative References</a><a href="#section-toc.1-1.10.2.2.1" class="pilcrow">¶</a></p>
+          <li class="ulEmpty toc compact" id="section-toc.1-1.6">
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="xref">6</a>.  <a href="#name-discarding-the-security-con" class="xref">Discarding the Security Context</a></p>
+</li>
+          <li class="ulEmpty toc compact" id="section-toc.1-1.7">
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="xref">7</a>.  <a href="#name-security-considerations" class="xref">Security Considerations</a></p>
+</li>
+          <li class="ulEmpty toc compact" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="xref">8</a>.  <a href="#name-privacy-considerations" class="xref">Privacy Considerations</a></p>
+</li>
+          <li class="ulEmpty toc compact" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="xref">9</a>.  <a href="#name-iana-considerations" class="xref">IANA Considerations</a></p>
+<ul class="ulEmpty toc compact">
+<li class="ulEmpty toc compact" id="section-toc.1-1.9.2.1">
+                <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="xref">9.1</a>.  <a href="#name-ace-profile-registry" class="xref">ACE Profile Registry</a></p>
+</li>
+              <li class="ulEmpty toc compact" id="section-toc.1-1.9.2.2">
+                <p id="section-toc.1-1.9.2.2.1"><a href="#section-9.2" class="xref">9.2</a>.  <a href="#name-oauth-parameters-registry" class="xref">OAuth Parameters Registry</a></p>
+</li>
+              <li class="ulEmpty toc compact" id="section-toc.1-1.9.2.3">
+                <p id="section-toc.1-1.9.2.3.1"><a href="#section-9.3" class="xref">9.3</a>.  <a href="#name-oauth-parameters-cbor-mappi" class="xref">OAuth Parameters CBOR Mappings Registry</a></p>
+</li>
+              <li class="ulEmpty toc compact" id="section-toc.1-1.9.2.4">
+                <p id="section-toc.1-1.9.2.4.1"><a href="#section-9.4" class="xref">9.4</a>.  <a href="#name-oscore-security-context-par" class="xref">OSCORE Security Context Parameters Registry</a></p>
+</li>
+              <li class="ulEmpty toc compact" id="section-toc.1-1.9.2.5">
+                <p id="section-toc.1-1.9.2.5.1"><a href="#section-9.5" class="xref">9.5</a>.  <a href="#name-cwt-confirmation-methods-re" class="xref">CWT Confirmation Methods Registry</a></p>
+</li>
+              <li class="ulEmpty toc compact" id="section-toc.1-1.9.2.6">
+                <p id="section-toc.1-1.9.2.6.1"><a href="#section-9.6" class="xref">9.6</a>.  <a href="#name-jwt-confirmation-methods-re" class="xref">JWT Confirmation Methods Registry</a></p>
+</li>
+              <li class="ulEmpty toc compact" id="section-toc.1-1.9.2.7">
+                <p id="section-toc.1-1.9.2.7.1"><a href="#section-9.7" class="xref">9.7</a>.  <a href="#name-expert-review-instructions" class="xref">Expert Review Instructions</a></p>
 </li>
             </ul>
 </li>
-          <li class="ulEmpty compact toc" id="section-toc.1-1.11">
-            <p id="section-toc.1-1.11.1"><a href="#section-appendix.a" class="xref">Appendix A</a>.  <a href="#name-profile-requirements" class="xref">Profile Requirements</a><a href="#section-toc.1-1.11.1" class="pilcrow">¶</a></p>
+          <li class="ulEmpty toc compact" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#section-10" class="xref">10</a>. <a href="#name-references" class="xref">References</a></p>
+<ul class="ulEmpty toc compact">
+<li class="ulEmpty toc compact" id="section-toc.1-1.10.2.1">
+                <p id="section-toc.1-1.10.2.1.1"><a href="#section-10.1" class="xref">10.1</a>.  <a href="#name-normative-references" class="xref">Normative References</a></p>
 </li>
-          <li class="ulEmpty compact toc" id="section-toc.1-1.12">
-            <p id="section-toc.1-1.12.1"><a href="#section-appendix.b" class="xref"></a><a href="#name-acknowledgments" class="xref">Acknowledgments</a><a href="#section-toc.1-1.12.1" class="pilcrow">¶</a></p>
+              <li class="ulEmpty toc compact" id="section-toc.1-1.10.2.2">
+                <p id="section-toc.1-1.10.2.2.1"><a href="#section-10.2" class="xref">10.2</a>.  <a href="#name-informative-references" class="xref">Informative References</a></p>
 </li>
-          <li class="ulEmpty compact toc" id="section-toc.1-1.13">
-            <p id="section-toc.1-1.13.1"><a href="#section-appendix.c" class="xref"></a><a href="#name-authors-addresses" class="xref">Authors' Addresses</a><a href="#section-toc.1-1.13.1" class="pilcrow">¶</a></p>
+            </ul>
+</li>
+          <li class="ulEmpty toc compact" id="section-toc.1-1.11">
+            <p id="section-toc.1-1.11.1"><a href="#section-appendix.a" class="xref">Appendix A</a>.  <a href="#name-profile-requirements" class="xref">Profile Requirements</a></p>
+</li>
+          <li class="ulEmpty toc compact" id="section-toc.1-1.12">
+            <p id="section-toc.1-1.12.1"><a href="#section-appendix.b" class="xref"></a><a href="#name-acknowledgments" class="xref">Acknowledgments</a></p>
+</li>
+          <li class="ulEmpty toc compact" id="section-toc.1-1.13">
+            <p id="section-toc.1-1.13.1"><a href="#section-appendix.c" class="xref"></a><a href="#name-authors-addresses" class="xref">Authors' Addresses</a></p>
 </li>
         </ul>
 </nav>
@@ -1068,9 +1068,9 @@ address div.right {
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
 <p id="section-1-1">
-        This memo specifies a profile of the ACE framework <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span>.  In this profile, a client and a resource server use the Constrained Application Protocol (CoAP) <span>[<a href="#RFC7252" class="xref">RFC7252</a>]</span> to communicate.  The client uses an access token, bound to a symmetric key (the proof-of-possession key) to authorize its access to the resource server.  Note that this profile uses a symmetric-crypto-based scheme, where the symmetric secret is used as input material for keying material derivation.  In order to provide communication security and proof of possession, the client and resource server use Object Security for Constrained RESTful Environments (OSCORE) <span>[<a href="#RFC8613" class="xref">RFC8613</a>]</span>.  Note that the proof of possession is not achieved through a dedicated protocol element, but rather occurs after the first message exchange using OSCORE.<a href="#section-1-1" class="pilcrow">¶</a></p>
+        This document specifies the "coap_oscore" profile of the ACE framework <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span>.  In this profile, a client and a resource server use the Constrained Application Protocol (CoAP) <span>[<a href="#RFC7252" class="xref">RFC7252</a>]</span> to communicate.  The client uses an access token, bound to a symmetric key (the proof-of-possession key) to authorize its access to the resource server.  Note that this profile uses a symmetric-crypto-based scheme, where the symmetric secret is used as input material for keying material derivation.  In order to provide communication security and proof of possession, the client and resource server use Object Security for Constrained RESTful Environments (OSCORE) <span>[<a href="#RFC8613" class="xref">RFC8613</a>]</span>.  Note that the proof of possession is not achieved through a dedicated protocol element, but rather occurs after the first message exchange using OSCORE.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">
-        OSCORE specifies how to use CBOR Object Signing and Encryption (COSE) <span>[<a href="#RFC8152" class="xref">RFC8152</a>]</span> to secure CoAP messages.
+        OSCORE specifies how to use CBOR Object Signing and Encryption (COSE) <span>[<a href="#I-D.ietf-cose-rfc8152bis-struct" class="xref">I-D.ietf-cose-rfc8152bis-struct</a>]</span><span>[<a href="#I-D.ietf-cose-rfc8152bis-algs" class="xref">I-D.ietf-cose-rfc8152bis-algs</a>]</span> to secure CoAP messages.
         Note that OSCORE can be used to secure CoAP messages, as well as HTTP and combinations of HTTP and CoAP; a profile of ACE similar to the one described in this document, with the difference of using HTTP instead of CoAP as communication protocol, could be specified analogously to this one.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <div id="terminology">
 <section id="section-1.1">
@@ -1084,7 +1084,7 @@ address div.right {
       described in BCP 14 <span>[<a href="#RFC2119" class="xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="xref">RFC8174</a>]</span> when, and only when, they
       appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
 <p id="section-1.1-2">
-          Certain security-related terms such as "authentication", "authorization", "confidentiality", "(data) integrity", "message  authentication code", and "verify" are taken from <span>[<a href="#RFC4949" class="xref">RFC4949</a>]</span>.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
+          Certain security-related terms such as "authentication", "authorization", "confidentiality", "(data) integrity", "Message Authentication Code (MAC)", "Hash-based Message Authentication Code (HMAC)", and "verify" are taken from <span>[<a href="#RFC4949" class="xref">RFC4949</a>]</span>.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
 <p id="section-1.1-3">
           RESTful terminology follows HTTP <span>[<a href="#RFC7231" class="xref">RFC7231</a>]</span>.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
 <p id="section-1.1-4">
@@ -1092,9 +1092,11 @@ address div.right {
 <p id="section-1.1-5">
           Terminology for entities in the architecture is defined in OAuth 2.0 <span>[<a href="#RFC6749" class="xref">RFC6749</a>]</span>, such as client (C), resource server (RS), and authorization server (AS). It is assumed in this document that a given resource on a specific RS is associated to a unique AS.<a href="#section-1.1-5" class="pilcrow">¶</a></p>
 <p id="section-1.1-6">
-          Concise Binary Object Representation (CBOR) <span>[<a href="#RFC8949" class="xref">RFC8949</a>]</span> and Concise Data Definition Language (CDDL) <span>[<a href="#RFC8610" class="xref">RFC8610</a>]</span> are used in this specification. CDDL predefined type names, especially bstr for CBOR byte strings and tstr for CBOR text strings, are used extensively in the document.<a href="#section-1.1-6" class="pilcrow">¶</a></p>
+          Concise Binary Object Representation (CBOR) <span>[<a href="#RFC8949" class="xref">RFC8949</a>]</span> and Concise Data Definition Language (CDDL) <span>[<a href="#RFC8610" class="xref">RFC8610</a>]</span> are used in this document. CDDL predefined type names, especially bstr for CBOR byte strings and tstr for CBOR text strings, are used extensively in this document.<a href="#section-1.1-6" class="pilcrow">¶</a></p>
 <p id="section-1.1-7">
-          Note that the term "endpoint" is used here, as in <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span>, following its OAuth definition, which is to denote resources such as token and introspect at the AS and authz-info at the RS.  The CoAP <span>[<a href="#RFC7252" class="xref">RFC7252</a>]</span> definition, which is "An entity participating in the CoAP protocol" is not used in this memo.<a href="#section-1.1-7" class="pilcrow">¶</a></p>
+          Note that the term "endpoint" is used here, as in <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span>, following its OAuth definition, which is to denote resources such as token and introspect at the AS and authz-info at the RS.  The CoAP <span>[<a href="#RFC7252" class="xref">RFC7252</a>]</span> definition, which is "An entity participating in the CoAP protocol" is not used in this document.<a href="#section-1.1-7" class="pilcrow">¶</a></p>
+<p id="section-1.1-8">
+          Examples throughout this document are expressed in CBOR diagnostic notation without the tag and value abbreviations.<a href="#section-1.1-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1109,16 +1111,16 @@ address div.right {
         The RS maintains a collection of OSCORE Security Contexts with associated authorization information for all the clients that it is communicating with. The
         authorization information is maintained as policy that is used as input to processing requests from those clients.<a href="#section-2-2" class="pilcrow">¶</a></p>
 <p id="section-2-3">
-        This profile requires a client to retrieve an access token from the AS for the resource it wants to access on an RS, by sending an access token request to the token endpoint, as specified in section 5.8 of <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span>. The access token request and response MUST be confidentiality-protected and ensure authenticity.  This profile RECOMMENDS the use of OSCORE between client and AS, to reduce the number of libraries the client has to support, but other protocols fulfilling the security requirements defined in section 5 of <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span> (such as TLS or DTLS) MAY be used as well.<a href="#section-2-3" class="pilcrow">¶</a></p>
+        This profile requires a client to retrieve an access token from the AS for the resource it wants to access on an RS, by sending an access token request to the token endpoint, as specified in section 5.8 of <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span>. The access token request and response MUST be confidentiality-protected and ensure authenticity.  This profile RECOMMENDS the use of OSCORE between client and AS, to reduce the number of libraries the client has to support, but other protocols fulfilling the security requirements defined in section 5 of <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span> MAY alternatively be used, such as TLS <span>[<a href="#RFC8446" class="xref">RFC8446</a>]</span> or DTLS <span>[<a href="#I-D.ietf-tls-dtls13" class="xref">I-D.ietf-tls-dtls13</a>]</span>.<a href="#section-2-3" class="pilcrow">¶</a></p>
 <p id="section-2-4">
-        Once the client has retrieved the access token, it generates a nonce N1, defined in this specification (see <a href="#nonce1" class="xref">Section 4.1.1</a>). The client also generates its own OSCORE Recipient ID ID1 (see Section 3.1 of <span>[<a href="#RFC8613" class="xref">RFC8613</a>]</span>), for use with the keying material associated to the RS. The client posts the token, N1 and its Recipient ID to the RS using the authz-info endpoint and mechanisms specified in section 5.8 of <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span> and Content-Format = application/ace+cbor. When using this profile, the communication with the authz-info endpoint is not protected, except for update of access rights.<a href="#section-2-4" class="pilcrow">¶</a></p>
+        Once the client has retrieved the access token, it generates a nonce N1, defined in this document (see <a href="#nonce1" class="xref">Section 4.1.1</a>). The client also generates its own OSCORE Recipient ID ID1 (see Section 3.1 of <span>[<a href="#RFC8613" class="xref">RFC8613</a>]</span>), for use with the keying material associated to the RS. The client posts the token, N1 and its Recipient ID to the RS using the authz-info endpoint and mechanisms specified in section 5.8 of <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span> and Content-Format = application/ace+cbor. When using this profile, the communication with the authz-info endpoint is not protected, except for update of access rights.<a href="#section-2-4" class="pilcrow">¶</a></p>
 <p id="section-2-5">
         If the access token is valid, the RS replies to this request with a 2.01 (Created) response with Content-Format = application/ace+cbor, which contains a nonce N2 and its newly generated OSCORE Recipient ID, ID2, for use with the keying material associated to the client. Moreover, the server concatenates the input salt received in the token, N1, and N2 to obtain the Master Salt of the OSCORE Security Context (see section 3 of <span>[<a href="#RFC8613" class="xref">RFC8613</a>]</span>).
         The RS then derives the complete Security Context associated with the received token from the Master Salt, the OSCORE Recipient ID generated by the client (set as its OSCORE Sender ID), its own OSCORE Recipient ID, plus the parameters received in the access token from the AS, following section 3.2 of <span>[<a href="#RFC8613" class="xref">RFC8613</a>]</span>.<a href="#section-2-5" class="pilcrow">¶</a></p>
 <p id="section-2-6">
         In a similar way, after receiving the nonce N2, the client concatenates the input salt, N1 and N2 to obtain the Master Salt of the OSCORE Security Context. The client then derives the complete Security Context from the Master Salt, the OSCORE Recipient ID generated by the RS (set as its OSCORE Sender ID), its own OSCORE Recipient ID, plus the parameters received from the AS.<a href="#section-2-6" class="pilcrow">¶</a></p>
 <p id="section-2-7">
-        Finally, the client starts the communication with the RS by sending a request protected with OSCORE to the RS. If the request is successfully verified, the server stores the complete Security Context state that is ready for use in protecting messages, and uses it in the response, and in further communications with the client, until token deletion, due to e.g. expiration. This Security Context is discarded when a token (whether the same or a different one) is used to successfully derive a new Security Context for that client.<a href="#section-2-7" class="pilcrow">¶</a></p>
+        Finally, the client starts the communication with the RS by sending a request protected with OSCORE to the RS. If the request is successfully verified, the server stores the complete Security Context state that is ready for use in protecting messages, and uses it in the response, and in further communications with the client, until token deletion due to, for example, expiration. This Security Context is discarded when a token (whether the same or a different one) is used to successfully derive a new Security Context for that client.<a href="#section-2-7" class="pilcrow">¶</a></p>
 <p id="section-2-8">
         The use of nonces N1 and N2 during the exchange prevents the reuse of an
         Authenticated Encryption with Associated Data (AEAD) nonce/key pair
@@ -1188,7 +1190,7 @@ Sec Context storage/            |                     |
 <p id="section-3.1-2">
           The client must send this POST request to the token endpoint over a secure channel that guarantees authentication, message integrity and confidentiality (see <a href="#introsp" class="xref">Section 5</a>).<a href="#section-3.1-2" class="pilcrow">¶</a></p>
 <p id="section-3.1-3">
-          An example of such a request, with payload in CBOR diagnostic notation without the tag and value abbreviations is reported in <a href="#ex0" class="xref">Figure 2</a><a href="#section-3.1-3" class="pilcrow">¶</a></p>
+          An example of such a request is shown in <a href="#ex0" class="xref">Figure 2</a><a href="#section-3.1-3" class="pilcrow">¶</a></p>
 <span id="name-example-c-to-as-post-token-"></span><div id="ex0">
 <figure id="figure-2">
           <div class="artwork art-text alignLeft" id="section-3.1-4.1">
@@ -1199,7 +1201,7 @@ Sec Context storage/            |                     |
     Content-Format: "application/ace+cbor"
     Payload:
     {
-      "req_aud" : "tempSensor4711",
+      "audience" : "tempSensor4711",
       "scope" : "read"
      }
 
@@ -1210,9 +1212,9 @@ Sec Context storage/            |                     |
           </figcaption></figure>
 </div>
 <p id="section-3.1-5">
-          If the client wants to update its access rights without changing an existing OSCORE Security Context, it MUST include in its POST request to the token endpoint a req_cnf object, with the kid field carrying a CBOR byte string containing the OSCORE Input Material Identifier (assigned as discussed in <a href="#as-c" class="xref">Section 3.2</a>). This identifier, together with other information such as audience (see Section 5.8.1 of <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span>), can be used by the AS to determine the shared secret bound to the proof-of-possession token and therefore MUST identify a symmetric key that was previously generated by the AS as a shared secret for the communication between the client and the RS. The AS MUST verify that the received value identifies a proof-of-possession key that has previously been issued to the requesting client. If that is not the case, the Client-to-AS request MUST be declined with the error code 'invalid_request' as defined in Section 5.8.3 of <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span>.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
+          If the client wants to update its access rights without changing an existing OSCORE Security Context, it MUST include in its POST request to the token endpoint a req_cnf object, with the kid field carrying a CBOR byte string containing the OSCORE Input Material Identifier (assigned as discussed in <a href="#as-c" class="xref">Section 3.2</a>). This identifier, together with other information such as audience (see Section 5.8.1 of <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span>), can be used by the AS to determine the shared secret bound to the proof-of-possession token and therefore MUST identify a symmetric key that was previously generated by the AS as a shared secret for the communication between the client and the RS. The AS MUST verify that the received value identifies a proof-of-possession key that has previously been issued to the requesting client. If that is not the case, the Client-to-AS request MUST be declined with the error code <code>invalid_request</code> as defined in Section 5.8.3 of <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span>.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
 <p id="section-3.1-6">
-          An example of such a request, with payload in CBOR diagnostic notation without the tag and value abbreviations is reported in <a href="#ex7" class="xref">Figure 3</a><a href="#section-3.1-6" class="pilcrow">¶</a></p>
+          An example of such a request is shown in <a href="#ex7" class="xref">Figure 3</a><a href="#section-3.1-6" class="pilcrow">¶</a></p>
 <span id="name-example-c-to-as-post-token-r"></span><div id="ex7">
 <figure id="figure-3">
           <div class="artwork art-text alignLeft" id="section-3.1-7.1">
@@ -1223,7 +1225,7 @@ Sec Context storage/            |                     |
     Content-Format: "application/ace+cbor"
     Payload:
     {
-      "req_aud" : "tempSensor4711",
+      "audience" : "tempSensor4711",
       "scope" : "write",
       "req_cnf" : {
         "kid" : h'01'
@@ -1245,7 +1247,7 @@ Sec Context storage/            |                     |
 <p id="section-3.2-1">
           After verifying the POST request to the token endpoint and that the client is authorized to obtain an access token corresponding to its access token request, the AS responds as defined in section 5.8.2 of <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span>. If the client request was invalid, or not authorized, the AS returns an error response as described in section 5.8.3 of <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span>.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 <p id="section-3.2-2">
-          The AS can signal that the use of OSCORE is REQUIRED for a specific access token by including the "profile" parameter with the value "coap_oscore" in the access token response.  This means that the client MUST use OSCORE towards all resource servers for which this access token is valid, and follow <a href="#oscore-setup" class="xref">Section 4.3</a> to derive the security context to run OSCORE.
+          The AS can signal that the use of OSCORE is REQUIRED for a specific access token by including the "ace_profile" parameter with the value "coap_oscore" in the access token response.  This means that the client MUST use OSCORE towards all resource servers for which this access token is valid, and follow <a href="#oscore-setup" class="xref">Section 4.3</a> to derive the security context to run OSCORE.
 Usually it is assumed that constrained devices will be pre-configured with the necessary profile, so that this kind of profile signaling can be omitted.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
 <p id="section-3.2-3">
           Moreover, the AS MUST send the following data:<a href="#section-3.2-3" class="pilcrow">¶</a></p>
@@ -1262,7 +1264,7 @@ Usually it is assumed that constrained devices will be pre-configured with the n
 </li>
           <li class="normal" id="section-3.2-6.2">an AEAD algorithm<a href="#section-3.2-6.2" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="section-3.2-6.3">an HMAC-based key derivation function (HKDF) algorithm<a href="#section-3.2-6.3" class="pilcrow">¶</a>
+          <li class="normal" id="section-3.2-6.3">an HMAC-based key derivation function (HKDF, <span>[<a href="#RFC5869" class="xref">RFC5869</a>]</span>) algorithm, see section 3.1 of <span>[<a href="#I-D.ietf-cose-rfc8152bis-algs" class="xref">I-D.ietf-cose-rfc8152bis-algs</a>]</span><a href="#section-3.2-6.3" class="pilcrow">¶</a>
 </li>
           <li class="normal" id="section-3.2-6.4">a salt<a href="#section-3.2-6.4" class="pilcrow">¶</a>
 </li>
@@ -1270,18 +1272,19 @@ Usually it is assumed that constrained devices will be pre-configured with the n
 </li>
         </ul>
 <p id="section-3.2-7">
-          This data is transported in the OSCORE_Input_Material. The OSCORE_Input_Material is a CBOR map object, defined in <a href="#oscore-sec-ctx" class="xref">Section 3.2.1</a>. This object is transported in the 'cnf' parameter of the access token response as defined in Section 3.2 of <span>[<a href="#I-D.ietf-ace-oauth-params" class="xref">I-D.ietf-ace-oauth-params</a>]</span>, as the value of a field named 'osc', registered in <a href="#osc-cwt" class="xref">Section 9.5</a> and <a href="#osc-jwt" class="xref">Section 9.6</a>.<a href="#section-3.2-7" class="pilcrow">¶</a></p>
+          This data is transported in the OSCORE_Input_Material. The OSCORE_Input_Material is a CBOR map object, defined in <a href="#oscore-sec-ctx" class="xref">Section 3.2.1</a>. This object is transported in the <code>cnf</code> parameter of the access token response as defined in Section 3.2 of <span>[<a href="#I-D.ietf-ace-oauth-params" class="xref">I-D.ietf-ace-oauth-params</a>]</span>, as the value of a field named <code>osc</code>, registered in <a href="#osc-cwt" class="xref">Section 9.5</a> and <a href="#osc-jwt" class="xref">Section 9.6</a>.<a href="#section-3.2-7" class="pilcrow">¶</a></p>
 <p id="section-3.2-8">
-          The AS MAY assign an identifier to the context (context identifier). This identifier is used as ID Context in the OSCORE context as described in section 3.1 of <span>[<a href="#RFC8613" class="xref">RFC8613</a>]</span>. If assigned, this parameters MUST be communicated as the 'contextId' field in the OSCORE_Input_Material. The applications needs to consider that this identifier is sent in the clear and may reveal information about the endpoints, as mentioned in section 12.8 of <span>[<a href="#RFC8613" class="xref">RFC8613</a>]</span>.<a href="#section-3.2-8" class="pilcrow">¶</a></p>
+          The AS MAY assign an identifier to the context (context identifier). This identifier is used as ID Context in the OSCORE context as described in section 3.1 of <span>[<a href="#RFC8613" class="xref">RFC8613</a>]</span>. If assigned, this parameters MUST be communicated as the <code>contextId</code> field in the OSCORE_Input_Material. The application needs to consider that this identifier is sent in the clear and may reveal information about the endpoints, as mentioned in section 12.8 of <span>[<a href="#RFC8613" class="xref">RFC8613</a>]</span>.<a href="#section-3.2-8" class="pilcrow">¶</a></p>
 <p id="section-3.2-9">
-          The master secret and the identifier of the OSCORE_Input_Material MUST be communicated as the 'ms' and 'id' field in the 'osc' field in the 'cnf' parameeter of the access token response.
-          If included, the AEAD algorithm is sent in the 'alg' parameter in the OSCORE_Input_Material; the HKDF algorithm in the 'hkdf' parameter of the OSCORE_Input_Material; a salt in the 'salt' parameter of the OSCORE_Input_Material; and the OSCORE version in the 'version' parameter of the OSCORE_Input_Material.<a href="#section-3.2-9" class="pilcrow">¶</a></p>
+          The master secret and the identifier of the OSCORE_Input_Material MUST be communicated as the <code>ms</code> and <code>id</code> field in the <code>osc</code> field in the <code>cnf</code> parameter of the access token response.
+          If included, the AEAD algorithm is sent in the <code>alg</code> parameter in the OSCORE_Input_Material; the HKDF algorithm in the <code>hkdf</code> parameter of the OSCORE_Input_Material; a salt in the <code>salt</code> parameter of the OSCORE_Input_Material; and the OSCORE version in the <code>version</code> parameter of the OSCORE_Input_Material.<a href="#section-3.2-9" class="pilcrow">¶</a></p>
 <p id="section-3.2-10">
-         The same parameters MUST be included in the claims associated with the access token. This profile RECOMMENDS the use of CBOR web token (CWT) as specified in  <span>[<a href="#RFC8392" class="xref">RFC8392</a>]</span>. If the token is a CWT, the same OSCORE_Input_Material structure defined above MUST be placed in the 'osc' field of the 'cnf' claim of this token.<a href="#section-3.2-10" class="pilcrow">¶</a></p>
+         The same parameters MUST be included in the claims associated with the access token.
+          The OSCORE master secret MUST be encrypted by the authorization server so that only the resource server can decrypt it (see Section 6.1. of <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span>). This profile RECOMMENDS the use of a CBOR web token (CWT) protected with COSE_Encrypt/COSE_Encrypt0 as specified in  <span>[<a href="#RFC8392" class="xref">RFC8392</a>]</span>. If the token is a CWT, the same OSCORE_Input_Material structure defined above MUST be placed in the <code>osc</code> field of the <code>cnf</code> claim of this token.<a href="#section-3.2-10" class="pilcrow">¶</a></p>
 <p id="section-3.2-11">
           The AS MUST send different OSCORE_Input_Material (and therefore different access tokens) to different authorized clients, in order for the RS to differentiate between clients.<a href="#section-3.2-11" class="pilcrow">¶</a></p>
 <p id="section-3.2-12">
-          <a href="#ex1" class="xref">Figure 4</a> shows an example of an AS response, with payload in CBOR diagnostic notation without the tag and value abbreviations. The access token has been truncated for readability.<a href="#section-3.2-12" class="pilcrow">¶</a></p>
+          <a href="#ex1" class="xref">Figure 4</a> shows an example of an AS response. The access token has been truncated for readability.<a href="#section-3.2-12" class="pilcrow">¶</a></p>
 <span id="name-example-as-to-c-access-toke"></span><div id="ex1">
 <figure id="figure-4">
           <div class="artwork art-text alignLeft" id="section-3.2-13.1">
@@ -1292,7 +1295,7 @@ Usually it is assumed that constrained devices will be pre-configured with the n
     {
       "access_token" : h'8343a1010aa2044c53 ...
        (remainder of access token (CWT) omitted for brevity)',
-      "profile" : "coap_oscore",
+      "ace_profile" : "coap_oscore",
       "expires_in" : "3600",
       "cnf" : {
         "osc" : {
@@ -1309,7 +1312,7 @@ Usually it is assumed that constrained devices will be pre-configured with the n
           </figcaption></figure>
 </div>
 <p id="section-3.2-14">
-          <a href="#ex2" class="xref">Figure 5</a> shows an example CWT Claims Set, including the relevant OSCORE parameters in the 'cnf' claim, in CBOR diagnostic notation without tag and value abbreviations.<a href="#section-3.2-14" class="pilcrow">¶</a></p>
+          <a href="#ex2" class="xref">Figure 5</a> shows an example CWT Claims Set, including the relevant OSCORE parameters in the <code>cnf</code> claim.<a href="#section-3.2-14" class="pilcrow">¶</a></p>
 <span id="name-example-cwt-claims-set-with"></span><div id="ex2">
 <figure id="figure-5">
           <div class="artwork art-text alignLeft" id="section-3.2-15.1">
@@ -1334,7 +1337,7 @@ Usually it is assumed that constrained devices will be pre-configured with the n
           </figcaption></figure>
 </div>
 <p id="section-3.2-16">
-          The same CWT Claims Set as in <a href="#ex2" class="xref">Figure 5</a>, using the value abbreviations defined in <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span> and <span>[<a href="#RFC8747" class="xref">RFC8747</a>]</span> and encoded in CBOR is shown in <a href="#ex2-cbor" class="xref">Figure 6</a>. The bytes in hexadecimal are reported in the first column, while their corresponding CBOR meaning is reported after the '#' sign on the second column, for easiness of readability.<a href="#section-3.2-16" class="pilcrow">¶</a></p>
+          The same CWT Claims Set as in <a href="#ex2" class="xref">Figure 5</a>, using the value abbreviations defined in <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span> and <span>[<a href="#RFC8747" class="xref">RFC8747</a>]</span> and encoded in CBOR is shown in <a href="#ex2-cbor" class="xref">Figure 6</a>. The bytes in hexadecimal are reported in the first column, while their corresponding CBOR meaning is reported after the <code>#</code> sign on the second column, for easiness of readability.<a href="#section-3.2-16" class="pilcrow">¶</a></p>
 <p id="section-3.2-17">
           NOTE TO THE RFC EDITOR: before publishing, it should be checked (and in case fixed) that the values used below (which are not yet registered) are the final values registered in IANA.<a href="#section-3.2-17" class="pilcrow">¶</a></p>
 <span id="name-example-cwt-claims-set-with-"></span><div id="ex2-cbor">
@@ -1384,9 +1387,9 @@ A5                                      # map(5)
           </figcaption></figure>
 </div>
 <p id="section-3.2-19">
-          If the client has requested an update to its access rights using the same OSCORE Security Context, which is valid and authorized, the AS MUST omit the 'cnf' parameter in the response, and MUST carry the OSCORE Input Material identifier in the 'kid' field in the 'cnf' claim of the token. This identifier needs to be included in the token in order for the RS to identify the correct OSCORE Input Material.<a href="#section-3.2-19" class="pilcrow">¶</a></p>
+          If the client has requested an update to its access rights using the same OSCORE Security Context, which is valid and authorized, the AS MUST omit the <code>cnf</code> parameter in the response, and MUST carry the OSCORE Input Material identifier in the <code>kid</code> field in the <code>cnf</code> claim of the token. This identifier needs to be included in the token in order for the RS to identify the correct OSCORE Input Material.<a href="#section-3.2-19" class="pilcrow">¶</a></p>
 <p id="section-3.2-20">
-          <a href="#ex5" class="xref">Figure 7</a> shows an example of such an AS response, with payload in CBOR diagnostic notation without the tag and value abbreviations. The access token has been truncated for readability.<a href="#section-3.2-20" class="pilcrow">¶</a></p>
+          <a href="#ex5" class="xref">Figure 7</a> shows an example of such an AS response The access token has been truncated for readability.<a href="#section-3.2-20" class="pilcrow">¶</a></p>
 <span id="name-example-as-to-c-access-token"></span><div id="ex5">
 <figure id="figure-7">
           <div class="artwork art-text alignLeft" id="section-3.2-21.1">
@@ -1397,7 +1400,7 @@ A5                                      # map(5)
     {
       "access_token" : h'8343a1010aa2044c53 ...
        (remainder of access token (CWT) omitted for brevity)',
-      "profile" : "coap_oscore",
+      "ace_profile" : "coap_oscore",
       "expires_in" : "3600"
     }
 
@@ -1408,7 +1411,7 @@ A5                                      # map(5)
           </figcaption></figure>
 </div>
 <p id="section-3.2-22">
-          <a href="#ex6" class="xref">Figure 8</a> shows an example CWT Claims Set, containing the necessary OSCORE parameters in the 'cnf' claim for update of access rights, in CBOR diagnostic notation without tag and value abbreviations.<a href="#section-3.2-22" class="pilcrow">¶</a></p>
+          <a href="#ex6" class="xref">Figure 8</a> shows an example CWT Claims Set, containing the necessary OSCORE parameters in the <code>cnf</code> claim for update of access rights.<a href="#section-3.2-22" class="pilcrow">¶</a></p>
 <span id="name-example-cwt-claims-set-with-o"></span><div id="ex6">
 <figure id="figure-8">
           <div class="artwork art-text alignLeft" id="section-3.2-23.1">
@@ -1435,7 +1438,7 @@ A5                                      # map(5)
 <a href="#section-3.2.1" class="section-number selfRef">3.2.1. </a><a href="#name-the-oscore_input_material" class="section-name selfRef">The OSCORE_Input_Material</a>
           </h4>
 <p id="section-3.2.1-1">
-            An OSCORE_Input_Material is an object that represents the input material to derive an OSCORE Security Context, i.e., the local set of information elements necessary to carry out the cryptographic operations in OSCORE (Section 3.1 of <span>[<a href="#RFC8613" class="xref">RFC8613</a>]</span>). In particular, the OSCORE_Input_Material is defined to be serialized and transported between nodes, as specified by this document, but can also be used by other specifications if needed. The OSCORE_Input_Material can either be encoded as a JSON object or as a CBOR map. The set of common parameters that can appear in an OSCORE_Input_Material can be found in the IANA "OSCORE Security Context Parameters" registry (<a href="#sec-ctx-params-reg" class="xref">Section 9.4</a>), defined for extensibility, and is specified below.
+            An OSCORE_Input_Material is an object that represents the input material to derive an OSCORE Security Context, i.e., the local set of information elements necessary to carry out the cryptographic operations in OSCORE (Section 3.1 of <span>[<a href="#RFC8613" class="xref">RFC8613</a>]</span>). In particular, the OSCORE_Input_Material is defined to be serialized and transported between nodes, as specified by this document, but can also be used by other specifications if needed. The OSCORE_Input_Material can either be encoded as a JSON object or as a CBOR map. The set of common parameters that can appear in an OSCORE_Input_Material can be found in the IANA "OSCORE Security Context Parameters" registry (<a href="#sec-ctx-params-reg" class="xref">Section 9.4</a>), defined for extensibility, and the initial set of parameters defined in this document is specified below.
             All parameters are optional.
             <a href="#key-labels" class="xref">Table 1</a> provides a summary of the OSCORE_Input_Material parameters defined in this section.<a href="#section-3.2.1-1" class="pilcrow">¶</a></p>
 <span id="name-oscore_input_material-param"></span><div id="key-labels">
@@ -1533,7 +1536,7 @@ A5                                      # map(5)
 <dt id="section-3.2.1-3.7">hkdf:</dt>
             <dd style="margin-left: 1.5em" id="section-3.2.1-3.8">
                 This parameter identifies the OSCORE HKDF Algorithm. For more information about this field, see section 3.1 of <span>[<a href="#RFC8613" class="xref">RFC8613</a>]</span>. 
-                The values used MUST be registered in the IANA "COSE Algorithms" registry (see <span>[<a href="#COSE.Algorithms" class="xref">COSE.Algorithms</a>]</span>) and MUST be HMAC-based HKDF algorithms. The value can either be the integer or the text string value of the HMAC-based HKDF algorithm in the "COSE Algorithms" registry.
+                The values used MUST be registered in the IANA "COSE Algorithms" registry (see <span>[<a href="#COSE.Algorithms" class="xref">COSE.Algorithms</a>]</span>) and MUST be HMAC-based HKDF algorithms (see section 3.1 of <span>[<a href="#I-D.ietf-cose-rfc8152bis-algs" class="xref">I-D.ietf-cose-rfc8152bis-algs</a>]</span>). The value can either be the integer or the text string value of the HMAC-based HKDF algorithm in the "COSE Algorithms" registry.
                 In JSON, the "hkdf" value is a case-sensitive ASCII string or an integer.
                 In CBOR, the "hkdf" type is text string or integer, and has label 3.<a href="#section-3.2.1-3.8" class="pilcrow">¶</a>
 </dd>
@@ -1609,7 +1612,7 @@ OSCORE_Input_Material = {
 <p id="section-4-1">
         The following subsections describe the details of the POST request and response to the authz-info endpoint between client and RS. The client generates a nonce N1 and an identifier ID1 unique in the sets of its own Recipient IDs, and posts them together with the token that includes the materials (e.g., OSCORE parameters) received from the AS to the RS. The RS then generates a nonce N2 and an identifier ID2 unique in the sets of its own Recipient IDs, and uses Section 3.2 of <span>[<a href="#RFC8613" class="xref">RFC8613</a>]</span> to derive a security context based on a shared master secret, the two exchanged nonces and the two identifiers, established between client and server. The exchanged nonces and identifiers are encoded as CBOR byte string if CBOR is used, and as Base64 string if JSON is used. This security context is used to protect all future communication between client and RS using OSCORE, as long as the access token is valid.<a href="#section-4-1" class="pilcrow">¶</a></p>
 <p id="section-4-2">
-        Note that the RS and client authenticates each other
+        Note that the RS and client authenticate each other
         by generating the shared OSCORE Security Context using
         the pop-key as master secret.  An attacker
         posting a valid token to the RS will not be able to generate a valid OSCORE Security Context and
@@ -1620,21 +1623,21 @@ OSCORE_Input_Material = {
 <a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-c-to-rs-post-to-authz-info-" class="section-name selfRef">C-to-RS: POST to authz-info endpoint</a>
         </h3>
 <p id="section-4.1-1">
-          The client MUST generate a nonce value N1 very unlikely to have been previously used with the same input keying material. This profile RECOMMENDS to use a 64-bit long random number as nonce's value. The client MUST store the nonce N1 as long as the response from the RS is not received and the access token related to it is still valid (to the best of the client's knowledge).<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+          The client MUST generate a nonce value N1 very unlikely to have been previously used with the same input keying material. This profile RECOMMENDS using a 64-bit long random number as the nonce's value. The client MUST store the nonce N1 as long as the response from the RS is not received and the access token related to it is still valid (to the best of the client's knowledge).<a href="#section-4.1-1" class="pilcrow">¶</a></p>
 <p id="section-4.1-2">
           The client generates its own Recipient ID, ID1, for the OSCORE Security Context that it is establishing with the RS. By generating its own Recipient ID, the client makes sure that it does not collide with any of its Recipient IDs, nor with any other identifier ID1 if the client is executing this exchange with a different RS at the same time.<a href="#section-4.1-2" class="pilcrow">¶</a></p>
 <p id="section-4.1-3">
           The client MUST use CoAP and the Authorization Information resource as described in section 5.8.1 of <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span> to transport the token, N1 and ID1 to the RS.<a href="#section-4.1-3" class="pilcrow">¶</a></p>
 <p id="section-4.1-4">
-           Note that the use of the payload and the Content-Format is different from what is described in section 5.8.1 of <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span>, which only transports the token without any CBOR wrapping. In this profile, the client MUST wrap the token, N1 and ID1 in a CBOR map. The client MUST use the Content-Format "application/ace+cbor" defined in section 8.14 of <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span>. The client MUST include the access token using the 'access_token' parameter, N1 using the 'nonce1' parameter defined in <a href="#nonce1" class="xref">Section 4.1.1</a>, and ID1 using the 'ace_client_recipientid' parameter defined in <a href="#id1" class="xref">Section 4.1.2</a>.<a href="#section-4.1-4" class="pilcrow">¶</a></p>
+           Note that the use of the payload and the Content-Format is different from what is described in section 5.8.1 of <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span>, which only transports the token without any CBOR wrapping. In this profile, the client MUST wrap the token, N1 and ID1 in a CBOR map. The client MUST use the Content-Format "application/ace+cbor" defined in section 8.14 of <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span>. The client MUST include the access token using the <code>access_token</code> parameter, N1 using the <code>nonce1</code> parameter defined in <a href="#nonce1" class="xref">Section 4.1.1</a>, and ID1 using the <code>ace_client_recipientid</code> parameter defined in <a href="#id1" class="xref">Section 4.1.2</a>.<a href="#section-4.1-4" class="pilcrow">¶</a></p>
 <p id="section-4.1-5">
           The communication with the authz-info endpoint does not have to be protected, except for the update of access rights case described below.<a href="#section-4.1-5" class="pilcrow">¶</a></p>
 <p id="section-4.1-6">
           Note that a client may be required to re-POST the access token in order to complete a request, since an RS may delete a stored access token (and associated Security Context) at any time, for example due to all storage space being consumed. This situation is detected by the client when it receives an AS Request Creation Hints response. Reposting the same access token will result in deriving a new OSCORE Security Context to be used with the RS, as different exchanged nonces will be used.<a href="#section-4.1-6" class="pilcrow">¶</a></p>
 <p id="section-4.1-7">
-          The client may also chose to re-POST the access token in order to renew its OSCORE Security Context. In that case, the client and the RS will exchange newly generated nonces, re-negotiate identifiers, and derive new keying material. The client and RS might decide to keep the same identifiers or renew them during the re-negotiation.<a href="#section-4.1-7" class="pilcrow">¶</a></p>
+          The client may also choose to re-POST the access token in order to update its OSCORE Security Context. In that case, the client and the RS will exchange newly generated nonces, re-negotiate identifiers, and derive new keying material. The client and RS might decide to keep the same identifiers or renew them during the re-negotiation.<a href="#section-4.1-7" class="pilcrow">¶</a></p>
 <p id="section-4.1-8">
-          <a href="#ex3" class="xref">Figure 10</a> shows an example of the request sent from the client to the RS, with payload in CBOR diagnostic notation without the tag and value abbreviations. The access token has been truncated for readability.<a href="#section-4.1-8" class="pilcrow">¶</a></p>
+          <a href="#ex3" class="xref">Figure 10</a> shows an example of the request sent from the client to the RS. The access token has been truncated for readability.<a href="#section-4.1-8" class="pilcrow">¶</a></p>
 <span id="name-example-c-to-rs-post-authz-"></span><div id="ex3">
 <figure id="figure-10">
           <div class="artwork art-text alignLeft" id="section-4.1-9.1">
@@ -1658,7 +1661,7 @@ OSCORE_Input_Material = {
           </figcaption></figure>
 </div>
 <p id="section-4.1-10">
-          If the client has already posted a valid token, has already established a security association with the RS, and wants to update its access rights, the client can do so by posting the new token (retrieved from the AS and containing the update of access rights) to the /authz-info endpoint. The client MUST protect the request using the OSCORE Security Context established during the first token exchange. The client MUST only send the 'access_token' field in the CBOR map in the payload, no nonce or identifier are sent. After proper verification (see <a href="#rs-c" class="xref">Section 4.2</a>), the RS will replace the old token with the new one, maintaining the same Security Context.<a href="#section-4.1-10" class="pilcrow">¶</a></p>
+          If the client has already posted a valid token, has already established a security association with the RS, and wants to update its access rights, the client can do so by posting the new token (retrieved from the AS and containing the update of access rights) to the /authz-info endpoint. The client MUST protect the request using the OSCORE Security Context established during the first token exchange. The client MUST only send the <code>access_token</code> field in the CBOR map in the payload, no nonce or identifier are sent. After proper verification (see <a href="#rs-c" class="xref">Section 4.2</a>), the RS will replace the old token with the new one, maintaining the same Security Context.<a href="#section-4.1-10" class="pilcrow">¶</a></p>
 <div id="nonce1">
 <section id="section-4.1.1">
           <h4 id="name-the-nonce-1-parameter">
@@ -1689,12 +1692,12 @@ OSCORE_Input_Material = {
 <a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-rs-to-c-201-created" class="section-name selfRef">RS-to-C: 2.01 (Created)</a>
         </h3>
 <p id="section-4.2-1">
-          The RS MUST follow the procedures defined in section 5.8.1 of <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span>: the RS must verify the validity of the token. If the token is valid, the RS must respond to the POST request with 2.01 (Created). If the token is valid but is associated to claims that the RS cannot process (e.g., an unknown scope), or if any of the expected parameters is missing (e.g., any of the mandatory parameters from the AS or the identifier 'id1'), or if any parameters received in the 'osc' field is unrecognized, the RS must respond with an error response code equivalent to the CoAP code 4.00 (Bad Request). In the latter two cases, the RS may provide additional information in the error response, in order to clarify what went wrong.
+          The RS MUST follow the procedures defined in section 5.8.1 of <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span>: the RS must verify the validity of the token. If the token is valid, the RS must respond to the POST request with 2.01 (Created). If the token is valid but is associated to claims that the RS cannot process (e.g., an unknown scope), or if any of the expected parameters is missing (e.g., any of the mandatory parameters from the AS or the identifier <code>id1</code>), or if any parameters received in the <code>osc</code> field is unrecognized, the RS must respond with an error response code equivalent to the CoAP code 4.00 (Bad Request). In the latter two cases, the RS may provide additional information in the error response, in order to clarify what went wrong.
           The RS may make an introspection request (see Section 5.9.1 of <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span>) to validate the token before responding to the POST request to the authz-info endpoint.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
 <p id="section-4.2-2">
-          Additionally, the RS MUST generate a nonce N2 very unlikely to have been previously used with the same input keying material, and its own Recipient ID, ID2. The RS makes sure that ID2 does not collide with any of its Recipient IDs. The RS MUST ensure that ID2 is different from the value received in the ace_client_recipientid parameter. The RS sends N2 and ID2 within the 2.01 (Created) response. The payload of the 2.01 (Created) response MUST be a CBOR map containing the 'nonce2' parameter defined in <a href="#nonce2" class="xref">Section 4.2.1</a>, set to N2, and the 'ace_server_recipientid' parameter defined in <a href="#id2" class="xref">Section 4.2.2</a>, set to ID2. This profile RECOMMENDS to use a 64-bit long random number as nonce's value. The RS MUST use the Content-Format "application/ace+cbor" defined in section 8.14 of <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span>.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
+          Additionally, the RS MUST generate a nonce N2 very unlikely to have been previously used with the same input keying material, and its own Recipient ID, ID2. The RS makes sure that ID2 does not collide with any of its Recipient IDs. The RS MUST ensure that ID2 is different from the value received in the ace_client_recipientid parameter. The RS sends N2 and ID2 within the 2.01 (Created) response. The payload of the 2.01 (Created) response MUST be a CBOR map containing the <code>nonce2</code> parameter defined in <a href="#nonce2" class="xref">Section 4.2.1</a>, set to N2, and the <code>ace_server_recipientid</code> parameter defined in <a href="#id2" class="xref">Section 4.2.2</a>, set to ID2. This profile RECOMMENDS using a 64-bit long random number as the nonce's value. The RS MUST use the Content-Format "application/ace+cbor" defined in section 8.14 of <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span>.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
 <p id="section-4.2-3">
-          <a href="#ex4" class="xref">Figure 11</a> shows an example of the response sent from the RS to the client, with payload in CBOR diagnostic notation without the tag and value abbreviations.<a href="#section-4.2-3" class="pilcrow">¶</a></p>
+          <a href="#ex4" class="xref">Figure 11</a> shows an example of the response sent from the RS to the client.<a href="#section-4.2-3" class="pilcrow">¶</a></p>
 <span id="name-example-rs-to-c-201-created"></span><div id="ex4">
 <figure id="figure-11">
           <div class="artwork art-text alignLeft" id="section-4.2-4.1">
@@ -1716,7 +1719,7 @@ OSCORE_Input_Material = {
 <p id="section-4.2-5">
           As specified in section 5.8.3 of <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span>, the RS must notify the client with an error response with code 4.01 (Unauthorized) for any long running request before terminating the session, when the access token expires.<a href="#section-4.2-5" class="pilcrow">¶</a></p>
 <p id="section-4.2-6">
-          If the RS receives the token in a OSCORE protected message, it means that the client is requesting an update of access rights. The RS MUST ignore any nonce and identifiers in the request, if any was sent. The RS MUST check that the "kid" of the 'cnf' claim of the new access token matches the identifier of the OSCORE Input Material of the context used to protect the message. If that is the case, the RS MUST overwrite the old token and associate the new token to the Security Context identified by the "kid" value in the 'cnf' claim. The RS MUST respond with a 2.01 (Created) response protected with the same Security Context, with no payload. If any verification fails, the RS MUST respond with a 4.01 (Unauthorized) error response.<a href="#section-4.2-6" class="pilcrow">¶</a></p>
+          If the RS receives the token in a OSCORE protected message, it means that the client is requesting an update of access rights. The RS MUST ignore any nonce and identifiers in the request, if any was sent. The RS MUST check that the "kid" of the <code>cnf</code> claim of the new access token matches the identifier of the OSCORE Input Material of the context used to protect the message. If that is the case, the RS MUST overwrite the old token and associate the new token to the Security Context identified by the "kid" value in the <code>cnf</code> claim. The RS MUST respond with a 2.01 (Created) response protected with the same Security Context, with no payload. If any verification fails, the RS MUST respond with a 4.01 (Unauthorized) error response.<a href="#section-4.2-6" class="pilcrow">¶</a></p>
 <p id="section-4.2-7">
           As specified in section 5.8.1 of <span>[<a href="#I-D.ietf-ace-oauth-authz" class="xref">I-D.ietf-ace-oauth-authz</a>]</span>, when receiving an updated access token with updated authorization information from the client (see <a href="#c-as" class="xref">Section 3.1</a>), it is recommended that the RS overwrites the previous token, that is only the latest authorization information in the token received by the RS is valid. This simplifies the process needed by the RS to keep track of authorization information for a given client.<a href="#section-4.2-7" class="pilcrow">¶</a></p>
 <div id="nonce2">
@@ -1749,7 +1752,7 @@ OSCORE_Input_Material = {
 <a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-oscore-setup" class="section-name selfRef">OSCORE Setup</a>
         </h3>
 <p id="section-4.3-1">
-          Once receiving the 2.01 (Created) response from the RS, following the POST request to authz-info endpoint, the client MUST extract the bstr nonce N2 from the 'nonce2' parameter in the CBOR map in the payload of the response. Then, the client MUST set the Master Salt of the Security Context created to communicate with the RS to the concatenation of salt, N1, and N2, in this order: Master Salt = salt | N1 | N2, where | denotes byte string concatenation, where salt is the CBOR byte string received from the AS in <a href="#as-c" class="xref">Section 3.2</a>, and where N1 and N2 are the two nonces encoded as CBOR byte strings.  An example of Master Salt construction using CBOR encoding is given in <a href="#ms-ex" class="xref">Figure 12</a>.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
+          Once the 2.01 (Created) response is received from the RS, following the POST request to authz-info endpoint, the client MUST extract the bstr nonce N2 from the <code>nonce2</code> parameter in the CBOR map in the payload of the response. Then, the client MUST set the Master Salt of the Security Context created to communicate with the RS to the concatenation of salt, N1, and N2, in this order: Master Salt = salt | N1 | N2, where | denotes byte string concatenation, where salt is the CBOR byte string received from the AS in <a href="#as-c" class="xref">Section 3.2</a>, and where N1 and N2 are the two nonces encoded as CBOR byte strings.  An example of Master Salt construction using CBOR encoding is given in <a href="#ms-ex" class="xref">Figure 12</a>.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
 <span id="name-example-of-master-salt-cons"></span><div id="ms-ex">
 <figure id="figure-12">
           <div class="artwork art-text alignLeft" id="section-4.3-2.1">
@@ -1843,11 +1846,11 @@ token.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
 <p id="section-6-1">
         There are a number of scenarios where a client or RS needs to discard the OSCORE security context, and acquire a new one.<a href="#section-6-1" class="pilcrow">¶</a></p>
 <p id="section-6-2">
-        The client MUST discard the current Security Context associated with an RS when:<a href="#section-6-2" class="pilcrow">¶</a></p>
+        The client MUST discard the current Security Context associated with an RS when any of the following occurs:<a href="#section-6-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6-3.1"> the Sequence Number space ends.<a href="#section-6-3.1" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-6-3.2"> the access token associated with the context becomes invalid, due to e.g. expiration.<a href="#section-6-3.2" class="pilcrow">¶</a>
+        <li class="normal" id="section-6-3.2"> the access token associated with the context becomes invalid due to, for example, expiration.<a href="#section-6-3.2" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="section-6-3.3"> the client receives a number of 4.01 Unauthorized responses to OSCORE requests using the same Security Context. The exact number needs to be specified by the application.<a href="#section-6-3.3" class="pilcrow">¶</a>
 </li>
@@ -1855,7 +1858,7 @@ token.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-6-4">
-        The RS MUST discard the current Security Context associated with a client when:<a href="#section-6-4" class="pilcrow">¶</a></p>
+        The RS MUST discard the current Security Context associated with a client when any of the following occurs:<a href="#section-6-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6-5.1"> the Sequence Number space ends.<a href="#section-6-5.1" class="pilcrow">¶</a>
 </li>
@@ -1865,7 +1868,7 @@ token.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-6-6">
-        Whenever one more access token is successfully posted to the RS, and a new Security Context is derived between the client and RS, messages in transit that were protected with the previous Security Context might not pass verification, as the old context is discarded. That means that messages sent shortly before the client posts one more access token to the RS might not successfully reach the destination. Analogously, implementations may want to cancel CoAP observations at the RS registered before the Security Context is replaced, or conversely they will need to implement a mechanism to ensure that those observation are to be protected with the newly derived Security Context.<a href="#section-6-6" class="pilcrow">¶</a></p>
+        Whenever one more access token is successfully posted to the RS, and a new Security Context is derived between the client and RS, messages in transit that were protected with the previous Security Context might not pass verification, as the old context is discarded. That means that messages sent shortly before the client posts one more access token to the RS might not successfully reach the destination. Analogously, implementations may want to cancel CoAP observations at the RS registered before the Security Context is replaced, or conversely they will need to implement a mechanism to ensure that those observations are to be protected with the newly derived Security Context.<a href="#section-6-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sec-cons">
@@ -1882,8 +1885,8 @@ token.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
         Furthermore the general security considerations of OSCORE <span>[<a href="#RFC8613" class="xref">RFC8613</a>]</span> also apply to this specific
         use of the OSCORE protocol.<a href="#section-7-2" class="pilcrow">¶</a></p>
 <p id="section-7-3">
-        As previously stated, the proof-of-possession in this profile is performed by both parties verifying that they have established the same Security Context, as specified in <a href="#oscore-setup" class="xref">Section 4.3</a>, which means that both the OSCORE request and OSCORE response pass verification.
-        RS authentication requires both that the client trusts the AS and that the OSCORE response from the RS pass verification.<a href="#section-7-3" class="pilcrow">¶</a></p>
+        As previously stated, the proof-of-possession in this profile is performed by both parties verifying that they have established the same Security Context, as specified in <a href="#oscore-setup" class="xref">Section 4.3</a>, which means that both the OSCORE request and the OSCORE response passes verification.
+        RS authentication requires both that the client trusts the AS and that the OSCORE response from the RS passes verification.<a href="#section-7-3" class="pilcrow">¶</a></p>
 <p id="section-7-4">
         OSCORE is designed to secure point-to-point communication,
         providing a secure binding between the request and the response(s).
@@ -1893,10 +1896,10 @@ token.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
         corresponds to the expected use of OSCORE, to prevent weakening the
         security assurances provided by OSCORE.<a href="#section-7-4" class="pilcrow">¶</a></p>
 <p id="section-7-5">
-        Since the use of nonces N1 and N2 during the exchange guarantees uniqueness of AEAD keys and nonces, it is REQUIRED that the exchanged nonces are not reused with the same input keying material even in case of re-boots. This document RECOMMENDS the exchange of 64 bit random nonces. Considering the birthday paradox, the average collision for each nonce will happen after 2^32 messages, which is considerably more token provisionings than expected for intended applications. If applications use something else, such as a counter, they need to guarantee that reboot and loss of state on either node does not provoke reuse.
+        Since the use of nonces N1 and N2 during the exchange guarantees uniqueness of AEAD keys and nonces, it is REQUIRED that the exchanged nonces are not reused with the same input keying material even in case of re-boots. This document RECOMMENDS the exchange of 64 bit random nonces. Considering the birthday paradox, the average collision for each nonce will happen after 2^32 messages, which is considerably more token provisioned than would be expected for intended applications. If applications use something else, such as a counter, they need to guarantee that reboot and loss of state on either node does not provoke reuse.
         If that is not guaranteed, nodes are susceptible to reuse of AEAD (nonce, key) pairs, especially since an on-path attacker can cause the use of a previously exchanged client nonce N1 for Security Context establishment by replaying the corresponding client-to-server message.<a href="#section-7-5" class="pilcrow">¶</a></p>
 <p id="section-7-6">
-        This profile recommends that the RS maintains a single access token for each client. The use of multiple access tokens for a single client increases the strain on the resource server as it must consider every access token and calculate the actual permissions of the client. Also, tokens indicating different or disjoint permissions from each other may lead the server to enforce wrong permissions. If one of the access tokens expires earlier than others, the resulting permissions may offer insufficient protection. Developers should avoid using multiple access tokens for a same client.<a href="#section-7-6" class="pilcrow">¶</a></p>
+        This profile RECOMMENDS that the RS maintains a single access token for each client. The use of multiple access tokens for a single client increases the strain on the resource server as it must consider every access token and calculate the actual permissions of the client. Also, tokens indicating different or disjoint permissions from each other may lead the server to enforce wrong permissions. If one of the access tokens expires earlier than others, the resulting permissions may offer insufficient protection. Developers SHOULD avoid using multiple access tokens for a same client.<a href="#section-7-6" class="pilcrow">¶</a></p>
 <p id="section-7-7">
         If a single OSCORE Input Material is used with multiple RSs, the RSs can impersonate the client to one of the other RS, and impersonate another RS to the client. If a master secret is used with several clients, the clients can impersonate RS to one of the other clients. Similarly if symmetric keys are used to integrity protect the token between AS and RS and the token can be used with multiple RSs, the RSs can impersonate AS to one of the other RS. If the token key is used for any other communication between the RSs and AS, the RSs can impersonate each other to the AS.<a href="#section-7-7" class="pilcrow">¶</a></p>
 </section>
@@ -1928,8 +1931,8 @@ token.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
       <h2 id="name-iana-considerations">
 <a href="#section-9" class="section-number selfRef">9. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-9-1">Note to RFC Editor: Please replace all occurrences of "[[this specification]]"
-      with the RFC number of this specification and delete this paragraph.<a href="#section-9-1" class="pilcrow">¶</a></p>
+<p id="section-9-1">Note to RFC Editor: Please replace all occurrences of "[[this document]]"
+      with the RFC number of this document. Please add a reference to the IANA ACE Profile registry in the nextt subsection once it has been created by IANA, and then delete this paragraph.<a href="#section-9-1" class="pilcrow">¶</a></p>
 <section id="section-9.1">
         <h3 id="name-ace-profile-registry">
 <a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-ace-profile-registry" class="section-name selfRef">ACE Profile Registry</a>
@@ -1945,7 +1948,7 @@ token.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
 </li>
           <li class="compact" id="section-9.1-2.3">CBOR Value: TBD (value between 1 and 255)<a href="#section-9.1-2.3" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-9.1-2.4">Reference: [[this specification]]<a href="#section-9.1-2.4" class="pilcrow">¶</a>
+          <li class="compact" id="section-9.1-2.4">Reference: [[this document]]<a href="#section-9.1-2.4" class="pilcrow">¶</a>
 </li>
         </ul>
 </section>
@@ -1955,7 +1958,7 @@ token.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
 <a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-oauth-parameters-registry" class="section-name selfRef">OAuth Parameters Registry</a>
         </h3>
 <p id="section-9.2-1">The following registrations are done for the OAuth Parameters
-        Registry following the procedure specified in section 11.2 of <span>[<a href="#RFC6749" class="xref">RFC6749</a>]</span>:<a href="#section-9.2-1" class="pilcrow">¶</a></p>
+        Registry <span>[<a href="#IANA.OAuthParameters" class="xref">IANA.OAuthParameters</a>]</span> following the procedure specified in section 11.2 of <span>[<a href="#RFC6749" class="xref">RFC6749</a>]</span>:<a href="#section-9.2-1" class="pilcrow">¶</a></p>
 <ul class="compact">
 <li class="compact" id="section-9.2-2.1">Parameter name: nonce1<a href="#section-9.2-2.1" class="pilcrow">¶</a>
 </li>
@@ -1963,7 +1966,7 @@ token.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
 </li>
           <li class="compact" id="section-9.2-2.3">Change Controller: IESG<a href="#section-9.2-2.3" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-9.2-2.4">Specification Document(s): [[this specification]]<a href="#section-9.2-2.4" class="pilcrow">¶</a>
+          <li class="compact" id="section-9.2-2.4">Specification Document(s): [[this document]]<a href="#section-9.2-2.4" class="pilcrow">¶</a>
 </li>
         </ul>
 <ul class="compact">
@@ -1973,7 +1976,7 @@ token.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
 </li>
           <li class="compact" id="section-9.2-3.3">Change Controller: IESG<a href="#section-9.2-3.3" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-9.2-3.4">Specification Document(s): [[this specification]]<a href="#section-9.2-3.4" class="pilcrow">¶</a>
+          <li class="compact" id="section-9.2-3.4">Specification Document(s): [[this document]]<a href="#section-9.2-3.4" class="pilcrow">¶</a>
 </li>
         </ul>
 <ul class="compact">
@@ -1983,7 +1986,7 @@ token.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
 </li>
           <li class="compact" id="section-9.2-4.3">Change Controller: IESG<a href="#section-9.2-4.3" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-9.2-4.4">Specification Document(s): [[this specification]]<a href="#section-9.2-4.4" class="pilcrow">¶</a>
+          <li class="compact" id="section-9.2-4.4">Specification Document(s): [[this document]]<a href="#section-9.2-4.4" class="pilcrow">¶</a>
 </li>
         </ul>
 <ul class="compact">
@@ -1993,7 +1996,7 @@ token.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
 </li>
           <li class="compact" id="section-9.2-5.3">Change Controller: IESG<a href="#section-9.2-5.3" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-9.2-5.4">Specification Document(s): [[this specification]]<a href="#section-9.2-5.4" class="pilcrow">¶</a>
+          <li class="compact" id="section-9.2-5.4">Specification Document(s): [[this document]]<a href="#section-9.2-5.4" class="pilcrow">¶</a>
 </li>
         </ul>
 </section>
@@ -2011,7 +2014,7 @@ token.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
 </li>
           <li class="compact" id="section-9.3-2.3">Value Type: bstr<a href="#section-9.3-2.3" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-9.3-2.4">Reference: [[this specification]]<a href="#section-9.3-2.4" class="pilcrow">¶</a>
+          <li class="compact" id="section-9.3-2.4">Reference: [[this document]]<a href="#section-9.3-2.4" class="pilcrow">¶</a>
 </li>
         </ul>
 <ul class="compact">
@@ -2021,7 +2024,7 @@ token.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
 </li>
           <li class="compact" id="section-9.3-3.3">Value Type: bstr<a href="#section-9.3-3.3" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-9.3-3.4">Reference: [[this specification]]<a href="#section-9.3-3.4" class="pilcrow">¶</a>
+          <li class="compact" id="section-9.3-3.4">Reference: [[this document]]<a href="#section-9.3-3.4" class="pilcrow">¶</a>
 </li>
         </ul>
 <ul class="compact">
@@ -2031,7 +2034,7 @@ token.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
 </li>
           <li class="compact" id="section-9.3-4.3">Value Type: bstr<a href="#section-9.3-4.3" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-9.3-4.4">Reference: [[this specification]]<a href="#section-9.3-4.4" class="pilcrow">¶</a>
+          <li class="compact" id="section-9.3-4.4">Reference: [[this document]]<a href="#section-9.3-4.4" class="pilcrow">¶</a>
 </li>
         </ul>
 <ul class="compact">
@@ -2041,7 +2044,7 @@ token.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
 </li>
           <li class="compact" id="section-9.3-5.3">Value Type: bstr<a href="#section-9.3-5.3" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-9.3-5.4">Reference: [[this specification]]<a href="#section-9.3-5.4" class="pilcrow">¶</a>
+          <li class="compact" id="section-9.3-5.4">Reference: [[this document]]<a href="#section-9.3-5.4" class="pilcrow">¶</a>
 </li>
         </ul>
 </section>
@@ -2061,7 +2064,7 @@ token.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
           <dt id="section-9.4-3.1">name</dt>
           <dd style="margin-left: 1.5em" id="section-9.4-3.2">
               The JSON name requested (e.g., "ms").
-              Because a core goal of this specification is for the resulting representations to be compact, it is RECOMMENDED that the name be short.
+              Because a core goal of this document is for the resulting representations to be compact, it is RECOMMENDED that the name be short.
               This name is case sensitive.
               Names may not match other registered names in a case-insensitive manner unless the Designated Experts determine that there is a compelling reason to allow an exception.
               The name is not used in the CBOR encoding.<a href="#section-9.4-3.2" class="pilcrow">¶</a>
@@ -2109,7 +2112,7 @@ token.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
         <h3 id="name-cwt-confirmation-methods-re">
 <a href="#section-9.5" class="section-number selfRef">9.5. </a><a href="#name-cwt-confirmation-methods-re" class="section-name selfRef">CWT Confirmation Methods Registry</a>
         </h3>
-<p id="section-9.5-1">The following registration is done for the CWT Confirmation Methods Registry following the procedure specified in section 7.2.1 of <span>[<a href="#RFC8747" class="xref">RFC8747</a>]</span>:<a href="#section-9.5-1" class="pilcrow">¶</a></p>
+<p id="section-9.5-1">The following registration is done for the CWT Confirmation Methods Registry <span>[<a href="#IANA.CWTConfirmationMethods" class="xref">IANA.CWTConfirmationMethods</a>]</span> following the procedure specified in section 7.2.1 of <span>[<a href="#RFC8747" class="xref">RFC8747</a>]</span>:<a href="#section-9.5-1" class="pilcrow">¶</a></p>
 <ul class="compact">
 <li class="compact" id="section-9.5-2.1">Confirmation Method Name: "osc"<a href="#section-9.5-2.1" class="pilcrow">¶</a>
 </li>
@@ -2121,7 +2124,7 @@ token.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
 </li>
           <li class="compact" id="section-9.5-2.5">Change Controller: IESG<a href="#section-9.5-2.5" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-9.5-2.6">Specification Document(s): <a href="#oscore-sec-ctx" class="xref">Section 3.2.1</a> of [[this specification]]<a href="#section-9.5-2.6" class="pilcrow">¶</a>
+          <li class="compact" id="section-9.5-2.6">Specification Document(s): <a href="#oscore-sec-ctx" class="xref">Section 3.2.1</a> of [[this document]]<a href="#section-9.5-2.6" class="pilcrow">¶</a>
 </li>
         </ul>
 </section>
@@ -2131,7 +2134,7 @@ token.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
         <h3 id="name-jwt-confirmation-methods-re">
 <a href="#section-9.6" class="section-number selfRef">9.6. </a><a href="#name-jwt-confirmation-methods-re" class="section-name selfRef">JWT Confirmation Methods Registry</a>
         </h3>
-<p id="section-9.6-1">The following registration is done for the JWT Confirmation Methods Registry following the procedure specified in section 6.2.1 of <span>[<a href="#RFC7800" class="xref">RFC7800</a>]</span>:<a href="#section-9.6-1" class="pilcrow">¶</a></p>
+<p id="section-9.6-1">The following registration is done for the JWT Confirmation Methods Registry <span>[<a href="#IANA.JWTConfirmationMethods" class="xref">IANA.JWTConfirmationMethods</a>]</span> following the procedure specified in section 6.2.1 of <span>[<a href="#RFC7800" class="xref">RFC7800</a>]</span>:<a href="#section-9.6-1" class="pilcrow">¶</a></p>
 <ul class="compact">
 <li class="compact" id="section-9.6-2.1">Confirmation Method Value: "osc"<a href="#section-9.6-2.1" class="pilcrow">¶</a>
 </li>
@@ -2139,7 +2142,7 @@ token.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
 </li>
           <li class="compact" id="section-9.6-2.3">Change Controller: IESG<a href="#section-9.6-2.3" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-9.6-2.4">Specification Document(s): <a href="#oscore-sec-ctx" class="xref">Section 3.2.1</a> of [[this specification]]<a href="#section-9.6-2.4" class="pilcrow">¶</a>
+          <li class="compact" id="section-9.6-2.4">Specification Document(s): <a href="#oscore-sec-ctx" class="xref">Section 3.2.1</a> of [[this document]]<a href="#section-9.6-2.4" class="pilcrow">¶</a>
 </li>
         </ul>
 </section>
@@ -2190,23 +2193,43 @@ token.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
 <dd class="break"></dd>
 <dt id="I-D.ietf-ace-oauth-authz">[I-D.ietf-ace-oauth-authz]</dt>
         <dd>
-<span class="refAuthor">Seitz, L.</span><span class="refAuthor">, Selander, G.</span><span class="refAuthor">, Wahlstroem, E.</span><span class="refAuthor">, Erdtman, S.</span><span class="refAuthor">, and H. Tschofenig</span>, <span class="refTitle">"Authentication and Authorization for Constrained Environments (ACE) using the OAuth 2.0 Framework (ACE-OAuth)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-ace-oauth-authz-36</span>, <time datetime="2020-11-16" class="refDate">16 November 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-ietf-ace-oauth-authz-36.txt">http://www.ietf.org/internet-drafts/draft-ietf-ace-oauth-authz-36.txt</a>&gt;</span>. </dd>
+<span class="refAuthor">Seitz, L.</span>, <span class="refAuthor">Selander, G.</span>, <span class="refAuthor">Wahlstroem, E.</span>, <span class="refAuthor">Erdtman, S.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Authentication and Authorization for Constrained Environments (ACE) using the OAuth 2.0 Framework (ACE-OAuth)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-ace-oauth-authz-36</span>, <time datetime="2020-11-16" class="refDate">16 November 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-ietf-ace-oauth-authz-36.txt">http://www.ietf.org/internet-drafts/draft-ietf-ace-oauth-authz-36.txt</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-ace-oauth-params">[I-D.ietf-ace-oauth-params]</dt>
         <dd>
 <span class="refAuthor">Seitz, L.</span>, <span class="refTitle">"Additional OAuth Parameters for Authorization in Constrained Environments (ACE)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-ace-oauth-params-13</span>, <time datetime="2020-04-28" class="refDate">28 April 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-ietf-ace-oauth-params-13.txt">http://www.ietf.org/internet-drafts/draft-ietf-ace-oauth-params-13.txt</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="I-D.ietf-cose-rfc8152bis-algs">[I-D.ietf-cose-rfc8152bis-algs]</dt>
+        <dd>
+<span class="refAuthor">Schaad, J.</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE): Initial Algorithms"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cose-rfc8152bis-algs-12</span>, <time datetime="2020-09-24" class="refDate">24 September 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-ietf-cose-rfc8152bis-algs-12.txt">http://www.ietf.org/internet-drafts/draft-ietf-cose-rfc8152bis-algs-12.txt</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.ietf-cose-rfc8152bis-struct">[I-D.ietf-cose-rfc8152bis-struct]</dt>
+        <dd>
+<span class="refAuthor">Schaad, J.</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE): Structures and Process"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cose-rfc8152bis-struct-14</span>, <time datetime="2020-09-24" class="refDate">24 September 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-ietf-cose-rfc8152bis-struct-14.txt">http://www.ietf.org/internet-drafts/draft-ietf-cose-rfc8152bis-struct-14.txt</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="IANA.CWTConfirmationMethods">[IANA.CWTConfirmationMethods]</dt>
+        <dd>
+<span class="refAuthor">IANA</span>, <span class="refTitle">"CWT Confirmation Methods"</span>, <span>&lt;<a href="https://www.iana.org/assignments/cwt/cwt.xhtml#confirmation-methods">https://www.iana.org/assignments/cwt/cwt.xhtml#confirmation-methods</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="IANA.JWTConfirmationMethods">[IANA.JWTConfirmationMethods]</dt>
+        <dd>
+<span class="refAuthor">IANA</span>, <span class="refTitle">"JWT Confirmation Methods"</span>, <span>&lt;<a href="https://www.iana.org/assignments/jwt/jwt.xhtml#confirmation-methods">https://www.iana.org/assignments/jwt/jwt.xhtml#confirmation-methods</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="IANA.OAuthParameters">[IANA.OAuthParameters]</dt>
+        <dd>
+<span class="refAuthor">IANA</span>, <span class="refTitle">"OAuth Parameters"</span>, <span>&lt;<a href="https://www.iana.org/assignments/oauth-parameters/oauth-parameters.xhtml#parameters">https://www.iana.org/assignments/oauth-parameters/oauth-parameters.xhtml#parameters</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC5869">[RFC5869]</dt>
+        <dd>
+<span class="refAuthor">Krawczyk, H.</span> and <span class="refAuthor">P. Eronen</span>, <span class="refTitle">"HMAC-based Extract-and-Expand Key Derivation Function (HKDF)"</span>, <span class="seriesInfo">RFC 5869</span>, <span class="seriesInfo">DOI 10.17487/RFC5869</span>, <time datetime="2010-05" class="refDate">May 2010</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc5869">https://www.rfc-editor.org/info/rfc5869</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC7252">[RFC7252]</dt>
         <dd>
-<span class="refAuthor">Shelby, Z.</span><span class="refAuthor">, Hartke, K.</span><span class="refAuthor">, and C. Bormann</span>, <span class="refTitle">"The Constrained Application Protocol (CoAP)"</span>, <span class="seriesInfo">RFC 7252</span>, <span class="seriesInfo">DOI 10.17487/RFC7252</span>, <time datetime="2014-06" class="refDate">June 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7252">https://www.rfc-editor.org/info/rfc7252</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC8152">[RFC8152]</dt>
-        <dd>
-<span class="refAuthor">Schaad, J.</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE)"</span>, <span class="seriesInfo">RFC 8152</span>, <span class="seriesInfo">DOI 10.17487/RFC8152</span>, <time datetime="2017-07" class="refDate">July 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8152">https://www.rfc-editor.org/info/rfc8152</a>&gt;</span>. </dd>
+<span class="refAuthor">Shelby, Z.</span>, <span class="refAuthor">Hartke, K.</span>, and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"The Constrained Application Protocol (CoAP)"</span>, <span class="seriesInfo">RFC 7252</span>, <span class="seriesInfo">DOI 10.17487/RFC7252</span>, <time datetime="2014-06" class="refDate">June 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7252">https://www.rfc-editor.org/info/rfc7252</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
         <dd>
@@ -2214,19 +2237,19 @@ token.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
 <dd class="break"></dd>
 <dt id="RFC8392">[RFC8392]</dt>
         <dd>
-<span class="refAuthor">Jones, M.</span><span class="refAuthor">, Wahlstroem, E.</span><span class="refAuthor">, Erdtman, S.</span><span class="refAuthor">, and H. Tschofenig</span>, <span class="refTitle">"CBOR Web Token (CWT)"</span>, <span class="seriesInfo">RFC 8392</span>, <span class="seriesInfo">DOI 10.17487/RFC8392</span>, <time datetime="2018-05" class="refDate">May 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8392">https://www.rfc-editor.org/info/rfc8392</a>&gt;</span>. </dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Wahlstroem, E.</span>, <span class="refAuthor">Erdtman, S.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"CBOR Web Token (CWT)"</span>, <span class="seriesInfo">RFC 8392</span>, <span class="seriesInfo">DOI 10.17487/RFC8392</span>, <time datetime="2018-05" class="refDate">May 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8392">https://www.rfc-editor.org/info/rfc8392</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8610">[RFC8610]</dt>
         <dd>
-<span class="refAuthor">Birkholz, H.</span><span class="refAuthor">, Vigano, C.</span><span class="refAuthor">, and C. Bormann</span>, <span class="refTitle">"Concise Data Definition Language (CDDL): A Notational Convention to Express Concise Binary Object Representation (CBOR) and JSON Data Structures"</span>, <span class="seriesInfo">RFC 8610</span>, <span class="seriesInfo">DOI 10.17487/RFC8610</span>, <time datetime="2019-06" class="refDate">June 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8610">https://www.rfc-editor.org/info/rfc8610</a>&gt;</span>. </dd>
+<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Vigano, C.</span>, and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"Concise Data Definition Language (CDDL): A Notational Convention to Express Concise Binary Object Representation (CBOR) and JSON Data Structures"</span>, <span class="seriesInfo">RFC 8610</span>, <span class="seriesInfo">DOI 10.17487/RFC8610</span>, <time datetime="2019-06" class="refDate">June 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8610">https://www.rfc-editor.org/info/rfc8610</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8613">[RFC8613]</dt>
         <dd>
-<span class="refAuthor">Selander, G.</span><span class="refAuthor">, Mattsson, J.</span><span class="refAuthor">, Palombini, F.</span><span class="refAuthor">, and L. Seitz</span>, <span class="refTitle">"Object Security for Constrained RESTful Environments (OSCORE)"</span>, <span class="seriesInfo">RFC 8613</span>, <span class="seriesInfo">DOI 10.17487/RFC8613</span>, <time datetime="2019-07" class="refDate">July 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8613">https://www.rfc-editor.org/info/rfc8613</a>&gt;</span>. </dd>
+<span class="refAuthor">Selander, G.</span>, <span class="refAuthor">Mattsson, J.</span>, <span class="refAuthor">Palombini, F.</span>, and <span class="refAuthor">L. Seitz</span>, <span class="refTitle">"Object Security for Constrained RESTful Environments (OSCORE)"</span>, <span class="seriesInfo">RFC 8613</span>, <span class="seriesInfo">DOI 10.17487/RFC8613</span>, <time datetime="2019-07" class="refDate">July 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8613">https://www.rfc-editor.org/info/rfc8613</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8949">[RFC8949]</dt>
       <dd>
-<span class="refAuthor">Bormann, C.</span><span class="refAuthor"> and P. Hoffman</span>, <span class="refTitle">"Concise Binary Object Representation (CBOR)"</span>, <span class="seriesInfo">STD 94</span>, <span class="seriesInfo">RFC 8949</span>, <span class="seriesInfo">DOI 10.17487/RFC8949</span>, <time datetime="2020-12" class="refDate">December 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8949">https://www.rfc-editor.org/info/rfc8949</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">P. Hoffman</span>, <span class="refTitle">"Concise Binary Object Representation (CBOR)"</span>, <span class="seriesInfo">STD 94</span>, <span class="seriesInfo">RFC 8949</span>, <span class="seriesInfo">DOI 10.17487/RFC8949</span>, <time datetime="2020-12" class="refDate">December 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8949">https://www.rfc-editor.org/info/rfc8949</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -2235,6 +2258,10 @@ token.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
 <a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
+<dt id="I-D.ietf-tls-dtls13">[I-D.ietf-tls-dtls13]</dt>
+        <dd>
+<span class="refAuthor">Rescorla, E.</span>, <span class="refAuthor">Tschofenig, H.</span>, and <span class="refAuthor">N. Modadugu</span>, <span class="refTitle">"The Datagram Transport Layer Security (DTLS) Protocol Version 1.3"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-tls-dtls13-40</span>, <time datetime="2021-01-20" class="refDate">20 January 2021</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-ietf-tls-dtls13-40.txt">http://www.ietf.org/internet-drafts/draft-ietf-tls-dtls13-40.txt</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC4949">[RFC4949]</dt>
         <dd>
 <span class="refAuthor">Shirey, R.</span>, <span class="refTitle">"Internet Security Glossary, Version 2"</span>, <span class="seriesInfo">FYI 36</span>, <span class="seriesInfo">RFC 4949</span>, <span class="seriesInfo">DOI 10.17487/RFC4949</span>, <time datetime="2007-08" class="refDate">August 2007</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc4949">https://www.rfc-editor.org/info/rfc4949</a>&gt;</span>. </dd>
@@ -2245,15 +2272,19 @@ token.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
 <dd class="break"></dd>
 <dt id="RFC7231">[RFC7231]</dt>
         <dd>
-<span class="refAuthor">Fielding, R., Ed.</span><span class="refAuthor"> and J. Reschke, Ed.</span>, <span class="refTitle">"Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content"</span>, <span class="seriesInfo">RFC 7231</span>, <span class="seriesInfo">DOI 10.17487/RFC7231</span>, <time datetime="2014-06" class="refDate">June 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7231">https://www.rfc-editor.org/info/rfc7231</a>&gt;</span>. </dd>
+<span class="refAuthor">Fielding, R., Ed.</span> and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content"</span>, <span class="seriesInfo">RFC 7231</span>, <span class="seriesInfo">DOI 10.17487/RFC7231</span>, <time datetime="2014-06" class="refDate">June 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7231">https://www.rfc-editor.org/info/rfc7231</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7800">[RFC7800]</dt>
         <dd>
-<span class="refAuthor">Jones, M.</span><span class="refAuthor">, Bradley, J.</span><span class="refAuthor">, and H. Tschofenig</span>, <span class="refTitle">"Proof-of-Possession Key Semantics for JSON Web Tokens (JWTs)"</span>, <span class="seriesInfo">RFC 7800</span>, <span class="seriesInfo">DOI 10.17487/RFC7800</span>, <time datetime="2016-04" class="refDate">April 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7800">https://www.rfc-editor.org/info/rfc7800</a>&gt;</span>. </dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Bradley, J.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Proof-of-Possession Key Semantics for JSON Web Tokens (JWTs)"</span>, <span class="seriesInfo">RFC 7800</span>, <span class="seriesInfo">DOI 10.17487/RFC7800</span>, <time datetime="2016-04" class="refDate">April 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7800">https://www.rfc-editor.org/info/rfc7800</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8446">[RFC8446]</dt>
+        <dd>
+<span class="refAuthor">Rescorla, E.</span>, <span class="refTitle">"The Transport Layer Security (TLS) Protocol Version 1.3"</span>, <span class="seriesInfo">RFC 8446</span>, <span class="seriesInfo">DOI 10.17487/RFC8446</span>, <time datetime="2018-08" class="refDate">August 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8446">https://www.rfc-editor.org/info/rfc8446</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8747">[RFC8747]</dt>
       <dd>
-<span class="refAuthor">Jones, M.</span><span class="refAuthor">, Seitz, L.</span><span class="refAuthor">, Selander, G.</span><span class="refAuthor">, Erdtman, S.</span><span class="refAuthor">, and H. Tschofenig</span>, <span class="refTitle">"Proof-of-Possession Key Semantics for CBOR Web Tokens (CWTs)"</span>, <span class="seriesInfo">RFC 8747</span>, <span class="seriesInfo">DOI 10.17487/RFC8747</span>, <time datetime="2020-03" class="refDate">March 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8747">https://www.rfc-editor.org/info/rfc8747</a>&gt;</span>. </dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Seitz, L.</span>, <span class="refAuthor">Selander, G.</span>, <span class="refAuthor">Erdtman, S.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Proof-of-Possession Key Semantics for CBOR Web Tokens (CWTs)"</span>, <span class="seriesInfo">RFC 8747</span>, <span class="seriesInfo">DOI 10.17487/RFC8747</span>, <time datetime="2020-03" class="refDate">March 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8747">https://www.rfc-editor.org/info/rfc8747</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -2319,7 +2350,7 @@ token.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
 <a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
       </h2>
 <p id="section-appendix.b-1">
-        The authors wish to thank Jim Schaad and Marco Tiloca for the input on this memo. Special thanks to the responsible area director Benjamin Kaduk for his extensive review and contributed text.
+        The authors wish to thank Jim Schaad and Marco Tiloca for the substantial input to this document, as well as Elwyn Davies, Linda Dunbar, Roman Danyliw, Martin Duke, Lars Eggert, Murray Kucherawy, and Zaheduzzaman Sarker for their reviews and feedback. Special thanks to the responsible area director Benjamin Kaduk for his extensive review and contributed text. 
         Ludwig Seitz worked on this document as part of the CelticNext projects CyberWI, and CRITISEC with funding from Vinnova.
         The work on this document has been partly supported also by the H2020 project SIFIS-Home (Grant agreement 952652).<a href="#section-appendix.b-1" class="pilcrow">¶</a></p>
 </section>

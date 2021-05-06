@@ -1547,8 +1547,8 @@ Authors' Addresses
 
    Ludwig Seitz
    Combitech
-   Djäknegatan 31
-   SE-211 35 Malmö
+   Djaeknegatan 31
+   SE-211 35 Malmoe
    Sweden
 
    Email: ludwig.seitz@combitech.com

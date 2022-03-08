@@ -761,7 +761,7 @@ The client <bcp14>MUST</bcp14> use the Content-Format "application/ace+cbor" def
         <section anchor="nonce1" numbered="true" toc="default">
           <name>The Nonce 1 Parameter</name>
           <t>
-             The <tt>nonce 1</tt> parameter <bcp14>MUST</bcp14> be sent from the client to the RS, together with the access token, if the ACE profile used is <tt>coap_oscore</tt>, and the message is not an update of access rights, protected with an existing OSCORE Security Context.  The parameter is encoded as a byte string for
+             The <tt>nonce1</tt> parameter <bcp14>MUST</bcp14> be sent from the client to the RS, together with the access token, if the ACE profile used is <tt>coap_oscore</tt>, and the message is not an update of access rights, protected with an existing OSCORE Security Context.  The parameter is encoded as a byte string for
    CBOR-based interactions and as a string (base64-encoded binary) for
    JSON-based interactions. This parameter is registered in <xref target="iana-nonces-ids" format="default"/>.
           </t>
@@ -846,7 +846,7 @@ Original:
         <section anchor="nonce2" numbered="true" toc="default">
           <name>The Nonce 2 Parameter</name>
           <t>
-             The <tt>nonce 2</tt> parameter <bcp14>MUST</bcp14> be sent from the RS to the client if the ACE profile used is "coap_oscore" and the message is not a response to an update of access rights, protected with an existing OSCORE Security Context. The parameter is encoded as a byte string for
+             The <tt>nonce2</tt> parameter <bcp14>MUST</bcp14> be sent from the RS to the client if the ACE profile used is <tt>coap_oscore</tt> and the message is not a response to an update of access rights, protected with an existing OSCORE Security Context. The parameter is encoded as a byte string for
    CBOR-based interactions and as a string (base64-encoded binary) for
    JSON-based interactions. This parameter is registered in <xref target="iana-nonces-ids" format="default"/>
           </t>
@@ -1248,9 +1248,9 @@ Current:
         <name>CWT Confirmation Methods Registry</name>
         <t>The following registration has been made in the "CWT Confirmation Methods" registry <xref target="IANA.CWTConfirmationMethods" format="default"/> following the procedure specified in <xref target="RFC8747" sectionFormat="of" section="7.2.1"/>:</t>
         <dl spacing="compact">
-          <dt>Confirmation Method Name:</dt><dd><tt>osc</tt></dd>
+          <dt>Confirmation Method Name:</dt><dd>osc</dd>
           <dt>Confirmation Method Description:</dt><dd>OSCORE_Input_Material carrying the parameters for using OSCORE per-message security with implicit key confirmation</dd>
-	  <dt>JWT Confirmation Method Name:</dt><dd><tt>osc</tt></dd>
+	  <dt>JWT Confirmation Method Name:</dt><dd>osc</dd>
           <dt>Confirmation Key:</dt><dd>4</dd>
           <dt>Confirmation Value Type(s):</dt><dd>map</dd>
           <dt>Change Controller:</dt><dd>IETF</dd>
@@ -1261,7 +1261,7 @@ Current:
         <name>JWT Confirmation Methods Registry</name>
         <t>The following registration has been made in the "JWT Confirmation Methods" registry <xref target="IANA.JWTConfirmationMethods" format="default"/> following the procedure specified in <xref target="RFC7800" sectionFormat="of" section="6.2.1"/>:</t>
         <dl spacing="compact">
-          <dt>Confirmation Method Value:</dt><dd><tt>osc</tt></dd>
+          <dt>Confirmation Method Value:</dt><dd>osc</dd>
           <dt>Confirmation Method Description:</dt><dd>OSCORE_Input_Material carrying the parameters for using OSCORE per-message security with implicit key confirmation</dd>
           <dt>Change Controller:</dt><dd>IETF</dd>
           <dt>Specification Document(s):</dt><dd><xref target="oscore-sec-ctx" format="default"/> of RFC 9203</dd>

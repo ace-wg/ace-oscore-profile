@@ -445,41 +445,30 @@ needed.
         <figure anchor="ex2-cbor">
           <name>Example CWT Claims Set with OSCORE Parameters Using CBOR Encoding</name>
           <sourcecode name="" type="cbor"><![CDATA[
-A5                                      # map(5)
-   63                                   # text(3)
-      617564                            # "aud"
-   76                                   # text(22)
+A5                              # map(5)
+   02                           # unsigned(2)
+   76                           # text(22)
       74656D7053656E736F72496E4C6976696E67526F6F6D
-                                        # "tempSensorInLivingRoom"
-   63                                   # text(3)
-      696174                            # "iat"
-   6A                                   # text(10)
-      31333630313839323234              # "1360189224"
-   63                                   # text(3)
-      657870                            # "exp"
-   6A                                   # text(10)
-      31333630323839323234              # "1360289224"
-   65                                   # text(5)
-      73636F7065                        # "scope"
-   78 18                                # text(24)
+                                # "tempSensorInLivingRoom"
+   06                           # unsigned(6)
+   1A 5112D728                  # unsigned(1360189224)
+   04                           # unsigned(4)
+   1A 51145DC8                  # unsigned(1360289224)
+   09                           # unsigned(9)
+   78 18                        # text(24)
       74656D70657261747572655F67206669726D776172655F70
-                                        # "temperature_g firmware_p"
-   63                                   # text(3)
-      636E66                            # "cnf"
-   A1                                   # map(1)
-      63                                # text(3)
-         6F7363                         # "osc"
-      A2                                # map(2)
-         62                             # text(2)
-            6D73                        # "ms"
-         50                             # bytes(16)
-            F9AF838368E353E78888E1426BD94E6F
-                                        # "\xF9\xAF\x83\x83h\xE3S\xE7
-                                        \x88\x88\xE1Bk\xD9No"
-         62                             # text(2)
-            6964                        # "id"
-         41                             # bytes(1)
-            01                          # "\x01"
+                                # "temperature_g firmware_p"
+   08                           # unsigned(8)
+      A1                        # map(1)
+         04                     # unsigned(4)
+            A2                  # map(2)
+               02               # unsigned(2)
+               50               # bytes(16)
+                  F9AF838368E353E78888E1426BD94E6F
+                                # "\xF9\xAF\x83\x83h\xE3S\xE1Bk\xD9No"
+               00               # unsigned(0)
+               41               # bytes(1)
+                  01            # "\u0001"
           ]]></sourcecode>
         </figure>
         <t>

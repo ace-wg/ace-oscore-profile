@@ -360,13 +360,13 @@ Perhaps:
    an HMAC-based key derivation function (HKDF) algorithm [RFC5869];
    see Section 5.1 of [RFC9053].
 
-Göran: <Not done>
+Göran: COSE does not have a register for HKDF so we are using the HMAC algorithm values, which is the reason for referencing section section 3.1. Clarification included below.
 -->
 
         <ul spacing="normal">
           <li>a context identifier</li>
           <li>an AEAD algorithm</li>
-          <li>an HMAC-based key derivation function (HKDF) algorithm <xref target="RFC5869" format="default"/>; see <xref target="RFC9053" sectionFormat="of" section="3.1"/></li>
+          <li>an HMAC-based key derivation function (HKDF) algorithm <xref target="RFC5869" format="default"/>; specified by the HMAC algorithm value, see <xref target="RFC9053" sectionFormat="of" section="3.1"/></li>
           <li>a salt</li>
           <li>the OSCORE version number</li>
         </ul>
@@ -462,7 +462,7 @@ Göran: Good.
 regarding IANA-assigned values, and let us know if any updates are
 needed.
 
-Göran: <Not done.>
+Göran: Checked "ms" is 2, "id" is 0. NOTE examples will be updated shortly.
 -->
 
         <figure anchor="ex2-cbor">
@@ -1189,9 +1189,8 @@ Considering the birthday paradox, the average collision for each nonce will happ
         <name>OSCORE Security Context Parameters Registry</name>
         <t>
           IANA has created a new registry entitled "OSCORE Security Context Parameters".
-          The registration procedure is Expert Review <xref target="RFC8126" format="default"/>.
+          The registration procedure depends on range of CBOR label values, following <xref target="RFC8126" format="default"/>.
           Guidelines for the experts are provided in <xref target="review" format="default"/>.
-          It should be noted that in addition to the Expert Review, some portions of the registry require a specification, potentially on the Standards Track, be supplied as well.
         </t>
         <t>
           The columns of the registry are:
@@ -1230,10 +1229,10 @@ Original:
    potentially on standards track, be supplied as well.
 
 
-Göran: <Not done.>
+Göran: Unfortunately, the IANA registry is not correct and needs to be updated according to the description below. I'll contact IANA on this.
 -->
           <dd>
-              The value to be used to identify this algorithm.
+              The value to be used to identify this name.
               Map key labels <bcp14>MUST</bcp14> be unique.
               The label can be a positive integer, a negative integer, or a string.
               Integer values between -256 and 255 and strings of length 1 are designated as Standards Track document required.
@@ -1272,10 +1271,10 @@ Current:
    The Reference column for all of these entries is this document and
    [RFC8613].
 
-Göran: <Not done>
+Göran: I can't see any need for referencing any other document, and changed accordingly.
 -->
 
-          The Reference column for all of these entries is this document and <xref target="RFC8613" format="default"/>.
+          The Reference column for all of these entries is this document.
         </t>
       </section>
 

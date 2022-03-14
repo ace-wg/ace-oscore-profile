@@ -297,8 +297,8 @@ Göran: Now changed to intended typing. Most figures are CoAP messages in which 
     Content-Format: application/ace+cbor
     Payload:
     {
-      "audience" : "tempSensor4711",
-      "scope" : "read"
+      / audience / 5 : "tempSensor4711",
+         / scope / 9 : "read"
      }
           ]]></sourcecode>
         </figure>

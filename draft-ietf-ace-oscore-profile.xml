@@ -1310,7 +1310,7 @@ Göran: I can't see any need for referencing any other document, and changed acc
         <t>
           Expert reviewers should take into consideration the following points:
         </t>
-        <ul spacing="compact">
+        <ul spacing="normal">
           <li>
               Point squatting should be discouraged. Reviewers are encouraged to get sufficient information for registration requests to ensure that the usage is not going to duplicate one that is already registered and that the point is likely to be used in deployments. The zones tagged as Private Use are intended for testing purposes and closed environments. Code points in other ranges should not be assigned for testing.
             </li>
@@ -1506,7 +1506,7 @@ Göran: Added missing reference.
 -->
 
 
- <ul spacing="compact">
+ <ul spacing="normal">
         <li>
             Optionally, define new methods for the client to discover the
             necessary permissions and AS for accessing a resource, different

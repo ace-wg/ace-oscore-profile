@@ -493,7 +493,7 @@ A5                              # map(5)
                02               # unsigned(2)
                50               # bytes(16)
                   F9AF838368E353E78888E1426BD94E6F
-                                # "\xF9\xAF\x83\x83h\xE3S\xE1Bk\xD9No"
+                                # "\xF9\xAF\x83 etc. "
           ]]></sourcecode>
         </figure>
         <t>

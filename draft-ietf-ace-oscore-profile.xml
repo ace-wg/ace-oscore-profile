@@ -665,8 +665,8 @@ A5                              # map(5)
             <sourcecode name="" type="json"><![CDATA[
         "osc" : {
           "alg" : "AES-CCM-16-64-128",
-          "id" : b64'AQ=='
-          "ms" : b64'+a+Dg2jjU+eIiOFCa9lObw'
+           "id" : b64'AQ=='
+           "ms" : b64'+a+Dg2jjU+eIiOFCa9lObw'
         }
             ]]></sourcecode>
           </figure>

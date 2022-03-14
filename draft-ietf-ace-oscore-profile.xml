@@ -294,7 +294,7 @@ Göran: Now changed to intended typing. Most figures are CoAP messages in which 
     Header: POST (Code=0.02)
     Uri-Host: "as.example.com"
     Uri-Path: "token"
-    Content-Format: "application/ace+cbor"
+    Content-Format: application/ace+cbor
     Payload:
     {
       "audience" : "tempSensor4711",
@@ -315,13 +315,13 @@ Göran: Now changed to intended typing. Most figures are CoAP messages in which 
     Header: POST (Code=0.02)
     Uri-Host: "as.example.com"
     Uri-Path: "token"
-    Content-Format: "application/ace+cbor"
+    Content-Format: application/ace+cbor
     Payload:
     {
-      "audience" : "tempSensor4711",
-      "scope" : "write",
-      "req_cnf" : {
-        "kid" : h'01'
+      / audience / 5 : "tempSensor4711",
+         / scope / 9 : "write",
+       / req_cnf / 4 : {
+             / kid / 2 : h'01'
      }
           ]]></sourcecode>
         </figure>
@@ -419,17 +419,17 @@ Göran: Good.
           <name>Example AS-to-C Access Token Response with an OSCORE Profile</name>
           <sourcecode name="" type=""><![CDATA[
     Header: Created (Code=2.01)
-    Content-Type: "application/ace+cbor"
+    Content-Type: application/ace+cbor
     Payload:
     {
-      "access_token" : h'8343a1010aa2044c53 ...
+      / access_token / 1 : h'8343a1010aa2044c53 ...
        (remainder of access token (CWT) omitted for brevity)',
-      "ace_profile" : "coap_oscore",
-      "expires_in" : 3600,
-      "cnf" : {
-        "osc" : {
-          "id" : h'01',
-          "ms" : h'f9af838368e353e78888e1426bd94e6f'
+      / ace_profile / 38 : / coap_oscore / 2,
+        / expires_in / 2 : 3600,
+               / cnf / 8 : {
+                 / osc / 4 : {
+                    / id / 0 : h'01',
+                    / ms / 2 : h'f9af838368e353e78888e1426bd94e6f'
         }
       }
     }
@@ -442,14 +442,14 @@ Göran: Good.
           <name>Example CWT Claims Set with OSCORE Parameters</name>
          <sourcecode name="" type="cbor"><![CDATA[
 {
-  "aud" : "tempSensorInLivingRoom",
-  "iat" : 1360189224,
-  "exp" : 1360289224,
-  "scope" :  "temperature_g firmware_p",
-  "cnf" : {
-    "osc" : {
-      "ms" : h'f9af838368e353e78888e1426bd94e6f',
-      "id" : h'01'
+    / aud / 3 : "tempSensorInLivingRoom",
+    / iat / 6 : 1360189224,
+    / exp / 4 : 1360289224,
+  / scope / 9 :  "temperature_g firmware_p",
+    / cnf / 8 : {
+      / osc / 4 : {
+         / id / 0 : h'01',
+         / ms / 2 : h'f9af838368e353e78888e1426bd94e6f'
     }
   }
 }
@@ -504,13 +504,13 @@ A5                              # map(5)
           <name>Example AS-to-C Access Token Response with an OSCORE Profile for the Update of Access Rights</name>
           <sourcecode name="" type=""><![CDATA[
     Header: Created (Code=2.01)
-    Content-Type: "application/ace+cbor"
+    Content-Type: application/ace+cbor
     Payload:
     {
-      "access_token" : h'8343a1010aa2044c53 ...
+      / access_token / 1 : h'8343a1010aa2044c53 ...
        (remainder of access token (CWT) omitted for brevity)',
-      "ace_profile" : "coap_oscore",
-      "expires_in" : 3600
+      / ace_profile / 38 : / coap_oscore / 2,
+        / expires_in / 2 : 3600
     }
           ]]></sourcecode>
         </figure>
@@ -521,12 +521,12 @@ A5                              # map(5)
           <name>Example CWT Claims Set with OSCORE Parameters for the Update of Access Rights</name>
          <sourcecode name="" type="cbor"><![CDATA[
   {
-    "aud" : "tempSensorInLivingRoom",
-    "iat" : 1360189224,
-    "exp" : 1360289224,
-    "scope" :  "temperature_h",
-    "cnf" : {
-      "kid" : h'01'
+      / aud / 3 : "tempSensorInLivingRoom",
+      / iat / 6 : 1360189224,
+      / exp / 4 : 1360289224,
+    / scope / 9 :  "temperature_h",
+      / cnf / 8 : {
+        / kid / 2 : h'01'
     }
   }
           ]]></sourcecode>
@@ -747,7 +747,7 @@ Original:
 
 Göran: Done. (8.16 is the Content-Format definition.)
 -->
-The client <bcp14>MUST</bcp14> use the Content-Format "application/ace+cbor" defined in <xref target="RFC9200" sectionFormat="of" section="8.16"/>. The client <bcp14>MUST</bcp14> include the access token using the <tt>access_token</tt> parameter; N1 using the <tt>nonce1</tt> parameter defined in <xref target="nonce1" format="default"/>; and ID1 using the <tt>ace_client_recipientid</tt> parameter defined in <xref target="id1" format="default"/>.
+The client <bcp14>MUST</bcp14> use the Content-Format application/ace+cbor defined in <xref target="RFC9200" sectionFormat="of" section="8.16"/>. The client <bcp14>MUST</bcp14> include the access token using the <tt>access_token</tt> parameter; N1 using the <tt>nonce1</tt> parameter defined in <xref target="nonce1" format="default"/>; and ID1 using the <tt>ace_client_recipientid</tt> parameter defined in <xref target="id1" format="default"/>.
         </t>
         <t>
           The communication with the authz-info endpoint does not have to be protected, except for the update of access rights case described below.
@@ -767,13 +767,13 @@ The client <bcp14>MUST</bcp14> use the Content-Format "application/ace+cbor" def
       Header: POST (Code=0.02)
       Uri-Host: "rs.example.com"
       Uri-Path: "authz-info"
-      Content-Format: "application/ace+cbor"
+      Content-Format: application/ace+cbor
       Payload:
         {
-          "access_token": h'8343a1010aa2044c53 ...
+                     / access_token / 1 : h'8343a1010aa2044c53 ...
        (remainder of access token (CWT) omitted for brevity)',
-          "nonce1": h'018a278f7faab55a',
-          "ace_client_recipientid" : h'1645'
+                          / nonce1 / 40 : h'018a278f7faab55a',
+          / ace_client_recipientid / 43 : h'1645'
         }
           ]]></sourcecode>
         </figure>
@@ -837,7 +837,7 @@ Original:
 Göran: As above
 -->
 
-	  The RS <bcp14>MUST</bcp14> use the Content-Format "application/ace+cbor" defined in <xref target="RFC9200" sectionFormat="of" section="8.16"/>.
+	  The RS <bcp14>MUST</bcp14> use the Content-Format application/ace+cbor defined in <xref target="RFC9200" sectionFormat="of" section="8.16"/>.
         </t>
         <!--
         <t>
@@ -854,11 +854,11 @@ Göran: As above
           <name>Example RS-to-C 2.01 (Created) Response</name>
           <sourcecode name="" type=""><![CDATA[
       Header: Created (Code=2.01)
-      Content-Format: "application/ace+cbor"
+      Content-Format: application/ace+cbor
       Payload:
         {
-          "nonce2": h'25a8991cd700ac01',
-          "ace_server_recipientid" : h'0000'
+                          / nonce2 / 42 : h'25a8991cd700ac01',
+          / ace_server_recipientid / 44 : h'0000'
         }
           ]]></sourcecode>
         </figure>

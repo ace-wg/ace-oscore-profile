@@ -453,6 +453,7 @@ Göran: Good.
     }
   }
 }
+
           ]]></sourcecode>
         </figure>
         <t>
@@ -462,14 +463,14 @@ Göran: Good.
 regarding IANA-assigned values, and let us know if any updates are
 needed.
 
-Göran: Checked "ms" is 2, "id" is 0. NOTE examples will be updated shortly.
+Göran: IANA-assigned values of osc, id and ms matches Figure 6.
 -->
 
         <figure anchor="ex2-cbor">
           <name>Example CWT Claims Set with OSCORE Parameters Using CBOR Encoding</name>
           <sourcecode name="" type="cbor"><![CDATA[
 A5                              # map(5)
-   02                           # unsigned(2)
+   03                           # unsigned(3)
    76                           # text(22)
       74656D7053656E736F72496E4C6976696E67526F6F6D
                                 # "tempSensorInLivingRoom"
@@ -485,13 +486,14 @@ A5                              # map(5)
       A1                        # map(1)
          04                     # unsigned(4)
             A2                  # map(2)
+               00               # unsigned(0)
+               41               # bytes(1)
+                  01            # "\u0001"
                02               # unsigned(2)
                50               # bytes(16)
                   F9AF838368E353E78888E1426BD94E6F
                                 # "\xF9\xAF\x83\x83h\xE3S\xE1Bk\xD9No"
-               00               # unsigned(0)
-               41               # bytes(1)
-                  01            # "\u0001"
+
           ]]></sourcecode>
         </figure>
         <t>

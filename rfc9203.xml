@@ -112,6 +112,8 @@
            We often use diagnostic notation comments to provide
            a textual representation of the numeric parameter names and values.
         </t>
+        <t>In this document, the term "base64-encoded" refers to URL-Safe base64 encoding (see <xref section="5" sectionFormat="of" target="RFC4648"/>) without padding.
+        </t>
       </section>
     </section>
     <section numbered="true" toc="default">
@@ -526,11 +528,11 @@ A5                              # map(5)
           <figure anchor="JSON-osc">
             <name>Example JSON OSCORE_Input_Material</name>
             <sourcecode name="" type="json"><![CDATA[
-        "osc" : {
-          "alg" : "AES-CCM-16-64-128",
-           "id" : b64'AQ=='
-           "ms" : b64'+a+Dg2jjU+eIiOFCa9lObw'
-        }
+                "osc" : {
+                  "alg" : "AES-CCM-16-64-128",
+                   "id" : "AQ",
+                   "ms" : "-a-Dg2jjU-eIiOFCa9lObw"
+                }
             ]]></sourcecode>
           </figure>
           <t>
@@ -547,7 +549,7 @@ OSCORE_Input_Material = {
     ? 4 => tstr / int,        ; alg
     ? 5 => bstr,              ; salt
     ? 6 => bstr,              ; contextId
-    * int / tstr => any
+    * (int / tstr) => any
 }
             ]]></sourcecode>
           </figure>
@@ -1141,7 +1143,7 @@ RFC 9053. Note that this doc is part of C416 -->
 <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
 <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8610.xml"/>
 <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5869.xml"/>
-
+<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.4648.xml"/>
 
 <!-- [IANA.OAuthParameters] The URL below is correct -->
         <reference anchor="IANA.OAuthParameters" target="https://www.iana.org/assignments/oauth-parameters">

@@ -104,8 +104,13 @@
 
 	  The CoAP definition, which is "[a]n entity participating in the CoAP protocol" <xref target="RFC7252" format="default"/>, is not used in this document.
         </t>
-        <t>
-          Examples throughout this document are expressed in CBOR diagnostic notation without the tag and value abbreviations.
+        <t>Throughout this document, examples for CBOR data items are expressed in
+           CBOR extended diagnostic notation as defined in
+           <xref section="8" sectionFormat="of" target="RFC8949"/> and
+           <xref section="G" sectionFormat="of" target="RFC8610"/>
+           ("diagnostic notation"), unless noted otherwise.
+           We often use diagnostic notation comments to provide
+           a textual representation of the numeric parameter names and values.
         </t>
       </section>
     </section>
@@ -203,7 +208,7 @@ Sec Context storage/            |                     |
         <figure anchor="ex0">
           <name>Example C-to-AS POST /token Request for an Access Token Bound to a Symmetric Key</name>
 
-        <sourcecode name="" type=""><![CDATA[
+        <sourcecode name="" type="cbor-diag"><![CDATA[
     Header: POST (Code=0.02)
     Uri-Host: "as.example.com"
     Uri-Path: "token"
@@ -224,7 +229,7 @@ Sec Context storage/            |                     |
         </t>
         <figure anchor="ex7">
           <name>Example C-to-AS POST /token Request for Updating Rights to an Access Token Bound to a Symmetric Key</name>
-          <sourcecode name="" type=""><![CDATA[
+          <sourcecode name="" type="cbor-diag"><![CDATA[
     Header: POST (Code=0.02)
     Uri-Host: "as.example.com"
     Uri-Path: "token"
@@ -288,7 +293,7 @@ Usually, it is assumed that constrained devices will be preconfigured with the n
         </t>
         <figure anchor="ex1">
           <name>Example AS-to-C Access Token Response with an OSCORE Profile</name>
-          <sourcecode name="" type=""><![CDATA[
+          <sourcecode name="" type="cbor-diag"><![CDATA[
     Header: Created (Code=2.01)
     Content-Type: application/ace+cbor
     Payload:
@@ -311,7 +316,7 @@ Usually, it is assumed that constrained devices will be preconfigured with the n
         </t>
         <figure anchor="ex2">
           <name>Example CWT Claims Set with OSCORE Parameters</name>
-         <sourcecode name="" type="cbor"><![CDATA[
+         <sourcecode name="" type="cbor-diag"><![CDATA[
 {
     / aud / 3 : "tempSensorInLivingRoom",
     / iat / 6 : 1360189224,
@@ -333,7 +338,7 @@ Usually, it is assumed that constrained devices will be preconfigured with the n
 
         <figure anchor="ex2-cbor">
           <name>Example CWT Claims Set with OSCORE Parameters Using CBOR Encoding</name>
-          <sourcecode name="" type="cbor"><![CDATA[
+          <sourcecode name="" type="cbor-pretty"><![CDATA[
 A5                              # map(5)
    03                           # unsigned(3)
    76                           # text(22)
@@ -353,11 +358,10 @@ A5                              # map(5)
             A2                  # map(2)
                00               # unsigned(0)
                41               # bytes(1)
-                  01            # "\u0001"
+                  01
                02               # unsigned(2)
                50               # bytes(16)
                   F9AF838368E353E78888E1426BD94E6F
-                                # "\xF9\xAF\x83 etc. "
           ]]></sourcecode>
         </figure>
         <t>
@@ -368,7 +372,7 @@ A5                              # map(5)
         </t>
         <figure anchor="ex5">
           <name>Example AS-to-C Access Token Response with an OSCORE Profile for the Update of Access Rights</name>
-          <sourcecode name="" type=""><![CDATA[
+          <sourcecode name="" type="cbor-diag"><![CDATA[
     Header: Created (Code=2.01)
     Content-Type: application/ace+cbor
     Payload:
@@ -385,7 +389,7 @@ A5                              # map(5)
         </t>
         <figure anchor="ex6">
           <name>Example CWT Claims Set with OSCORE Parameters for the Update of Access Rights</name>
-         <sourcecode name="" type="cbor"><![CDATA[
+         <sourcecode name="" type="cbor-diag"><![CDATA[
   {
       / aud / 3 : "tempSensorInLivingRoom",
       / iat / 6 : 1360189224,
@@ -591,7 +595,7 @@ The client <bcp14>MUST</bcp14> use the Content-Format application/ace+cbor defin
         </t>
         <figure anchor="ex3">
           <name>Example C-to-RS POST /authz-info Request Using CWT</name>
-          <sourcecode name="" type=""><![CDATA[
+          <sourcecode name="" type="cbor-diag"><![CDATA[
       Header: POST (Code=0.02)
       Uri-Host: "rs.example.com"
       Uri-Path: "authz-info"
@@ -642,7 +646,7 @@ The client <bcp14>MUST</bcp14> use the Content-Format application/ace+cbor defin
         </t>
         <figure anchor="ex4">
           <name>Example RS-to-C 2.01 (Created) Response</name>
-          <sourcecode name="" type=""><![CDATA[
+          <sourcecode name="" type="cbor-diag"><![CDATA[
       Header: Created (Code=2.01)
       Content-Format: application/ace+cbor
       Payload:

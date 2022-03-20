@@ -234,7 +234,7 @@ Sec Context storage/            |                     |
       / audience / 5 : "tempSensor4711",
          / scope / 9 : "write",
        / req_cnf / 4 : {
-             / kid / 2 : h'01'
+             / kid / 3 : h'01'
       }
     }
           ]]></sourcecode>
@@ -392,7 +392,7 @@ A5                              # map(5)
       / exp / 4 : 1360289224,
     / scope / 9 :  "temperature_h",
       / cnf / 8 : {
-        / kid / 2 : h'01'
+        / kid / 3 : h'01'
     }
   }
           ]]></sourcecode>
